@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Migraine Assistant</title>
+<style>
+:root{--bg:#eef1f5;--card:#fff;--tx:#1d2733;--mu:#6b7785;--ln:#dde2e9;--ac:#4a5ba8;--ac2:#e5e9f7;--on:#fff;--sh:0 1px 2px rgba(20,30,50,.06);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#11141a;--card:#1a1f29;--tx:#dfe4ec;--mu:#8d97a6;--ln:#2a313d;--ac:#8ea3ee;--ac2:#252c44;--on:#11141a;--sh:none}}
+:root[data-theme="dark"]{--bg:#11141a;--card:#1a1f29;--tx:#dfe4ec;--mu:#8d97a6;--ln:#2a313d;--ac:#8ea3ee;--ac2:#252c44;--on:#11141a;--sh:none}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.45 ui-rounded,-apple-system,"SF Pro Rounded","Segoe UI",Roboto,sans-serif}
+#app{max-width:520px;margin:0 auto;padding:16px 16px 96px}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+h1{font-size:24px;margin:0}h2{font-size:18px;margin:0}
+h3{font-size:15px;margin:18px 0 8px;color:var(--mu);font-weight:600}
+.sub{color:var(--mu);font-size:14px}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+.ib{width:42px;height:42px;border-radius:50%;background:var(--card);box-shadow:var(--sh);font-size:19px}
+.i{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--ac2);color:var(--ac);font-size:13px;font-weight:700;font-style:italic;margin-left:6px;cursor:pointer;vertical-align:middle}
+.card{background:var(--card);border-radius:20px;padding:16px;margin-bottom:12px;box-shadow:var(--sh)}
+.big{width:100%;padding:24px 16px;border-radius:26px;background:var(--ac);color:var(--on);font-size:22px;font-weight:700;margin:6px 0 10px;box-shadow:0 8px 22px -8px var(--ac)}
+.big small{display:block;font-size:14px;font-weight:500;opacity:.85}
+.big.pre{padding:16px;font-size:18px;background:var(--ac2);color:var(--ac);box-shadow:none}
+.rel{position:relative}.rel .i{position:absolute;top:10px;right:12px;margin:0;background:rgba(255,255,255,.28);color:inherit}
+.row{display:flex;gap:10px}.row>*{flex:1}
+.stat{text-align:center}.stat b{display:block;font-size:28px;line-height:1.1}
+.item{display:flex;gap:12px;align-items:center;padding:10px 0;border-top:1px solid var(--ln)}
+.item:first-of-type{border-top:0}
+.dot{flex:none;width:42px;height:42px;border-radius:14px;display:grid;place-items:center;font-weight:700;color:#10151c}
+.item .t{flex:1;min-width:0}.item .t div:first-child{font-weight:600}
+.item .t div+div{font-size:13px;color:var(--mu);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.del{color:var(--mu);font-size:18px;padding:6px 10px}
+.btn{width:100%;padding:15px;border-radius:16px;background:var(--ac);color:var(--on);font-weight:700;font-size:17px}
+.btn.alt{background:var(--ac2);color:var(--ac)}.btn:disabled{opacity:.5}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--ln);display:flex;justify-content:center;padding-bottom:env(safe-area-inset-bottom,0px);z-index:5}
+nav div{display:flex;width:100%;max-width:520px}
+nav button{flex:1;padding:10px 0 8px;font-size:12px;color:var(--mu)}
+nav button span{display:block;font-size:22px}nav button.on{color:var(--ac);font-weight:700}
+.v{display:none}.v.on{display:block}
+#ov,#tip{position:fixed;inset:0;background:rgba(5,8,14,.55);display:none;z-index:10;align-items:flex-end;justify-content:center}
+#tip{z-index:20;align-items:center;padding:24px}
+#ov.on,#tip.on{display:flex}
+.tb{background:var(--card);border-radius:20px;padding:20px;max-width:420px;width:100%;font-size:15px}
+.tb .btn{margin-top:14px}
+#sh{background:var(--bg);width:100%;max-width:520px;max-height:93%;overflow-y:auto;border-radius:26px 26px 0 0;padding:10px 16px calc(24px + env(safe-area-inset-bottom,0px));animation:up .22s ease-out}
+@keyframes up{from{transform:translateY(40px);opacity:0}}
+@media (prefers-reduced-motion:reduce){#sh{animation:none}}
+.gr{width:44px;height:5px;border-radius:3px;background:var(--ln);margin:0 auto 10px}
+.sh-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:10px 14px;border-radius:999px;background:var(--card);border:1.5px solid var(--ln);font-size:15px}
+.chip.on{background:var(--ac2);border-color:var(--ac);color:var(--ac);font-weight:600}
+.chip.s2{border-color:#c9822b;color:#c9822b;background:rgba(201,130,43,.12)}.chip.s3{border-color:var(--mu);color:var(--mu)}
+.ints{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.int{height:50px;border-radius:14px;font-size:19px;font-weight:700;color:#10151c;opacity:.45;border:3px solid transparent}
+.int.on{opacity:1;border-color:var(--tx);transform:scale(1.05)}
+input[type=datetime-local],input[type=text],input[type=number],input[type=date],textarea{width:100%;font:inherit;color:var(--tx);background:var(--card);border:1.5px solid var(--ln);border-radius:14px;padding:12px}
+textarea{min-height:64px}
+.bar{display:flex;align-items:center;gap:10px;margin:8px 0;font-size:14px}
+.bar .n{width:46%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar .tr{flex:1;height:10px;background:var(--ac2);border-radius:6px;overflow:hidden}
+.bar .tr i{display:block;height:100%;background:var(--ac)}.bar .p{width:34px;text-align:right;color:var(--mu)}
+.fl{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-top:1px solid var(--ln);gap:8px}
+.fl:first-child{border-top:0}
+.step{display:flex;align-items:center;gap:8px}
+.step button{width:40px;height:40px;border-radius:50%;background:var(--ac2);color:var(--ac);font-size:22px;font-weight:700}
+.step b{min-width:70px;text-align:center}
+.empty{color:var(--mu);text-align:center;padding:16px 6px}
+.hint{color:#c0392b;font-size:14px;margin:8px 0 0;display:none}
+table{width:100%;border-collapse:collapse;font-size:14px}td,th{padding:6px 4px;border-top:1px solid var(--ln);text-align:right}td:first-child,th:first-child{text-align:left}th{font-weight:600;color:var(--mu)}
+#aiout{white-space:pre-wrap;font-size:15px;margin-top:12px}
+.sm{font-size:13px;color:var(--mu)}.rp td,.rp th{text-align:left;vertical-align:top;font-size:13px}.rp table{display:block;overflow-x:auto}.rp pre{white-space:pre-wrap;font:inherit;font-size:15px}
+</style>
+</head>
+<body>
+<div id="app">
+<header><div><h1 style="font-size:21px;display:flex;align-items:center;gap:10px"><svg width="34" height="34" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8fa3ee"/><stop offset="1" stop-color="#4a5ba8"/></linearGradient></defs><rect width="64" height="64" rx="16" fill="url(#lg)"/><circle cx="28" cy="34" r="13" fill="#fff"/><g fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"><path d="M43.4 20.6A19 19 0 0 1 43.4 47.4" opacity=".75"/><path d="M47.7 16.3A25 25 0 0 1 47.7 51.7" opacity=".45"/><path d="M51.2 12.8A30 30 0 0 1 51.2 55.2" opacity=".25"/></g></svg>Migraine Assistant</h1><div class="sub" id="dt"></div></div><div style="display:flex;gap:8px"><button class="ib" id="th" aria-label="Thème">🌓</button><button class="ib" id="st" aria-label="Paramètres">⚙️</button></div></header>
+<section class="v on" id="v-home"></section><section class="v" id="v-hist"></section><section class="v" id="v-stats"></section><section class="v" id="v-ana"></section>
+</div>
+<nav><div>
+<button class="on" data-v="home"><span>🏠</span>Accueil</button><button data-v="hist"><span>📖</span>Historique</button><button data-v="stats"><span>📊</span>Stats</button><button data-v="ana"><span>🔬</span>Analyse</button>
+</div></nav>
+<div id="ov"><div id="sh"></div></div><div id="tip"></div>
+
+<script>
+const $=s=>document.querySelector(s);
+const D={loc:["Côté gauche","Côté droit","Front","Nuque","Derrière l’œil","Tout le crâne"],sym:["Nausées","Photophobie (lumière)","Phonophobie (bruit)","Vertiges","Aura visuelle"],trg:["Manque de sommeil","Stress","Écrans","Météo / pression","Saut de repas","Caféine / alcool","Règles / hormones"],trt:["Triptan","Antalgique","Anti-inflammatoire","Repos dans le noir","Caféine","Froid / glace"],pre:["Bâillements","Fatigue inhabituelle","Irritabilité","Fringale","Soif","Raideur de nuque","Sensibilité lumière/bruit","Difficulté de concentration","Humeur basse","Vision floue / picotements"],pain:["Cervicales","Mâchoire (ATM)","Œil","Visage / face","Épaules"]};
+const LBL={loc:"Localisation",sym:"Symptômes associés",trg:"Déclencheurs suspectés",trt:"Traitements pris",pre:"Symptômes de pré-crise",pain:"Douleurs associées"};
+const PL=["","avant","après","incertain"],PW=["","avant la migraine","après / pendant la migraine","chronologie incertaine"];
+const F=[["sleepH","Sommeil (h)",.5,0,14,7,"h","Durée de la nuit. Sur iPhone : app Santé > Sommeil (lecture automatique possible seulement dans la version native)."],["water","Eau bue",.25,0,6,0,"L","Litres bus sur cette période ; les périodes s’additionnent sur la journée (repère : 1,5 à 2 L/jour)."],["coffee","Cafés / thés",1,0,15,0,"","Nombre de boissons caféinées aujourd’hui. Un excès comme un sevrage peuvent jouer."],["alcohol","Verres d’alcool",1,0,15,0,"","Nombre de verres aujourd’hui."],["screens","Écrans (h)",.5,0,16,0,"h","Temps d’écrans sur cette période. Sur iPhone : Réglages > Temps d’écran (lecture automatique possible seulement dans la version native)."],["meals","Repas pris",1,0,6,0,"","Nombre de repas pris aujourd’hui. Sauter un repas est un déclencheur classique."],["activity","Activité physique",15,0,300,0,"min","Minutes d’activité physique aujourd’hui."]];
+const C=[["sleepQ","Qualité du sommeil","1 = très mauvaise, 5 = excellente."],["stress","Stress","1 = serein, 5 = très stressé."],["mood","Humeur","1 = très basse, 5 = excellente."]];
+const WE=["Stable","Chaud / lourd","Orageux","Froid","Pluie","Vent"];
+const INFO={go:"Déclare une crise. Seule l’intensité est obligatoire : le reste est facultatif et peut être complété plus tard.",pre:"À utiliser dès les premiers signes (bâillements, nuque raide…) alors que la migraine n’est pas là. Ces signes seront automatiquement rattachés à la prochaine crise déclarée dans les 48 h.",jr:"Le journal collecte vos habitudes (sommeil, eau, stress…). Chaque saisie est horodatée avec précision. Vous pouvez en faire plusieurs par jour : c’est ce qui permet de repérer ce qui précède une crise.",hist:"Toutes vos crises, avec leurs signes de pré-crise rattachés. Touchez 🗑 pour supprimer.",stats:"Comptages simples : fréquence, intensité, éléments les plus souvent cochés.",ana:"Corrélations calculées sur votre appareil, puis analyse approfondie par IA sur demande.",when:"Date et heure de début. Par défaut : maintenant. Modifiable si vous déclarez après coup.",int:"Intensité de 1 (légère) à 10 (insupportable). Le vert correspond à une douleur faible, le rouge à une douleur forte.",loc:"Où la douleur est située. « Aucun » = aucune localisation précise ; « ＋ Autre » ajoute un élément mémorisé pour la prochaine fois.",sym:"Signes qui accompagnent la douleur. « Aucun » = aucun symptôme associé ; « ＋ Autre » ajoute un élément mémorisé.",pain:"Douleurs cervicales, mâchoire, œil, face… Touchez un élément pour choisir sa chronologie : « avant » (précède la migraine, possible déclencheur), « après » (conséquence), « incertain ». Touchez encore pour effacer. C’est ce qui permettra de savoir si ces douleurs causent la migraine ou en découlent.",trg:"Ce que vous soupçonnez d’avoir déclenché la crise. Cochez large : l’analyse départagera. « Aucun » = aucun déclencheur identifié.",trt:"Ce que vous avez pris ou fait pour soulager. « ＋ Autre » mémorise un nouveau traitement pour les prochaines fois.",lp:"Signes de pré-crise récents (48 h) non encore rattachés. Cochés = liés à cette crise ; décochez ceux qui n’ont aucun rapport.",note:"Texte libre : contexte, lieu, activité, évolution.",prep:"Symptômes ressentis AVANT la douleur. Les repérer permet d’anticiper et de traiter plus tôt. « Aucun » = rien de particulier.",ai:"Envoie vos données (sans votre nom) à Claude pour une analyse approfondie : déclencheurs probables, chronologie des douleurs, pistes de prévention. Aide à la réflexion, pas un diagnostic. L’envoi n’a lieu que lorsque vous touchez le bouton.",prof:"Âge, poids, taille, antécédents… ces éléments affinent l’analyse. Tout reste sur votre appareil.",lists:"Retirez (✕) ou ajoutez des éléments dans chaque questionnaire. Les ajouts faits dans une crise apparaissent aussi ici.",corr:"Compare vos moyennes dans les 24 h avant une crise avec celles des autres moments. Un écart marqué est une piste, pas une preuve.",chr:"Pour chaque zone douloureuse : combien de fois elle est apparue avant, après, ou avec chronologie incertaine par rapport à la migraine."};
+const clone=o=>JSON.parse(JSON.stringify(o));
+let S={attacks:[],pre:[],journal:[],profile:{},cfg:clone(D),theme:"auto",ai:null};
+function load(){try{const r=JSON.parse(localStorage.getItem("migraine-v2")||localStorage.getItem("migraine-v1")||"null");if(r)Object.assign(S,r)}catch(e){}
+ if(!Array.isArray(S.journal))S.journal=[];if(!Array.isArray(S.pre))S.pre=[];S.cfg=Object.assign(clone(D),S.cfg||{});S.attacks.forEach(a=>{a.pain=a.pain||{};a.pre=a.pre||[]})}
+function save(){try{localStorage.setItem("migraine-v2",JSON.stringify(S))}catch(e){}}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const I=k=>`<span class="i" data-i="${k}" role="button" aria-label="Information">i</span>`;
+const col=n=>`hsl(${130-(n-1)*14},58%,${n>7?62:58}%)`;
+const iso=d=>new Date(d-d.getTimezoneOffset()*6e4).toISOString().slice(0,16);
+const dayKey=d=>iso(new Date(d)).slice(0,10);
+const fmt=d=>new Date(d).toLocaleString("fr-FR",{weekday:"short",day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"});
+const sorted=()=>[...S.attacks].sort((a,b)=>b.date.localeCompare(a.date));
+const avg=l=>l.length?l.reduce((s,a)=>s+a.intensity,0)/l.length:0;
+const mean=x=>x.length?Math.round(x.reduce((s,v)=>s+v,0)/x.length*100)/100:"–";
+const real=a=>(a||[]).filter(x=>x!=="Aucun");
+
+/* dialogues (pas de alert/prompt : bloqués en page publiée) */
+function dlg(h){$("#tip").innerHTML=`<div class="tb">${h}</div>`;$("#tip").classList.add("on")}
+const shut=()=>$("#tip").classList.remove("on");
+$("#tip").onclick=e=>{if(e.target.id==="tip")shut()};
+function tip(k){dlg(INFO[k]||"");$(".tb").insertAdjacentHTML("beforeend",`<button class="btn alt" id="ok">Compris</button>`);$("#ok").onclick=shut}
+function ask(t,cb){dlg(`<b>${t}</b><input type="text" id="ai1" style="margin:10px 0"><button class="btn" id="ok">Ajouter</button>`);const i=$("#ai1");i.focus();const go=()=>{const v=i.value.trim();shut();if(v)cb(v)};$("#ok").onclick=go;i.onkeydown=e=>{if(e.key==="Enter")go()}}
+function sure(t,cb){dlg(`<b>${t}</b><div class="row" style="margin-top:12px"><button class="btn alt" id="no">Annuler</button><button class="btn" id="ok">Confirmer</button></div>`);$("#no").onclick=shut;$("#ok").onclick=()=>{shut();cb()}}
+document.addEventListener("click",e=>{const i=e.target.closest(".i");if(i){e.stopPropagation();e.preventDefault();tip(i.dataset.i)}},true);
+
+function applyTheme(){const r=document.documentElement;S.theme==="auto"?r.removeAttribute("data-theme"):r.setAttribute("data-theme",S.theme);$("#th").textContent={auto:"🌓",light:"☀️",dark:"🌙"}[S.theme]}
+$("#th").onclick=()=>{S.theme={auto:"light",light:"dark",dark:"auto"}[S.theme];save();applyTheme()};
+$("#st").onclick=()=>settings();
+
+/* ---------- vues ---------- */
+const linked=a=>S.pre.filter(p=>p.att===a.id);
+function item(a,del){const n=linked(a).length;return `<div class="item" data-oa="${a.id}"><div class="dot" style="background:${col(a.intensity)}">${a.intensity}</div><div class="t"><div>${fmt(a.date)}${n?` 🌀${n}`:""}${a.end?` ✓ ${Math.round((new Date(a.end)-new Date(a.date))/6e4)} min`:""}</div><div>${esc([...real(a.loc),...real(a.sym),...real(a.trt)].join(", ")||"Aucun détail")}</div></div>${del?`<button class="del" data-da="${a.id}" aria-label="Supprimer">🗑</button>`:""}</div>`}
+function itemP(p){return `<div class="item" data-op="${p.id}"><div class="dot" style="background:var(--ac2)">🌀</div><div class="t"><div>${fmt(p.date)} · pré-crise</div><div>${esc(real(p.sym).join(", ")||"Aucun détail")}</div></div><button class="del" data-dp="${p.id}" aria-label="Supprimer">🗑</button></div>`}
+function hist(){
+ const l=[...sorted().map(a=>({d:a.date,h:item(a,1)})),...S.pre.filter(p=>!p.att).map(p=>({d:p.date,h:itemP(p)}))].sort((a,b)=>b.d.localeCompare(a.d));
+ $("#v-hist").innerHTML=`<h3 style="margin-top:0">Historique${I("hist")}</h3><div class="card">${l.length?l.map(x=>x.h).join(""):`<div class="empty">Votre historique apparaîtra ici.</div>`}</div>`;
+ $("#v-hist").querySelectorAll("[data-da]").forEach(b=>b.onclick=()=>sure("Supprimer cette crise ?",()=>{const id=+b.dataset.da;S.attacks=S.attacks.filter(a=>a.id!==id);S.pre.forEach(p=>{if(p.att===id)p.att=null});save();render()}));
+ $("#v-hist").querySelectorAll("[data-dp]").forEach(b=>b.onclick=()=>sure("Supprimer cette pré-crise ?",()=>{S.pre=S.pre.filter(p=>p.id!==+b.dataset.dp);save();render()}));
+}
+function tally(list,key){const c={};list.forEach(a=>real(a[key]).forEach(x=>c[x]=(c[x]||0)+1));return Object.entries(c).sort((a,b)=>b[1]-a[1]).slice(0,6)}
+const bars=(rows,n)=>rows.length?rows.map(([k,v])=>`<div class="bar"><span class="n">${esc(k)}</span><span class="tr"><i style="width:${v/n*100}%"></i></span><span class="p">${Math.round(v/n*100)}%</span></div>`).join(""):`<div class="empty">Pas encore de données.</div>`;
+function painTally(){const c={},add=(o,f)=>Object.entries(o||{}).forEach(([z,s])=>{if(z==="Aucun")return;(c[z]=c[z]||[0,0,0,0])[f||s]++});S.attacks.forEach(a=>add(a.pain));S.pre.forEach(p=>add(p.pain,1));return c}
+function stats(){
+ const n=S.attacks.length,m=S.attacks.filter(a=>a.date.startsWith(iso(new Date()).slice(0,7))),pt=painTally();
+ $("#v-stats").innerHTML=`<div class="row"><div class="card stat"><b>${m.length}</b><span class="sub">ce mois-ci</span></div><div class="card stat"><b>${n}</b><span class="sub">au total</span></div><div class="card stat"><b>${n?avg(S.attacks).toFixed(1):"–"}</b><span class="sub">intensité moy.</span></div></div>
+ <h3>Déclencheurs fréquents${I("trg")}</h3><div class="card">${bars(tally(S.attacks,"trg"),n)}</div>
+ <h3>Symptômes fréquents${I("sym")}</h3><div class="card">${bars(tally(S.attacks,"sym"),n)}</div>
+ <h3>Signes de pré-crise${I("prep")}</h3><div class="card">${bars(tally(S.pre,"sym"),S.pre.length)}</div>
+ <h3>Traitements utilisés${I("trt")}</h3><div class="card">${bars(tally(S.attacks,"trt"),n)}</div>
+ <h3>Douleurs associées : chronologie${I("chr")}</h3><div class="card">${Object.keys(pt).length?Object.entries(pt).map(([z,c])=>`<div class="fl"><b>${esc(z)}</b><span class="sm">avant ${c[1]} · après ${c[2]} · incertain ${c[3]}</span></div>`).join(""):`<div class="empty">Pas encore de données.</div>`}</div>`;
+}
+const NUM=[...F.map(f=>[f[0],f[1]]),...C.map(c=>[c[0],c[1]])];
+function corr(){
+ const A=S.attacks.map(a=>+new Date(a.date)),pre=j=>{const t=+new Date(j.ts);return A.some(a=>a-t>0&&a-t<864e5)};
+ const rows=NUM.map(([k,l])=>{const x=S.journal.filter(j=>pre(j)&&j[k]!=null).map(j=>j[k]),y=S.journal.filter(j=>!pre(j)&&j[k]!=null).map(j=>j[k]);return x.length<2||y.length<2?"":`<tr><td>${l}</td><td>${mean(x)}</td><td>${mean(y)}</td></tr>`}).join("");
+ return rows?`<table><tr><th></th><th>24 h avant crise</th><th>autres moments</th></tr>${rows}</table>`:`<div class="empty">Faites plusieurs saisies de journal (dont certaines avant des crises) pour voir apparaître des comparaisons.</div>`;
+}
+function render(){home();hist();stats();ana();$("#v-stats").insertAdjacentHTML("afterbegin",todayCard());$("#dt").textContent=new Date().toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"})}
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("on",x===b));document.querySelectorAll(".v").forEach(v=>v.classList.toggle("on",v.id==="v-"+b.dataset.v));window.scrollTo(0,0)});
+
+/* ---------- feuilles ---------- */
+function sheet(h){$("#sh").innerHTML=`<div class="gr"></div>`+h;$("#ov").classList.add("on")}
+function close(){$("#ov").classList.remove("on")}
+$("#ov").onclick=e=>{if(e.target.id==="ov")close()};
+const chipsIn=(g,sel)=>{const p=g==="pain",none=p?sel.Aucun:sel.has("Aucun");
+ return S.cfg[g].map(v=>{const s=p?(sel[v]||0):0,on=p?s:sel.has(v);return `<button class="chip${on?" on":""}${s?" s"+s:""}" data-g="${g}" data-v="${esc(v)}">${esc(v)}${s?" · "+PL[s]:""}</button>`}).join("")+`<button class="chip${none?" on":""}" data-g="${g}" data-v="Aucun">Aucun</button><button class="chip" data-add="${g}">＋ Autre</button>`};
+const sec=(g,f,info)=>`<h3>${LBL[g]}${I(info||g)}</h3><div class="chips" id="c-${g}">${chipsIn(g,f[g])}</div>`;
+const mk=()=>({loc:new Set,sym:new Set,trg:new Set,trt:new Set,pre:new Set,pain:{}});
+function bind(f,x){$("#sh").onclick=e=>{if(x&&x(e))return;const c=e.target.closest(".chip");if(!c)return;
+ const refresh=g=>{$("#c-"+g).innerHTML=chipsIn(g,f[g]);if(f.sync)f.sync()};
+ if(c.dataset.add){const g=c.dataset.add;ask("Nouvel élément (sera mémorisé) :",n=>{if(!S.cfg[g].includes(n))S.cfg[g].push(n);if(g==="pain"){delete f.pain.Aucun;f.pain[n]=1}else{f[g].delete("Aucun");f[g].add(n)}save();refresh(g)});return}
+ const g=c.dataset.g,v=c.dataset.v;if(!g)return;
+ if(g==="pain"){if(v==="Aucun")f.pain=f.pain.Aucun?{}:{Aucun:1};else{delete f.pain.Aucun;f.pain[v]=((f.pain[v]||0)+1)%4;if(!f.pain[v])delete f.pain[v]}}
+ else if(v==="Aucun"){const h=f[g].has(v);f[g].clear();if(!h)f[g].add(v)}else{f[g].delete("Aucun");f[g].has(v)?f[g].delete(v):f[g].add(v)}
+ refresh(g)}}
+const out=(f,g)=>g==="pain"?f.pain:[...f[g]];
+
+function settings(){
+ const P=S.profile,keep=$("#sh").scrollTop;
+ const fld=(k,l,t,ph)=>`<h3>${l}</h3><input type="${t}" data-p="${k}" value="${esc(P[k]||"")}" placeholder="${ph||""}">`;
+ const bmi=P.weight&&P.height?(P.weight/Math.pow(P.height/100,2)).toFixed(1):null;
+ sheet(`<div class="sh-h"><h2>Paramètres</h2><button class="ib" id="x">✕</button></div>
+ <h3>Profil${I("prof")}</h3><div class="card">
+ ${fld("name","Prénom / nom","text")}${fld("birth","Date de naissance","date")}
+ <h3>Sexe</h3><div class="chips">${["Femme","Homme","Autre"].map(v=>`<button class="chip${P.sex===v?" on":""}" data-pc="sex|${v}">${v}</button>`).join("")}</div>
+ <div class="row">${[["weight","Poids (kg)"],["height","Taille (cm)"]].map(([k,l])=>`<div>${fld(k,l,"number")}</div>`).join("")}</div>${bmi?`<div class="sm" style="margin-top:6px">IMC : ${bmi}</div>`:""}
+ <h3>Suivi du cycle menstruel</h3><div class="chips">${["Oui","Non"].map(v=>`<button class="chip${(!!P.cycle)===(v==="Oui")?" on":""}" data-pc="cycle|${v}">${v}</button>`).join("")}</div>
+ <h3>Antécédents familiaux de migraine</h3><div class="chips">${["Oui","Non","Je ne sais pas"].map(v=>`<button class="chip${P.fam===v?" on":""}" data-pc="fam|${v}">${v}</button>`).join("")}</div>
+ ${fld("bg","Traitement de fond","text","ex. bêtabloquant, contraception…")}${fld("cond","Autres conditions / allergies","text","ex. bruxisme, hypertension…")}${fld("apiKey","Clé API Anthropic (app iPhone : analyse IA)","password","sk-ant-…")}</div>
+ <h3>Questionnaires personnalisables${I("lists")}</h3>
+ ${Object.keys(LBL).map(g=>`<div class="card"><b>${LBL[g]}</b><div class="chips" style="margin-top:8px">${S.cfg[g].map(v=>`<button class="chip" data-rm="${g}|${esc(v)}">${esc(v)} ✕</button>`).join("")}<button class="chip on" data-ad="${g}">＋ Ajouter</button></div></div>`).join("")}
+ <button class="btn alt" id="dm" style="margin-top:12px">🧪 Charger 2 semaines de données de démo</button><button class="btn alt" id="dr" style="margin-top:10px">Retirer les données de démo</button><button class="btn alt" id="rs" style="margin-top:10px">Remettre les listes par défaut</button>
+ <button class="btn alt" id="rd" style="margin-top:10px;color:#c0392b">Effacer toutes mes données</button>`);
+ $("#sh").scrollTop=keep;$("#x").onclick=close;
+ $("#sh").onchange=e=>{const k=e.target.dataset.p;if(k){P[k]=e.target.value;save()}};
+ $("#sh").onclick=e=>{const c=e.target.closest(".chip");
+  if(c&&c.dataset.pc){const[k,v]=c.dataset.pc.split("|");P[k]=k==="cycle"?v==="Oui":v;save();settings()}
+  if(c&&c.dataset.rm){const[g,v]=c.dataset.rm.split("|");S.cfg[g]=S.cfg[g].filter(x=>x!==v);save();settings()}
+  if(c&&c.dataset.ad){const g=c.dataset.ad;ask("Nouvel élément :",n=>{if(!S.cfg[g].includes(n))S.cfg[g].push(n);save();settings()})}
+  if(e.target.id==="dm"){demo();save();close();render()}if(e.target.id==="dr"){["attacks","pre","journal"].forEach(g=>S[g]=S[g].filter(x=>!x.demo));save();close();render()}if(e.target.id==="rs")sure("Remettre toutes les listes par défaut ?",()=>{S.cfg=clone(D);save();settings()});
+  if(e.target.id==="rd")sure("Effacer définitivement toutes les données ?",()=>{S={attacks:[],pre:[],journal:[],profile:{},cfg:clone(D),theme:S.theme,ai:null};save();close();render()})};
+}
+
+/* ---------- analyse IA ---------- */
+const pw=o=>Object.fromEntries(Object.entries(o||{}).map(([k,v])=>[k,k==="Aucun"?"aucune":PW[v]]));
+function dataset(){const P=S.profile,age=P.birth?Math.floor((Date.now()-new Date(P.birth))/31557600000):null;
+ return{profil:{age,sexe:P.sex,poids_kg:P.weight,taille_cm:P.height,suivi_cycle:!!P.cycle,antecedents_familiaux:P.fam,traitement_de_fond:P.bg,autres_conditions:P.cond},
+ crises:S.attacks.filter(a=>inP(a.date)).slice(-80).map(a=>({date:a.date,intensite:a.intensity,localisation:a.loc,symptomes:a.sym,declencheurs_suspectes:a.trg,traitements:a.trt,douleurs_associees:pw(a.pain),note:a.note,fin:a.end,evenements:(a.ev||[]).map(e=>({apres_min:Math.round((new Date(e.t)-new Date(a.date))/6e4),type:e.k,valeur:e.v})),pre_crise:S.pre.filter(p=>p.att===a.id).map(p=>({date:p.date,symptomes:p.sym,douleurs:Object.keys(p.pain||{})}))})),
+ pre_crises_sans_crise:S.pre.filter(p=>!p.att).slice(-30).map(p=>({date:p.date,symptomes:p.sym,douleurs:Object.keys(p.pain||{})})),
+ jours:jours().filter(o=>inP(o.date))}}
+const PROMPT="Tu es un assistant de recherche clinique spécialisé dans les céphalées et la migraine. Analyse les données JSON de ce suivi personnel. Réponds en français, avec des titres courts : 1) Profil des crises (fréquence, intensité, rythme) 2) Déclencheurs probables classés, avec niveau de confiance (faible/moyen/élevé), justification chiffrée et distinction corrélation/causalité 3) Chronologie des douleurs cervicales, mâchoire, œil, face : plutôt précurseurs, conséquences ou incertaines, et ce que cela suggère (tension cervicale, ATM/bruxisme, phase prodromique…) 4) Signes de pré-crise les plus fiables pour anticiper 5) Efficacité apparente des traitements (délai d’action d’après les événements horodatés de chaque crise) 6) Pistes de prévention concrètes et testables 7) Données manquantes à recueillir 8) Signes d’alerte justifiant une consultation rapide et questions à poser au médecin. 9) Alimentation : liens possibles entre repas/aliments (fromage, chocolat, charcuterie, alcool, repas sautés…) et crises, avec prudence. Sois honnête sur les limites (petit échantillon, données partielles). Ce n’est pas un diagnostic. Données : ";
+/* ---------- v3 : moments, suivi de crise, démo ---------- */
+const MM={matin:{t:"☀️ Matin",s:"Nuit + petit-déjeuner",f:["sleepH","water","coffee"],c:["sleepQ","stress","mood"],food:"Petit-déjeuner"},midi:{t:"🌤 Midi",s:"Matinée + déjeuner",f:["water","coffee","screens","activity"],c:["stress","mood"],food:"Déjeuner",w:1},soir:{t:"🌙 Soir",s:"Après-midi + dîner",f:["water","coffee","alcohol","screens","activity"],c:["stress","mood"],food:"Dîner",w:1}};
+Object.assign(INFO,{jr:"Trois saisies par jour : matin (nuit + petit-déjeuner), midi (matinée + déjeuner), soir (après-midi + dîner). Le bouton mis en avant correspond à l’heure ; les autres restent ouverts pour corriger. Chaque saisie est horodatée.",jm:"Renseignez cette période. Les quantités (eau, cafés, écrans…) concernent uniquement la période ; elles s’additionnent sur la journée. Revenir ici modifie la saisie existante.",food:"Décrivez ce que vous avez mangé et bu. L’analyse IA cherchera des liens entre aliments (fromage, chocolat, charcuterie, alcool, repas sautés…) et vos crises.",sv:"Journal de la crise : chaque traitement pris, changement d’intensité ou fin de crise est horodaté à l’instant du clic. Cela permet de mesurer le délai d’efficacité des traitements.",tod:"Cumul de la journée : les saisies matin, midi et soir s’additionnent. Le compteur repart de zéro à minuit ; les valeurs de chaque jour sont conservées pour les stats et l’analyse.",mt:"Utilise votre position GPS pour récupérer la météo et la pression actuelles. Si cela ne fonctionne pas, choisissez la météo à la main."});
+const hm=t=>new Date(t).toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"}),tdy=()=>dayKey(new Date());
+const entry=(m,k)=>S.journal.find(z=>z.m===m&&dayKey(z.ts)===k);
+const active=()=>S.attacks.filter(a=>!a.end&&Date.now()-new Date(a.date)<864e5);
+const lv=(k,n)=>[1,3,5,7,10][(k==="stress"?n:6-n)-1];
+function jours(){const d={};S.journal.forEach(j=>{const k=dayKey(j.ts),o=d[k]=d[k]||{date:k,eau_L:0,cafes:0,alcool:0,ecrans_h:0,activite_min:0,repas:{},stress:[],humeur:[],meteo:[]};
+ o.eau_L+=j.water||0;o.cafes+=j.coffee||0;o.alcool+=j.alcohol||0;o.ecrans_h+=j.screens||0;o.activite_min+=j.activity||0;
+ if(j.m==="matin"){o.sommeil_h=j.sleepH;o.qualite_sommeil=j.sleepQ}if(j.m&&j.food)o.repas[j.m]=j.food;if(j.stress)o.stress.push(j.stress);if(j.mood)o.humeur.push(j.mood);if(j.weather)o.meteo.push(j.weather);if(j.press)o.pression_hPa=j.press;if(j.period)o.regles=j.period});
+ return Object.values(d).sort((a,b)=>a.date<b.date?-1:1).slice(-120)}
+const dayAgg=k=>jours().find(o=>o.date===k)||{eau_L:0,cafes:0,ecrans_h:0,activite_min:0};
+function todayCard(){const t=dayAgg(tdy());return `<h3 style="margin-top:0">Aujourd’hui${I("tod")}</h3><div class="row">${[[t.eau_L,"L d’eau"],[t.cafes,"cafés"],[t.ecrans_h,"h d’écrans"],[t.activite_min,"min d’activité"]].map(([v,l])=>`<div class="card stat"><b>${v}</b><span class="sub" style="font-size:12px">${l}</span></div>`).join("")}</div>`}
+function home(){
+ const P=S.profile,nm=(P.name||"").trim().split(" ")[0],h=new Date().getHours(),cur=h<11?"matin":h<17?"midi":"soir",m=S.attacks.filter(a=>a.date.startsWith(iso(new Date()).slice(0,7))),open=S.pre.filter(p=>!p.att).length,t=dayAgg(tdy());
+ $("#v-home").innerHTML=`<h2 style="font-size:26px;margin:0 0 12px">Bonjour${nm?" "+esc(nm):""} 👋${nm?"":`<div class="sub" style="font-size:14px;font-weight:400">Ajoutez votre prénom dans ⚙️</div>`}</h2>
+ ${active().map(a=>`<div class="card" data-oa="${a.id}" style="border:2px solid ${col(a.cur||a.intensity)}"><b>🔴 Crise en cours</b> depuis ${hm(a.date)}<div class="sub">Intensité actuelle ${a.cur||a.intensity}/10 · touchez pour noter un traitement, une amélioration ou la fin</div></div>`).join("")}
+ ${active().length?"":`<div class="rel"><button class="big" id="go">⚠️ J’ai une migraine<small>Déclarer une crise en quelques secondes</small></button>${I("go")}</div>`}
+ ${active().length?"":`<div class="rel"><button class="big pre" id="pr">🌀 Début de symptômes (pré-crise)${open?`<small>${open} en attente d’une crise</small>`:""}</button>${I("pre")}</div>`}
+ <div class="row"><div class="card stat"><b>${m.length}</b><span class="sub">crise${m.length>1?"s":""} ce mois-ci</span></div><div class="card stat"><b>${m.length?avg(m).toFixed(1):"–"}</b><span class="sub">intensité moyenne</span></div></div>
+ <div class="card"><h2>📝 Journal du jour${I("jr")}</h2><div class="row" style="margin:10px 0">${Object.entries(MM).map(([k,v])=>`<button class="btn${k===cur?"":" alt"}" style="padding:12px 4px;font-size:15px" data-jm="${k}">${v.t}${entry(k,tdy())?" ✓":""}</button>`).join("")}</div><div class="sub">Aujourd’hui : ${t.eau_L} L d’eau · ${t.cafes} café${t.cafes>1?"s":""} · ${t.ecrans_h} h d’écrans</div></div>
+ <h3>Dernières crises</h3><div class="card">${S.attacks.length?sorted().slice(0,3).map(a=>item(a)).join(""):`<div class="empty">Aucune crise enregistrée pour l’instant.<br><br><button class="btn alt" id="dm0">🧪 Charger 2 semaines de démo</button></div>`}</div>`;
+ if($("#go"))$("#go").onclick=()=>crisis();if($("#pr"))$("#pr").onclick=()=>prodrome();document.querySelectorAll("[data-jm]").forEach(b=>b.onclick=()=>journal(b.dataset.jm));
+ if($("#dm0"))$("#dm0").onclick=()=>{demo();save();render()};
+}
+document.addEventListener("click",e=>{if(e.target.closest(".del,.i"))return;const o=e.target.closest("[data-oa]"),p=e.target.closest("[data-op]");if(o)crisis(S.attacks.find(a=>a.id==o.dataset.oa));else if(p)prodrome(S.pre.find(x=>x.id==p.dataset.op))});
+
+function crisis(a){
+ const ed=!!a,f=mk(),now=Date.now(),near=p=>!p.att&&now-new Date(p.date)<1728e5;
+ if(ed){["loc","sym","trg","trt"].forEach(g=>f[g]=new Set(a[g]));f.pain=a.pain;f.intensity=a.intensity;f.lp=new Set(a.pre)}else{f.intensity=0;f.lp=new Set(S.pre.filter(near).map(p=>p.id))}
+ const cand=S.pre.filter(p=>f.lp.has(p.id)||near(p));
+ if(ed)f.sync=()=>{a.loc=[...f.loc];a.sym=[...f.sym];a.trg=[...f.trg];a.trt=[...f.trt];a.pain=f.pain;a.intensity=f.intensity||a.intensity;a.date=$("#when").value||a.date;a.note=$("#note").value.trim();S.pre.forEach(p=>{if(f.lp.has(p.id))p.att=a.id;else if(p.att===a.id)p.att=null});a.pre=[...f.lp];save()};
+ const lab=e=>e.k==="med"?"💊 "+esc(e.v):e.k==="int"?"Intensité "+e.v+"/10":"✅ Crise passée";
+ const ev=(k,v)=>{(a.ev=a.ev||[]).push({t:new Date().toISOString(),k,v});if(k==="end")a.end=new Date().toISOString();if(k==="int")a.cur=v;save();const y=$("#sh").scrollTop;crisis(a);$("#sh").scrollTop=y;render()};
+ const med=v=>{f.trt.delete("Aucun");f.trt.add(v);f.sync();ev("med",v)};
+ const nn=[1,2,3,4,5,6,7,8,9,10];
+ const fu=ed?`<h3>Suivi de la crise${I("sv")}</h3><div class="card"><b>💊 Traitement pris maintenant</b><div class="chips" style="margin:8px 0 14px">${S.cfg.trt.map(v=>`<button class="chip" data-med="${esc(v)}">${esc(v)}</button>`).join("")}<button class="chip" data-medadd="1">＋ Autre</button></div>
+ <b>Intensité maintenant</b><div class="ints" style="margin:8px 0 14px">${nn.map(n=>`<button class="int${(a.cur||a.intensity)===n?" on":""}" data-cur="${n}" style="background:${col(n)}">${n}</button>`).join("")}</div>
+ ${a.end?`<div class="sub">Terminée à ${hm(a.end)}</div><button class="btn alt" data-reopen="1" style="margin-top:8px">Rouvrir la crise</button>`:`<button class="btn" data-end="1">✅ La crise est passée</button>`}
+ <div style="margin-top:10px">${(a.ev||[]).map(e=>`<div class="fl"><span class="sm">${hm(e.t)}</span><span>${lab(e)}</span></div>`).join("")}</div></div>`:"";
+ sheet(`<div class="sh-h"><h2>${ed?"Crise du "+fmt(a.date):"Nouvelle crise"}</h2><button class="ib" id="x">✕</button></div>${fu}
+ <h3>Quand ?${I("when")}</h3><input type="datetime-local" id="when" value="${ed?a.date:iso(new Date())}">
+ <h3>Intensité ${ed?"au début":"de la douleur"}${I("int")}</h3><div class="ints">${nn.map(n=>`<button class="int${f.intensity===n?" on":""}" data-n="${n}" style="background:${col(n)}">${n}</button>`).join("")}</div><div class="hint" id="hint">Choisissez une intensité pour enregistrer.</div>
+ ${cand.length?`<h3>Pré-crise liée${I("lp")}</h3><div class="chips">${cand.map(p=>`<button class="chip${f.lp.has(p.id)?" on":""}" data-lp="${p.id}">🌀 ${esc(fmt(p.date))}${real(p.sym).length?" – "+esc(real(p.sym).slice(0,2).join(", ")):""}</button>`).join("")}</div>`:""}
+ ${sec("loc",f)}${sec("sym",f)}${sec("pain",f)}${sec("trg",f)}${sec("trt",f)}
+ <h3>Notes${I("note")}</h3><textarea id="note" placeholder="Facultatif">${ed?esc(a.note||""):""}</textarea>
+ <button class="btn" id="sv" style="margin-top:18px">${ed?"Fermer":"Enregistrer la crise"}</button>`);
+ $("#x").onclick=()=>{close();render()};
+ if(ed){$("#when").onchange=f.sync;$("#note").oninput=f.sync}
+ bind(f,e=>{const T=q=>e.target.closest(q);let i,l;
+  if(i=T("[data-med]")){med(i.dataset.med);return 1}
+  if(T("[data-medadd]")){ask("Nouveau traitement pris :",n=>{if(!S.cfg.trt.includes(n))S.cfg.trt.push(n);med(n)});return 1}
+  if(i=T("[data-cur]")){ev("int",+i.dataset.cur);return 1}
+  if(T("[data-end]")){ev("end");return 1}
+  if(T("[data-reopen]")){delete a.end;save();crisis(a);render();return 1}
+  if(i=T("[data-n]")){f.intensity=+i.dataset.n;document.querySelectorAll("[data-n]").forEach(x=>x.classList.toggle("on",x===i));$("#hint").style.display="none";if(f.sync)f.sync();return 1}
+  if(l=T("[data-lp]")){const id=+l.dataset.lp;f.lp.has(id)?f.lp.delete(id):f.lp.add(id);l.classList.toggle("on");if(f.sync)f.sync();return 1}});
+ $("#sv").onclick=()=>{if(ed){close();render();return}if(!f.intensity){$("#hint").style.display="block";return}
+  const id=Date.now(),n={id,date:$("#when").value||iso(new Date()),intensity:f.intensity,cur:f.intensity,loc:[...f.loc],sym:[...f.sym],trg:[...f.trg],trt:[...f.trt],pain:f.pain,pre:[...f.lp],note:$("#note").value.trim(),ev:[]};
+  S.pre.forEach(p=>{if(f.lp.has(p.id))p.att=id});S.attacks.push(n);save();close();render()};
+}
+function prodrome(p){
+ const ed=!!p,f=mk();if(ed){f.pre=new Set(p.sym);f.pain=p.pain}
+ if(ed)f.sync=()=>{p.sym=[...f.pre];p.pain=f.pain;p.date=$("#when").value||p.date;p.note=$("#note").value.trim();save()};
+ sheet(`<div class="sh-h"><h2>Pré-crise</h2><button class="ib" id="x">✕</button></div><div class="sub">Quelque chose commence, mais pas (encore) de migraine.</div>
+ <h3>Quand ?${I("when")}</h3><input type="datetime-local" id="when" value="${ed?p.date:iso(new Date())}">
+ ${sec("pre",f,"prep")}${sec("pain",f)}<h3>Notes${I("note")}</h3><textarea id="note" placeholder="Facultatif">${ed?esc(p.note||""):""}</textarea>
+ <button class="btn" id="sv" style="margin-top:18px">${ed?"Fermer":"Enregistrer"}</button>`);
+ $("#x").onclick=()=>{close();render()};bind(f);
+ if(ed){$("#when").onchange=f.sync;$("#note").oninput=f.sync}
+ $("#sv").onclick=()=>{if(!ed)S.pre.push({id:Date.now(),date:$("#when").value||iso(new Date()),sym:[...f.pre],pain:f.pain,note:$("#note").value.trim(),att:null});save();close();render()};
+}
+async function meteo(j,paint,msg){try{const p=await new Promise((ok,ko)=>navigator.geolocation.getCurrentPosition(ok,ko,{timeout:8000}));
+ const r=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${p.coords.latitude}&longitude=${p.coords.longitude}&current=temperature_2m,surface_pressure,weather_code,wind_speed_10m`),c=(await r.json()).current,w=c.weather_code;
+ j.temp=c.temperature_2m;j.press=Math.round(c.surface_pressure);j.weather=w>=95?"Orageux":w>=51?"Pluie":c.wind_speed_10m>35?"Vent":c.temperature_2m>27?"Chaud / lourd":c.temperature_2m<5?"Froid":"Stable";paint();msg(`${c.temperature_2m} °C · ${j.press} hPa`)}
+ catch(e){msg("Indisponible ici : choisissez la météo à la main.")}}
+function journal(m){
+ const M=MM[m],ex=entry(m,tdy()),P=S.profile,j=ex?Object.assign({},ex):{m,ts:iso(new Date()),weather:null,period:null,food:""};
+ if(!ex){F.forEach(f=>j[f[0]]=f[0]==="sleepH"?7:0);C.forEach(c=>j[c[0]]=null)}
+ const fs=F.filter(f=>M.f.includes(f[0])),cs=C.filter(c=>M.c.includes(c[0]));
+ const paint=()=>{fs.forEach(f=>{$("#n-"+f[0]).textContent=j[f[0]]+(f[6]?" "+f[6]:"")});document.querySelectorAll("[data-ck]").forEach(b=>b.classList.toggle("on",j[b.dataset.ck]==b.dataset.cv))};
+ F.forEach(f=>INFO["jf_"+f[0]]=f[7]);C.forEach(c=>INFO["jf_"+c[0]]=c[2]);INFO.jf_weather="Ressenti du temps : orage, chaleur lourde ou chute de pression sont des déclencheurs fréquents.";INFO.jf_period="Les variations hormonales sont un déclencheur majeur chez de nombreuses personnes.";
+ sheet(`<div class="sh-h"><h2>${M.t}${I("jm")}</h2><button class="ib" id="x">✕</button></div><div class="sub">${M.s}${ex?" · saisie déjà faite, modifiable":""}</div>
+ <h3>Horodatage${I("when")}</h3><input type="datetime-local" id="ts" value="${j.ts}">
+ ${m==="matin"&&window.webkit&&window.webkit.messageHandlers&&window.webkit.messageHandlers.health?`<button class="btn alt" id="hl" style="margin-top:12px">🍎 Importer le sommeil depuis Santé</button>`:""}<div class="card" style="margin-top:12px">${fs.map(f=>`<div class="fl"><span>${f[1]}${I("jf_"+f[0])}</span><div class="step"><button data-a="${f[0]}-">−</button><b id="n-${f[0]}"></b><button data-a="${f[0]}+">+</button></div></div>`).join("")}</div>
+ ${cs.map(c=>`<h3>${c[1]}${I("jf_"+c[0])}</h3><div class="chips">${[1,2,3,4,5].map(n=>`<button class="int" style="flex:1;height:46px;background:${col(lv(c[0],n))}" data-ck="${c[0]}" data-cv="${n}">${n}</button>`).join("")}</div>`).join("")}
+ ${M.w?`<h3>Météo${I("jf_weather")}</h3><div class="chips">${WE.map(w=>`<button class="chip" data-ck="weather" data-cv="${w}">${w}</button>`).join("")}</div><button class="btn alt" id="mt" style="margin-top:8px">📍 Météo actuelle (GPS)${I("mt")}</button><div class="sm" id="mm" style="margin-top:4px"></div>`:""}
+ ${m==="soir"&&P.cycle?`<h3>Règles en cours${I("jf_period")}</h3><div class="chips">${["Oui","Non"].map(w=>`<button class="chip" data-ck="period" data-cv="${w}">${w}</button>`).join("")}</div>`:""}
+ <h3>${M.food}${I("food")}</h3><textarea id="food" placeholder="Ex. : 2 œufs, pain complet, café, jus d’orange…">${esc(j.food||"")}</textarea>
+ <button class="btn" id="sv" style="margin-top:18px">Enregistrer</button>`);
+ if($("#hl"))$("#hl").onclick=()=>{window.nativeSleep=h=>{j.sleepH=Math.round(h*2)/2;paint()};window.webkit.messageHandlers.health.postMessage("sleep")};paint();$("#x").onclick=close;if($("#mt"))$("#mt").onclick=e=>{if(e.target.closest(".i"))return;meteo(j,paint,t=>$("#mm").textContent=t)};
+ $("#sh").onclick=e=>{const b=e.target.closest("button");if(!b)return;
+  if(b.dataset.a){const k=b.dataset.a.slice(0,-1),s=b.dataset.a.slice(-1)==="+"?1:-1,f=F.find(z=>z[0]===k);j[k]=Math.min(f[4],Math.max(f[3],Math.round((j[k]+s*f[2])*100)/100));paint()}
+  if(b.dataset.ck){const v=isNaN(b.dataset.cv)?b.dataset.cv:+b.dataset.cv;j[b.dataset.ck]=j[b.dataset.ck]===v?null:v;paint()}};
+ $("#sv").onclick=()=>{j.food=$("#food").value.trim();j.ts=$("#ts").value||iso(new Date());j.rec=new Date().toISOString();if(ex)Object.assign(ex,j);else{j.id=Date.now();S.journal.push(j)}save();close();render()};
+}
+/* ---------- v4 : rapports, IA, démo complète ---------- */
+Object.assign(INFO,{per:"Choisissez la période prise en compte par les rapports et l’analyse IA : 7, 14, 30, 90 jours, tout l’historique, ou un nombre de jours personnalisé (Autre…).",rap:"Rapport = synthèse chiffrée. Rapport détaillé = toutes les données de la période (crises avec suivi horodaté, pré-crises, journal jour par jour, repas). Rapport IA = analyse rédigée par l’IA. Chaque rapport peut être enregistré ou copié pour votre médecin."});
+const per=()=>S.per==null?30:S.per,inP=d=>!per()||+new Date(d)>=Date.now()-per()*864e5;
+function W(){const so=(a,b)=>a.date<b.date?-1:1;return{A:S.attacks.filter(a=>inP(a.date)).sort(so),P:S.pre.filter(p=>inP(p.date)).sort(so),D:jours().filter(o=>inP(o.date))}}
+const tbl=(h,r)=>r.length?`<table><tr>${h.map(x=>`<th>${x}</th>`).join("")}</tr>${r.map(x=>`<tr>${x.map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}</table>`:`<p class="sm">Aucune donnée sur la période.</p>`;
+const dur=a=>a.end?Math.round((new Date(a.end)-new Date(a.date))/6e4):null,pd=n=>n==null?"–":Math.floor(n/60)+" h "+String(n%60).padStart(2,"0");
+const pl=o=>Object.entries(o||{}).filter(([z])=>z!=="Aucun").map(([z,s])=>esc(z)+" ("+PL[s]+")").join(", ")||"–";
+const tt=(l,k,N)=>tbl(["Élément","Fois","%"],tally(l,k).map(([x,v])=>[esc(x),v,Math.round(v/N*100)+" %"]));
+function head(t){const P=S.profile,age=P.birth?Math.floor((Date.now()-new Date(P.birth))/31557600000):"";
+ return `<h2>${t}</h2><p class="sm">Migraine Assistant · généré le ${fmt(new Date())} · période : ${per()?per()+" derniers jours":"toutes les données"}</p><p>${[P.name,age?age+" ans":"",P.sex,P.weight?P.weight+" kg":"",P.height?P.height+" cm":"",P.bg?"Traitement de fond : "+P.bg:"",P.cond].filter(Boolean).map(esc).join(" · ")}</p>`}
+function rapport(det){
+ const{A,P,D}=W(),n=A.length,du=A.map(dur).filter(x=>x!=null),days=per()||Math.max(1,Math.ceil((Date.now()-new Date((A[0]||{date:Date.now()}).date))/864e5)),mv=k=>mean(D.map(o=>o[k]).filter(v=>v!=null)),pc={};
+ A.forEach(a=>Object.entries(a.pain||{}).forEach(([z,s])=>{if(z!=="Aucun")(pc[z]=pc[z]||[0,0,0,0])[s]++}));P.forEach(p=>Object.keys(p.pain||{}).forEach(z=>{if(z!=="Aucun")(pc[z]=pc[z]||[0,0,0,0])[1]++}));
+ let h=head(det?"Rapport détaillé":"Rapport de synthèse")+`<h3>Vue d’ensemble</h3>`+tbl(["Indicateur","Valeur"],[["Crises",n],["Fréquence",(n/days*7).toFixed(1)+" / semaine"],["Intensité moyenne / max",n?avg(A).toFixed(1)+" / "+Math.max(...A.map(a=>a.intensity)):"–"],["Durée moyenne",du.length?pd(Math.round(mean(du))):"–"],["Crises précédées d’une pré-crise",A.filter(a=>a.pre.length).length+" / "+n],["Pré-crises sans migraine",P.filter(p=>!p.att).length]])
+ +`<h3>Déclencheurs suspectés</h3>`+tt(A,"trg",n)+`<h3>Symptômes associés</h3>`+tt(A,"sym",n)+`<h3>Localisation</h3>`+tt(A,"loc",n)+`<h3>Traitements pris</h3>`+tt(A,"trt",n)
+ +`<h3>Douleurs associées : chronologie</h3>`+tbl(["Zone","Avant","Après","Incertain"],Object.entries(pc).map(([z,c])=>[esc(z),c[1],c[2],c[3]]))
+ +`<h3>Signes de pré-crise</h3>`+tt(P,"sym",P.length||1)
+ +`<h3>Habitudes (moyenne par jour)</h3>`+tbl(["Sommeil h","Eau L","Cafés","Alcool","Écrans h","Activité min"],D.length?[[mv("sommeil_h"),mv("eau_L"),mv("cafes"),mv("alcool"),mv("ecrans_h"),mv("activite_min")]]:[])
+ +`<h3>24 h avant une crise, comparé aux autres moments</h3>`+corr();
+ if(det)h+=`<h3>Détail des crises</h3>`+tbl(["Date","Int.","Durée","Localisation","Symptômes","Déclencheurs","Traitements","Douleurs associées","Suivi / notes"],A.map(a=>[fmt(a.date),a.intensity,pd(dur(a)),esc(real(a.loc).join(", ")||"–"),esc(real(a.sym).join(", ")||"–"),esc(real(a.trg).join(", ")||"–"),esc(real(a.trt).join(", ")||"–"),pl(a.pain),(a.ev||[]).map(e=>"+"+Math.round((new Date(e.t)-new Date(a.date))/6e4)+" min : "+(e.k==="med"?"💊 "+esc(e.v):e.k==="int"?"intensité "+e.v+"/10":"crise passée")).join("<br>")+(a.note?"<br>"+esc(a.note):"")]))
+ +`<h3>Pré-crises</h3>`+tbl(["Date","Signes","Douleurs","Rattachée à"],P.map(p=>[fmt(p.date),esc(real(p.sym).join(", ")||"–"),pl(p.pain),p.att?"crise du "+fmt((S.attacks.find(a=>a.id===p.att)||{}).date):"aucune crise"]))
+ +`<h3>Journal jour par jour</h3>`+tbl(["Jour","Sommeil","Eau L","Cafés","Alcool","Écrans h","Activité","Stress","Humeur","Météo","Règles"],D.map(o=>[o.date,(o.sommeil_h??"–")+" h"+(o.qualite_sommeil?" ("+o.qualite_sommeil+"/5)":""),o.eau_L,o.cafes,o.alcool,o.ecrans_h,o.activite_min,mean(o.stress),mean(o.humeur),esc([...new Set(o.meteo)].join(", ")||"–"),o.regles||"–"]))
+ +`<h3>Repas</h3>`+tbl(["Jour","Matin","Midi","Soir"],D.map(o=>[o.date,esc(o.repas.matin||"–"),esc(o.repas.midi||"–"),esc(o.repas.soir||"–")]));
+ return h}
+const docHTML=b=>`<!DOCTYPE html><html lang="fr"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Migraine Assistant</title><style>body{font:15px/1.5 -apple-system,sans-serif;max-width:900px;margin:20px auto;padding:0 14px;color:#1d2733}table{width:100%;border-collapse:collapse;font-size:13px;margin:8px 0}td,th{border-top:1px solid #ccd;padding:5px;text-align:left;vertical-align:top}th{color:#667}.sm{color:#667;font-size:13px}pre{white-space:pre-wrap;font:inherit}h3{color:#4a5ba8}</style><body>${b}`;
+async function saveDoc(name,html){const doc=docHTML(html);let dl=null;try{dl=await window.claude?.use("downloads")}catch(e){}
+ try{if(dl)await dl.save({filename:name+".html",data:doc});else{const f=new File([doc],name+".html",{type:"text/html"});if(navigator.canShare&&navigator.canShare({files:[f]}))await navigator.share({files:[f]});else{const u=URL.createObjectURL(f),a=document.createElement("a");a.href=u;a.download=f.name;a.click()}}}catch(e){}}
+function showReport(html,title,name){sheet(`<div class="sh-h"><h2>${title}</h2><button class="ib" id="x">✕</button></div><div class="rp">${html}</div><div class="row" style="margin-top:14px"><button class="btn alt" id="rc">Copier le texte</button><button class="btn" id="rs2">Enregistrer</button></div>`);
+ $("#x").onclick=close;$("#rs2").onclick=()=>saveDoc(name,html);$("#rc").onclick=()=>{try{navigator.clipboard.writeText($(".rp").innerText);$("#rc").textContent="Copié ✓"}catch(e){}}}
+async function askAI(prompt,onText){let sm=null;try{sm=await window.claude?.use("sample")}catch(e){}
+ if(sm){const r=await sm(prompt,{modelTier:"complex",cache:false,onText:({text})=>onText(text)});return r.text}
+ const k=S.profile.apiKey;if(!k)throw{code:"no_ai"};
+ const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"content-type":"application/json","x-api-key":k,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify({model:"claude-sonnet-5-5",max_tokens:4000,messages:[{role:"user",content:prompt}]})});
+ const d=await r.json();if(!r.ok)throw{code:(d.error&&d.error.type)||r.status};const t=d.content.map(c=>c.text||"").join("");onText(t);return t}
+const aiErr=e=>e.code==="no_ai"?"Analyse IA indisponible ici. Dans l’app iPhone, ajoutez votre clé API Anthropic dans ⚙️.":"Analyse impossible ("+(e.code||"erreur")+"). Réessayez plus tard.";
+async function runAI(){const o=$("#aiout"),b=$("#aib");if(!S.attacks.length){o.textContent="Enregistrez au moins une crise avant de lancer l’analyse.";return}
+ b.disabled=true;o.textContent="Analyse en cours…";
+ try{const t=await askAI(PROMPT+JSON.stringify(dataset()),x=>{o.textContent=x});S.ai={d:new Date().toISOString(),t};save();o.textContent=t}catch(e){o.textContent=aiErr(e)}b.disabled=false}
+async function aiReport(){if(!S.attacks.length){dlg("Enregistrez au moins une crise avant de lancer l’analyse.");return}
+ const R=t=>head("Rapport d’analyse IA")+`<pre>${esc(t)}</pre><p class="sm">Document généré par IA à partir de vos données ; il ne constitue pas un diagnostic médical.</p>`;
+ showReport(R("Analyse en cours…"),"Rapport IA","rapport-ia");
+ try{const t=await askAI(PROMPT+JSON.stringify(dataset()),x=>{const e=$(".rp pre");if(e)e.textContent=x});S.ai={d:new Date().toISOString(),t};save();if($("#ov").classList.contains("on"))showReport(R(t),"Rapport IA","rapport-ia")}
+ catch(e){const p=$(".rp pre");if(p)p.textContent=aiErr(e)}}
+function ana(){const pp=[7,14,30,90,0];
+ $("#v-ana").innerHTML=`<h3 style="margin-top:0">Période${I("per")}</h3><div class="chips">${pp.map(d=>`<button class="chip${per()===d?" on":""}" data-per="${d}">${d?d+" jours":"Tout"}</button>`).join("")}${pp.includes(per())?"":`<button class="chip on">${per()} jours</button>`}<button class="chip" data-per="x">Autre…</button></div>
+ <h3>Rapports${I("rap")}</h3><div class="card"><button class="btn" id="r1">📄 Rapport</button><button class="btn alt" id="r2" style="margin-top:10px">📑 Rapport détaillé</button><button class="btn alt" id="r3" style="margin-top:10px">🤖 Rapport d’analyse IA</button></div>
+ <h3>Comparaison avant crise${I("corr")}</h3><div class="card">${corr()}</div>
+ <h3>Analyse médicale par IA${I("ai")}</h3><div class="card"><button class="btn" id="aib">🔬 Analyser mes données</button><div class="sm" style="margin-top:8px">Aide à la réflexion, ne remplace pas un avis médical.</div><div id="aiout">${S.ai?esc(S.ai.t)+`\n\n(analyse du ${fmt(S.ai.d)})`:""}</div></div>`;
+ $("#aib").onclick=runAI;$("#r1").onclick=()=>showReport(rapport(0),"Rapport","rapport-migraine");$("#r2").onclick=()=>showReport(rapport(1),"Rapport détaillé","rapport-detaille");$("#r3").onclick=aiReport;
+ document.querySelectorAll("[data-per]").forEach(b=>b.onclick=()=>{if(b.dataset.per==="x")ask("Nombre de jours à prendre en compte :",v=>{const n=parseInt(v);if(n>0){S.per=n;save();ana()}});else{S.per=+b.dataset.per;save();ana()}})}
+function demo(){
+ if(S.journal.some(x=>x.demo))return;
+ let s=11,id=Date.now();const r=()=>(s=s*16807%2147483647)/2147483647,rn=(a,b)=>a+Math.floor(r()*(b-a+1)),pk=a=>a[Math.floor(r()*a.length)],pad=n=>String(n).padStart(2,"0"),T=(k,h,mi)=>`${k}T${pad(h)}:${pad(mi)}`,E=o=>S.journal.push(Object.assign({id:++id,demo:1,rec:new Date().toISOString()},o)),
+ FOOD=[["Tartines beurre-confiture, café noir","Salade de quinoa, poulet grillé","Poisson, riz, haricots verts"],["Café seul, rien d’autre","Sandwich jambon-fromage, chips","Pizza 4 fromages, 2 verres de vin rouge"],["Yaourt, banane, thé","Pâtes sauce tomate, fromage râpé","Soupe de légumes, pain complet"],["Croissant, café, jus d’orange","Burger, frites, soda","Charcuterie, fromage vieilli, chocolat noir"]],
+ AT=[{sym:["Nausées","Photophobie (lumière)"],loc:"Côté gauche",trg:["Manque de sommeil","Stress"],pain:{"Cervicales":1,"Mâchoire (ATM)":3},note:"Semaine chargée, peu dormi."},{sym:["Aura visuelle","Photophobie (lumière)","Nausées"],loc:"Derrière l’œil",trg:["Météo / pression"],pain:{"Œil":2,"Visage / face":2},note:"Orage dans l’après-midi, aura d’environ 20 min."},{sym:["Phonophobie (bruit)","Vertiges"],loc:"Nuque",trg:["Écrans","Stress"],pain:{"Cervicales":1,"Épaules":1},note:"Longue journée devant l’écran."},{sym:["Nausées","Phonophobie (bruit)"],loc:"Tout le crâne",trg:["Saut de repas","Caféine / alcool"],pain:{"Mâchoire (ATM)":1,"Cervicales":2},note:"Repas sauté ce midi, vin la veille."}],
+ pf=S.profile;[["name","Camille"],["birth","1988-04-12"],["sex","Femme"],["weight",62],["height",168],["cycle",true],["fam","Oui"],["bg","Propranolol 40 mg le soir"],["cond","Bruxisme nocturne, tensions cervicales"]].forEach(([k,v])=>{if(pf[k]==null||pf[k]==="")pf[k]=v});
+ ["Magnésium","Huiles essentielles menthe"].forEach(v=>{if(!S.cfg.trt.includes(v))S.cfg.trt.push(v)});if(!S.cfg.trg.includes("Chocolat / fromage vieilli"))S.cfg.trg.push("Chocolat / fromage vieilli");
+ const BD={13:0,10:3,8:1,5:2,3:0,1:3};
+ for(let i=14;i>=1;i--){const d=new Date();d.setDate(d.getDate()-i);const k=iso(d).slice(0,10),ty=BD[i],bad=ty!=null,at=AT[ty||0],f=bad?(ty===3?FOOD[1]:FOOD[3]):pk([FOOD[0],FOOD[2]]),pe=i>=5&&i<=9?"Oui":"Non",st=ty===1,pr=st?1002:rn(1014,1022),tp=st?29:rn(14,24);
+  E({m:"matin",ts:T(k,7,rn(0,40)),sleepH:bad?rn(4,5)+.5:rn(7,8),sleepQ:bad?rn(1,2):rn(4,5),stress:bad?rn(3,5):rn(1,2),mood:bad?rn(2,3):rn(4,5),water:.25,coffee:bad?2:1,food:f[0]});
+  E({m:"midi",ts:T(k,12,rn(0,40)),water:bad?.25:.75,coffee:bad?2:1,screens:bad?5:2.5,activity:bad?0:15,stress:bad?rn(4,5):rn(1,2),mood:bad?rn(1,3):rn(4,5),weather:st?"Orageux":"Stable",temp:tp,press:pr,food:f[1]});
+  E({m:"soir",ts:T(k,19,rn(0,40)),water:bad?.5:1,coffee:bad?1:0,alcohol:bad?rn(1,2):0,screens:bad?4:1.5,activity:bad?0:rn(2,4)*15,stress:bad?rn(3,5):rn(1,2),mood:bad?rn(2,3):rn(4,5),weather:st?"Orageux":"Stable",temp:tp-4,press:pr,period:pe,food:f[2]});
+  if(i===9)S.pre.push({id:++id,demo:1,date:T(k,16,10),sym:["Bâillements","Raideur de nuque"],pain:{"Cervicales":1},note:"Magnésium et repos : la crise n’est pas venue.",att:null});
+  if(bad){const aid=++id,pid=++id,h=rn(13,17),mi=rn(0,50),st0=new Date(T(k,h,mi)).getTime(),t=n=>new Date(st0+n*6e4).toISOString(),ip=rn(5,9),sev=ip>=7,m1=sev?"Triptan":pk(["Antalgique","Magnésium"]);
+   S.pre.push({id:pid,demo:1,date:T(k,h-rn(1,2),rn(0,40)),sym:[...new Set([pk(D.pre),pk(D.pre),"Raideur de nuque"])],pain:{"Cervicales":1},note:"",att:aid});
+   const ev=[{t:t(15),k:"med",v:m1}];if(sev){ev.push({t:t(45),k:"int",v:Math.min(10,ip+1)},{t:t(90),k:"med",v:"Antalgique"})}
+   ev.push({t:t(sev?140:90),k:"int",v:Math.max(1,ip-(sev?5:3))},{t:t(sev?250:160),k:"end"});
+   S.attacks.push({id:aid,demo:1,date:T(k,h,mi),intensity:ip,cur:Math.max(1,ip-3),loc:[at.loc],sym:[...at.sym],trg:[...at.trg,...(f===FOOD[3]?["Chocolat / fromage vieilli"]:[]),...(pe==="Oui"?["Règles / hormones"]:[])],pain:{...at.pain},trt:[...new Set([...ev.filter(e=>e.k==="med").map(e=>e.v),...(sev?["Repos dans le noir"]:[])])],pre:[pid],note:at.note,ev,end:ev[ev.length-1].t})}}
+}
+
+load();applyTheme();render();
+</script>
+</body>
+</html>
