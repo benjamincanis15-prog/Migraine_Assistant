@@ -1,8 +1,8 @@
-/* Migraine Assistant — Service Worker (v3.1)
+/* Migraine Assistant — Service Worker (v3.2)
    Rôle : rendre l'app installable et 100 % utilisable hors connexion,
    et afficher les notifications de rappel. Aucune donnée n'est envoyée nulle part. */
-const CACHE = "migraine-assistant-v3.1";
-const ASSETS = ["./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png"];
+const CACHE = "migraine-assistant-v3.2";
+const ASSETS = ["./", "./index.html", "./manifest.webmanifest", "./icon-180.png", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", (e) => {
   e.waitUntil(
@@ -53,11 +53,13 @@ self.addEventListener("fetch", (e) => {
 
 self.addEventListener("notificationclick", (e) => {
   e.notification.close();
-  const m = e.notification.data && e.notification.data.m;
+  /* data.m = moment du journal (matin, midi, soir) ; data.med = identifiant du rappel de médicament */
+  const d = e.notification.data || {}, msg = d.m ? { j: d.m } : d.med ? { med: d.med } : null;
+  const hash = d.m ? "#j=" + d.m : d.med ? "#med=" + d.med : "";
   e.waitUntil(
     self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((cs) => {
-      if (cs.length) { const c = cs[0]; if (m) c.postMessage({ j: m }); return c.focus(); }
-      return self.clients.openWindow("./" + (m ? "#j=" + m : ""));
+      if (cs.length) { const c = cs[0]; if (msg) c.postMessage(msg); return c.focus(); }
+      return self.clients.openWindow("./" + hash);
     })
   );
 });

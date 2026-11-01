@@ -37,7 +37,7 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 .btn.alt{background:var(--ac2);color:var(--ac)}.btn:disabled{opacity:.5}
 nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--ln);display:flex;justify-content:center;padding-bottom:env(safe-area-inset-bottom,0px);z-index:5}
 nav div{display:flex;width:100%;max-width:520px}
-nav button{flex:1;margin:6px 3px;padding:7px 0 5px;font-size:12px;color:var(--mu);border:1.5px solid transparent;border-radius:14px;transition:background .15s,border-color .15s}
+nav button{position:relative;flex:1;min-width:0;margin:6px 1px;padding:7px 0 5px;font-size:11px;letter-spacing:-.25px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--mu);border:1.5px solid transparent;border-radius:14px;transition:background .15s,border-color .15s}
 nav button svg{display:block;width:25px;height:25px;margin:0 auto 2px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}nav button.on{color:var(--ac);font-weight:700;border-color:var(--ac);background:var(--ac2)}
 .v{display:none}.v.on{display:block}
 #ov,#tip{position:fixed;inset:0;background:rgba(5,8,14,.55);display:none;z-index:10;align-items:flex-end;justify-content:center}
@@ -102,6 +102,7 @@ html{touch-action:manipulation;-webkit-text-size-adjust:100%}
 .mt.done{background:rgba(47,158,107,.14);border-color:#2f9e6b;color:#2f9e6b}.mt.done small{color:#2f9e6b;font-weight:700}
 .mt.miss{border-style:dashed;border-color:#d9892b}.mt.miss small{color:#c77a1d}.mt.later{opacity:.6}
 
+.bdg{position:absolute;top:3px;left:calc(50% + 6px);min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:#d9892b;color:#fff;font-size:10.5px;font-weight:700;line-height:17px;text-align:center}
 /* v3.1 */
 .evs{display:flex;gap:14px;align-items:center;margin:12px 0 6px}.evs b{font-size:30px;line-height:1;display:block}.evs span{font-size:12px;color:var(--mu)}.evt{font-weight:700;font-size:14px}
 .evr{font-size:14px;margin:6px 0 2px;min-height:21px}.evh{font-size:12.5px;color:var(--mu);font-weight:700;margin:10px 0 0}
@@ -129,11 +130,11 @@ details.tv{margin-top:10px}details.tv summary{cursor:pointer;color:var(--ac);fon
 <body>
 <div id="app">
 <header><div><h1 style="font-size:21px;display:flex;align-items:center;gap:10px"><svg width="38" height="38" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="lg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8fa3ee"/><stop offset="1" stop-color="#4a5ba8"/></linearGradient><linearGradient id="br" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b9c6fa"/><stop offset="1" stop-color="#7d92e6"/></linearGradient></defs><rect width="64" height="64" rx="16" fill="url(#lg2)"/><ellipse cx="32" cy="31" rx="29" ry="9.5" transform="rotate(-14 32 31)" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width="1.4"/><path d="M19 59V51C13 47 10 39 11 31C12 18 21 10 33 10C44 10 51 17 52 26C52 29 53 31 54 33C55 36 57 39 58 41C58 43 55 44 54 44C55 46 55 47 54 48C54 49 53 50 52 50C52 53 50 55 46 55H40V59Z" fill="#fff"/><path d="M17 31C15 23 22 16 31 17C40 16 47 21 47 28C48 34 43 39 37 39C34 41 27 41 24 38C20 37 18 34 17 31Z" fill="url(#br)" stroke="#4a5ba8" stroke-width="1.2" stroke-linejoin="round"/><g fill="none" stroke="#4a5ba8" stroke-width="1.1" stroke-linecap="round"><path d="M24 24C27 22 29 26 32 24C35 22 38 25 41 23"/><path d="M22 31C26 29 28 33 32 31C36 29 39 33 43 30"/><path d="M27 36C30 34 33 37 37 35"/><path d="M32 17V23"/></g><path d="M34 40L36 47" stroke="#7d92e6" stroke-width="2.4" stroke-linecap="round"/><path d="M29 2L19 15H25L21 24L33 10H27L31 2Z" fill="#e5484d" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/></svg>Migraine Assistant</h1><div class="sub" id="dt"></div></div><div style="display:flex;gap:8px"><button class="ib" id="th" aria-label="Thème">🌓</button><button class="ib" id="st" aria-label="Paramètres">⚙️</button></div></header>
-<section class="v on" id="v-home"></section><section class="v" id="v-hist"></section><section class="v" id="v-stats"></section><section class="v" id="v-ana"></section>
+<section class="v on" id="v-home"></section><section class="v" id="v-hist"></section><section class="v" id="v-med"></section><section class="v" id="v-stats"></section><section class="v" id="v-ana"></section>
 <div class="ver" id="ver"></div>
 </div>
 <nav><div>
-<button class="on" data-v="home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/><path d="M10 19.5v-5h4v5"/></svg>Accueil</button><button data-v="hist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1"/><path d="M3.5 4.5v4h4"/><path d="M12 8v4.2l2.8 1.8"/></svg>Historique</button><button data-v="stats"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="11" width="3.5" height="9" rx="1"/><rect x="10.2" y="4" width="3.5" height="16" rx="1"/><rect x="16.5" y="8" width="3.5" height="12" rx="1"/></svg>Stats</button><button data-v="ana"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m20 20-4.9-4.9"/><path d="M7 10.5h1.8l1.2-2.5 1.6 5 1.1-2.5H14"/></svg>Analyse</button>
+<button class="on" data-v="home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/><path d="M10 19.5v-5h4v5"/></svg>Accueil</button><button data-v="hist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1"/><path d="M3.5 4.5v4h4"/><path d="M12 8v4.2l2.8 1.8"/></svg>Historique</button><button data-v="med"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="8.25" width="19" height="7.5" rx="3.75" transform="rotate(-45 12 12)"/><path d="m9.35 9.35 5.3 5.3"/></svg>Médicaments</button><button data-v="stats"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="11" width="3.5" height="9" rx="1"/><rect x="10.2" y="4" width="3.5" height="16" rx="1"/><rect x="16.5" y="8" width="3.5" height="12" rx="1"/></svg>Stats</button><button data-v="ana"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m20 20-4.9-4.9"/><path d="M7 10.5h1.8l1.2-2.5 1.6 5 1.1-2.5H14"/></svg>Analyse</button>
 </div></nav>
 <div id="ov"><div id="sh"></div></div><div id="tip"></div>
 
@@ -150,7 +151,7 @@ const INFO={go:"Déclare une crise. Seule l’intensité est obligatoire : le re
 const clone=o=>JSON.parse(JSON.stringify(o));
 let S={attacks:[],pre:[],journal:[],profile:{},cfg:clone(D),theme:"auto",ai:null};
 function load(){try{const r=JSON.parse(localStorage.getItem("migraine-v2")||localStorage.getItem("migraine-v1")||"null");if(r)Object.assign(S,r)}catch(e){}
- if(!Array.isArray(S.journal))S.journal=[];if(!Array.isArray(S.pre))S.pre=[];S.cfg=Object.assign(clone(D),S.cfg||{});if((S.cfgv||0)<4){const OA=new Set(Object.values(OLDD).flat());Object.keys(D).forEach(g=>{const cu=(S.cfg[g]||[]).filter(v=>!OA.has(v)&&!D[g].includes(v));S.cfg[g]=[...D[g],...cu]});S.cfgv=4}S.attacks.forEach(a=>{a.pain=a.pain||{};a.pre=a.pre||[]});if(!S.rem||!Array.isArray(S.rem.slots))S.rem={on:false,slots:[]}}
+ if(!Array.isArray(S.journal))S.journal=[];if(!Array.isArray(S.pre))S.pre=[];S.cfg=Object.assign(clone(D),S.cfg||{});if((S.cfgv||0)<4){const OA=new Set(Object.values(OLDD).flat());Object.keys(D).forEach(g=>{const cu=(S.cfg[g]||[]).filter(v=>!OA.has(v)&&!D[g].includes(v));S.cfg[g]=[...D[g],...cu]});S.cfgv=4}S.attacks.forEach(a=>{a.pain=a.pain||{};a.pre=a.pre||[]});if(!S.rem||!Array.isArray(S.rem.slots))S.rem={on:false,slots:[]};M()}
 function save(){try{localStorage.setItem("migraine-v2",JSON.stringify(S))}catch(e){if(S.arch&&S.arch.length>2){S.arch.splice(Math.ceil(S.arch.length/2));save()}}}
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const I=k=>`<span class="i" data-i="${k}" role="button" aria-label="Information">i</span>`;
@@ -161,7 +162,7 @@ const fmt=d=>new Date(d).toLocaleString("fr-FR",{weekday:"short",day:"numeric",m
 const sorted=()=>[...S.attacks].sort((a,b)=>b.date.localeCompare(a.date));
 const avg=l=>l.length?l.reduce((s,a)=>s+a.intensity,0)/l.length:0;
 const mean=x=>x.length?Math.round(x.reduce((s,v)=>s+v,0)/x.length*100)/100:"–";
-const APP_VER="3.1",APP_DATE="01/11/2026";
+const APP_VER="3.2",APP_DATE="01/11/2026";
 const isMale=()=>!!(S.profile&&S.profile.sex==="Homme"),FEMRE=/r[eè]gles|menstru|hormon|cycle|pilule|contracep|ovulat/i,visOK=v=>!(isMale()&&FEMRE.test(v)),real=a=>(a||[]).filter(x=>x!=="Aucun"&&visOK(x));
 
 /* dialogues (pas de alert/prompt : bloqués en page publiée) */
@@ -200,7 +201,7 @@ function corr(){
  const rows=NUM.map(([k,l])=>{const x=S.journal.filter(j=>pre(j)&&j[k]!=null).map(j=>j[k]),y=S.journal.filter(j=>!pre(j)&&j[k]!=null).map(j=>j[k]);return x.length<2||y.length<2?"":`<tr><td>${l}</td><td>${mean(x)}</td><td>${mean(y)}</td></tr>`}).join("");
  return rows?`<table><tr><th></th><th>24 h avant crise</th><th>autres moments</th></tr>${rows}</table>`:`<div class="empty">Faites plusieurs saisies de journal (dont certaines avant des crises) pour voir apparaître des comparaisons.</div>`;
 }
-function render(){home();hist();stats();ana();$("#v-stats").insertAdjacentHTML("afterbegin",todayCard());$("#dt").textContent=new Date().toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"})}
+function render(){home();hist();stats();ana();medsView();$("#v-stats").insertAdjacentHTML("afterbegin",todayCard());$("#dt").textContent=new Date().toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"})}
 document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("on",x===b));document.querySelectorAll(".v").forEach(v=>v.classList.toggle("on",v.id==="v-"+b.dataset.v));window.scrollTo(0,0)});
 
 /* ---------- feuilles ---------- */
@@ -428,7 +429,6 @@ function home(){
  ${act.map(a=>`<div class="card" data-oa="${a.id}" style="border:2px solid ${col(a.cur||a.intensity)}"><b>🔴 Crise en cours</b> depuis ${hm(a.date)}<div class="sub">Intensité actuelle ${a.cur||a.intensity}/10 · touchez pour noter un traitement, une amélioration ou la fin</div></div>`).join("")}
  ${act.length?"":`<div class="rel"><button class="big" id="go">⚠️ J’ai une migraine<small>Déclarer une crise en quelques secondes</small></button>${I("go")}</div>`}
  ${act.length?"":`<div class="rel"><button class="big pre" id="pr">${op?"🌀 Pré-crise en cours":"🌀 Début de symptômes (pré-crise)"}${op?`<small>depuis ${hm(op.date)} · touchez pour mettre à jour</small>`:""}</button>${I("pre")}</div>`}
- <div class="row"><div class="card stat"><b>${m.length}</b><span class="sub">crise${m.length>1?"s":""} ce mois-ci</span></div><div class="card stat"><b>${m.length?avg(m).toFixed(1):"–"}</b><span class="sub">intensité moyenne</span></div></div>
  <div class="card"><h2>📝 Journal du jour${I("jr")}</h2><div class="mts">${ord.map(tile).join("")}</div><div class="sub" style="margin-top:10px">Aujourd’hui : ${t.eau_L} L d’eau · ${t.cafes} café${t.cafes>1?"s":""} · ${t.ecrans_h} h d’écrans</div></div>
  <h3>Dernières crises</h3><div class="card">${S.attacks.length?sorted().slice(0,3).map(a=>item(a)).join(""):`<div class="empty">Aucune crise enregistrée pour l’instant.<br><br><button class="btn alt" id="dm0">🧪 Charger 1 mois de démo</button></div>`}</div>`;
  if($("#go"))$("#go").onclick=()=>crisisWiz(null);if($("#pr"))$("#pr").onclick=()=>op?preView(op):preWiz(null);document.querySelectorAll("[data-jm]").forEach(b=>b.onclick=()=>journalWiz(b.dataset.jm));
@@ -450,6 +450,7 @@ function importText(t){let o;try{o=JSON.parse(t)}catch(e){dlg("Ce contenu n’es
  const fin=()=>{save();shut();close();applyTheme();render();dlg("<b>Import terminé ✓</b>");setTimeout(shut,1600)};
  $("#im1").onclick=()=>{["attacks","pre","journal"].forEach(g=>{const ids=new Set((S[g]||[]).map(x=>x.id));S[g]=[...(S[g]||[]),...(d[g]||[]).filter(x=>!ids.has(x.id))]});
   S.profile=Object.assign({},d.profile||{},S.profile);S.cfg=Object.assign({},d.cfg||{},S.cfg);Object.keys(S.cfg).forEach(g=>{if(Array.isArray(S.cfg[g])&&d.cfg&&Array.isArray(d.cfg[g]))S.cfg[g]=[...new Set([...S.cfg[g],...d.cfg[g]])]});
+  if(d.meds){const Mx=M(),li=new Set(Mx.list.map(x=>x.id)),lo=new Set(Mx.log.map(x=>x.id));Mx.list=[...Mx.list,...(d.meds.list||[]).filter(x=>!li.has(x.id))];Mx.log=[...Mx.log,...(d.meds.log||[]).filter(x=>!lo.has(x.id))]}
   const ai=new Set((S.arch||[]).map(x=>x.id));S.arch=[...(S.arch||[]),...(d.arch||[]).filter(x=>!ai.has(x.id))].sort((a,b)=>b.id-a.id);fin()};
  $("#im2").onclick=()=>{const th=S.theme;S={attacks:[],pre:[],journal:[],profile:{},cfg:clone(D),theme:th,ai:null};try{localStorage.setItem("migraine-v2",JSON.stringify(Object.assign({},d,{theme:th})))}catch(e){}load();fin()}}
 /* --- zoom bloqué --- */
@@ -469,7 +470,7 @@ function rapport(det){
  const{A,P,D}=W(),n=A.length,du=A.map(dur).filter(x=>x!=null),days=per()||Math.max(1,Math.ceil((Date.now()-new Date((A[0]||{date:Date.now()}).date))/864e5)),mv=k=>mean(D.map(o=>o[k]).filter(v=>v!=null)),pc={};
  A.forEach(a=>Object.entries(a.pain||{}).forEach(([z,s])=>{if(z!=="Aucun")(pc[z]=pc[z]||[0,0,0,0])[s]++}));P.forEach(p=>Object.keys(p.pain||{}).forEach(z=>{if(z!=="Aucun")(pc[z]=pc[z]||[0,0,0,0])[1]++}));
  let h=head(det?"Export complet":"Export (synthèse)")+`<h3>Vue d’ensemble</h3>`+tbl(["Indicateur","Valeur"],[["Crises",n],["Fréquence",(n/days*7).toFixed(1)+" / semaine"],["Intensité moyenne / max",n?avg(A).toFixed(1)+" / "+Math.max(...A.map(a=>a.intensity)):"–"],["Durée moyenne",du.length?pd(Math.round(mean(du))):"–"],["Crises précédées d’une pré-crise",A.filter(a=>a.pre.length).length+" / "+n],["Pré-crises sans migraine",P.filter(p=>!p.att).length]])
- +`<h3>Déclencheurs suspectés</h3>`+tt(A,"trg",n)+`<h3>Symptômes associés</h3>`+tt(A,"sym",n)+`<h3>Localisation</h3>`+tt(A,"loc",n)+`<h3>Type de douleur</h3>`+tt(A,"qual",n)+`<h3>Pendant la crise</h3>`+tt(A,"fn",n)+`<h3>Éléments importants avant la crise</h3>`+tt(A,"ctx",n)+`<h3>Traitements pris</h3>`+tt(A,"trt",n)+`<h3>Efficacité des traitements (notée par vous)</h3>`+resTable(A)
+ +`<h3>Déclencheurs suspectés</h3>`+tt(A,"trg",n)+`<h3>Symptômes associés</h3>`+tt(A,"sym",n)+`<h3>Localisation</h3>`+tt(A,"loc",n)+`<h3>Type de douleur</h3>`+tt(A,"qual",n)+`<h3>Pendant la crise</h3>`+tt(A,"fn",n)+`<h3>Éléments importants avant la crise</h3>`+tt(A,"ctx",n)+`<h3>Traitements pris</h3>`+tt(A,"trt",n)+`<h3>Efficacité des traitements (notée par vous)</h3>`+resTable(A)+medTable()
  +`<h3>Douleurs associées : chronologie</h3>`+tbl(["Zone","Avant","Après","Incertain"],Object.entries(pc).map(([z,c])=>[esc(z),c[1],c[2],c[3]]))
  +`<h3>Signes de pré-crise</h3>`+tt(P,"sym",P.length||1)
  +`<h3>Habitudes (moyenne par jour)</h3>`+tbl(["Sommeil h","Eau L","Cafés","Alcool","Écrans h","Activité min"],D.length?[[mv("sommeil_h"),mv("eau_L"),mv("cafes"),mv("alcool"),mv("ecrans_h"),mv("activite_min")]]:[])
@@ -653,7 +654,7 @@ function expertText(){
   const bad=c.reb+c.none,v=c.n<3?" — trop peu de crises notées pour conclure.":c.full/c.n>=.6?" — {{ok|plutôt efficace}}.":bad/c.n>=.5?(c.reb>=c.none?" — {{bd|rebond fréquent}}.":" — {{bd|peu efficace}}."):" — {{wn|efficacité mitigée}}.";
   B("Effet noté de "+t+" : "+p.join(", ")+" ("+c.n+" crise(s) notée(s))"+v)});
  let earlyBetter=false;if(early.length>=2&&late.length>=2){B("Prise précoce (≤ 30 min après le début) : durée moyenne "+pd(Math.round(mn(early)))+" contre "+pd(Math.round(mn(late)))+" quand le traitement est pris plus tard.");earlyBetter=mn(early)<mn(late)}
- const dayN=re=>new Set(A.filter(a=>real(a.trt).some(t=>re.test(nz(t)))||(a.ev||[]).some(e=>e.k==="med"&&re.test(nz(e.v)))).map(a=>dayKey(a.date))).size,k30=n=>n*30/span;
+ const dayN=re=>new Set([...A.filter(a=>real(a.trt).some(t=>re.test(nz(t)))||(a.ev||[]).some(e=>e.k==="med"&&re.test(nz(e.v)))).map(a=>dayKey(a.date)),...M().log.filter(l=>inP(l.ts)&&re.test(nz(l.name))).map(l=>l.day)]).size,k30=n=>n*30/span;
  const nT=dayN(/triptan|imigrane|maxalt|zomig|relpax|naratriptan/),nA=dayN(/antalgique|paracetamol|doliprane|ibuprofene|anti-inflammatoire|aspirine|advil|nurofen|codeine|tramadol/);
  if(nT>=6&&k30(nT)>=10){flags.mo=1;alerts.push("Triptans pris "+nT+" jour(s) sur la période (≈ "+Math.round(k30(nT))+" par mois) : au-delà de 10 jours/mois, risque de céphalée par abus médicamenteux. À discuter rapidement avec le médecin.")}
  if(nA>=8&&k30(nA)>=15){flags.mo=1;alerts.push("Antalgiques / anti-inflammatoires pris "+nA+" jour(s) sur la période (≈ "+Math.round(k30(nA))+" par mois) : au-delà de 15 jours/mois, risque de céphalée par abus médicamenteux.")}
@@ -870,15 +871,18 @@ async function remNotify(m,test){const T={matin:["Journal du matin","Un instant 
   opt={body:T[1],tag:"journal-"+m,silent:true,icon:"icon-192.png",badge:"icon-192.png",data:{m}},ti=test?"Test · "+T[0]:T[0];
  try{const reg=navigator.serviceWorker&&await navigator.serviceWorker.getRegistration();if(reg&&reg.showNotification){await reg.showNotification(ti,opt);return true}}catch(e){}
  try{new Notification(ti,opt);return true}catch(e){return false}}
-function remCheck(){const R=S.rem;if(!R||!R.on||typeof Notification==="undefined"||Notification.permission!=="granted")return;
+function remCheck(){const R=S.rem||{},Mx=M();if(!(R.on||Mx.on)||typeof Notification==="undefined"||Notification.permission!=="granted")return;
  const now=new Date(),day=dayKey(now),sent=remSent();let ch=0;Object.keys(sent).forEach(k=>{if(!k.startsWith(day)){delete sent[k];ch=1}});
- R.slots.slice(0,3).forEach(s=>{const[hh,mm]=s.t.split(":").map(Number),at=new Date(now.getFullYear(),now.getMonth(),now.getDate(),hh,mm).getTime(),k=day+"|"+s.t,m=remMoment(s.t),d=now-at;
-  if(d>=0&&d<REMWIN&&!sent[k]){sent[k]=1;ch=1;if(!entry(m,day))remNotify(m)}});
+ const due=t=>{const[hh,mm]=t.split(":").map(Number),d=now-new Date(now.getFullYear(),now.getMonth(),now.getDate(),hh,mm).getTime();return d>=0&&d<REMWIN};
+ if(R.on)(R.slots||[]).slice(0,3).forEach(s=>{const k=day+"|"+s.t,m=remMoment(s.t);if(due(s.t)&&!sent[k]){sent[k]=1;ch=1;if(!entry(m,day))remNotify(m)}});
+ if(Mx.on)Mx.list.forEach(x=>{const k=day+"|med|"+x.id+"|"+x.t;if(due(x.t)&&!sent[k]){sent[k]=1;ch=1;if(!medTaken(x,day))medNotify(x)}});
  if(ch)try{localStorage.setItem(REMKEY,JSON.stringify(sent))}catch(e){}}
-function remICS(){const R=S.rem,sl=R.slots.length?R.slots:[{t:"20:00"}],p2=n=>String(n).padStart(2,"0"),d=new Date(),url=location.href.split("#")[0],web=/^https?:/.test(url),
-  TT={matin:"Journal du matin",midi:"Journal du midi",soir:"Bilan de la journée"},fd=x=>""+x.getFullYear()+p2(x.getMonth()+1)+p2(x.getDate())+"T"+p2(x.getHours())+p2(x.getMinutes())+"00";
- const ev=sl.slice(0,3).map((s,i)=>{const[hh,mm]=s.t.split(":").map(Number),a=new Date(d.getFullYear(),d.getMonth(),d.getDate(),hh,mm),b=new Date(a.getTime()+6e5),m=remMoment(s.t);
-  return["BEGIN:VEVENT","UID:ma-"+i+"-"+s.t.replace(":","")+"@migraine-assistant","DTSTAMP:"+fd(d).slice(0,8)+"T000000Z","DTSTART:"+fd(a),"DTEND:"+fd(b),"RRULE:FREQ=DAILY","SUMMARY:"+TT[m],"DESCRIPTION:Ouvrir Migraine Assistant pour remplir le journal."+(web?"\\n"+url:""),web?"URL:"+url:"","BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:"+TT[m],"TRIGGER:PT0S","END:VALARM","END:VEVENT"].filter(Boolean).join("\r\n")});
+function remICS(){const R=S.rem||{slots:[]},Mx=M(),sl=R.slots.length?R.slots:(Mx.list.length?[]:[{t:"20:00"}]),p2=n=>String(n).padStart(2,"0"),d=new Date(),url=location.href.split("#")[0],web=/^https?:/.test(url),
+  TT={matin:"Journal du matin",midi:"Journal du midi",soir:"Bilan de la journée"},fd=x=>""+x.getFullYear()+p2(x.getMonth()+1)+p2(x.getDate())+"T"+p2(x.getHours())+p2(x.getMinutes())+"00",ie=s=>String(s).replace(/[\\;,]/g,m=>"\\"+m).replace(/\n/g,"\\n");
+ const vev=(uid,t,sum,desc)=>{const[hh,mm]=t.split(":").map(Number),a=new Date(d.getFullYear(),d.getMonth(),d.getDate(),hh,mm),b=new Date(a.getTime()+6e5);
+  return["BEGIN:VEVENT","UID:"+uid+"@migraine-assistant","DTSTAMP:"+fd(d).slice(0,8)+"T000000Z","DTSTART:"+fd(a),"DTEND:"+fd(b),"RRULE:FREQ=DAILY","SUMMARY:"+ie(sum),"DESCRIPTION:"+ie(desc)+(web?"\\n"+url:""),web?"URL:"+url:"","BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:"+ie(sum),"TRIGGER:PT0S","END:VALARM","END:VEVENT"].filter(Boolean).join("\r\n")};
+ const ev=[...sl.slice(0,3).map((s,i)=>vev("ma-"+i+"-"+s.t.replace(":",""),s.t,TT[remMoment(s.t)],"Ouvrir Migraine Assistant pour remplir le journal.")),
+  ...Mx.list.map(x=>vev("ma-med-"+x.id,x.t,"💊 "+x.name+(x.dose?" "+x.dose:""),"Prendre "+x.name+(x.dose?" ("+x.dose+")":"")+", puis noter la prise dans Migraine Assistant."))];
  return["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Migraine Assistant//FR","CALSCALE:GREGORIAN",...ev,"END:VCALENDAR"].join("\r\n")+"\r\n"}
 function remCard(){const R=S.rem||(S.rem={on:false,slots:[]}),sup=typeof Notification!=="undefined",perm=sup?Notification.permission:"none",on=R.on&&perm==="granted";
  let h=`<h3>Rappels discrets${I("rem")}</h3><div class="card"><div class="sm" style="margin-bottom:10px">Pour ne pas oublier votre journal : jusqu’à 3 rappels par jour, silencieux, envoyés seulement si le moment n’est pas déjà rempli.</div>`;
@@ -897,7 +901,7 @@ async function remClick(e){const t=e.target.closest("[data-rem],#rem-add,#rem-te
  if(t.id==="rem-add"&&R.slots.length<3){const used=R.slots.map(s=>s.t),t2=["20:00","08:00","12:30","18:00"].find(x=>!used.includes(x))||"21:00";R.slots.push({id:Date.now(),t:t2});save();settings(1);return}
  if(t.dataset.rx){R.slots=R.slots.filter(s=>String(s.id)!==t.dataset.rx);save();settings(1);return}
  if(t.id==="rem-test"){const ok=await remNotify(R.slots.length?remMoment(R.slots[0].t):"soir",true);const m=$("#remmsg");if(m)m.textContent=ok?"Notification envoyée. Si rien n’apparaît, vérifiez les réglages de notification de l’app.":"Impossible d’afficher la notification sur cet appareil.";return}
- if(t.id==="rem-ics"){const ok=await saveFile("rappels-journal.ics",remICS(),"text/calendar");if(!ok)dlg("<b>Export impossible</b><div class=\"sm\" style=\"margin-top:6px\">Votre navigateur n’a pas pu créer le fichier de calendrier.</div>")}}
+ if(t.id==="rem-ics"){const ok=await saveFile("rappels-migraine-assistant.ics",remICS(),"text/calendar");if(!ok)dlg("<b>Export impossible</b><div class=\"sm\" style=\"margin-top:6px\">Votre navigateur n’a pas pu créer le fichier de calendrier.</div>")}}
 function remTime(el){const s=(S.rem.slots||[]).find(x=>String(x.id)===el.dataset.rt);if(s&&el.value){s.t=el.value;save();settings(1);remCheck()}}
 async function swStatus(){let m;
  if(!("serviceWorker" in navigator))m="⚪ Le mode hors connexion n’est pas disponible sur ce navigateur.";
@@ -912,7 +916,7 @@ function aiExplain(){
  sheet(`<div class="sh-h"><h2>Comment fonctionne l’analyse ?</h2><button class="ib" id="x" aria-label="Fermer">✕</button></div><p class="sub" style="margin:4px 0 0">Expliqué simplement, étape par étape.</p>
  ${C("#1f8f5a","🔬","En bref",`<p>Le « rapport d’analyse IA » est calculé par un <b>moteur intégré à l’application</b>. Il relit ce que vous avez noté, repère ce qui <b>revient avant vos crises</b>, puis propose des pistes classées par priorité.</p><p>Ce n’est <b>pas un chatbot</b> ni un service en ligne : tout se calcule <b>sur votre téléphone</b>, sans Internet, sans clé et sans abonnement. À chaque ouverture, le calcul est refait avec vos données les plus récentes.</p>`)}
  ${C("#4a5ba8","📅","Sur quelle durée ?",`<p>Sur la <b>période choisie en haut de l’onglet Analyse</b> : 7, 14, <b>30 jours (par défaut)</b>, 90 jours, tout l’historique ou un nombre de jours de votre choix.</p><ul><li>Toutes les crises, pré-crises et saisies du journal de cette période sont lues. Celles d’avant ne comptent pas.</li><li>Pour la comparaison jour par jour, l’analyse regarde au maximum les 120 derniers jours de journal.</li><li>Plus la période est longue, plus les conclusions sont solides. Comptez <b>au moins 5 crises</b> et un journal rempli presque chaque jour.</li></ul>`)}
- ${C("#8250c8","📥","Ce qui est lu",`<ul><li><b>Vos crises</b> : date, intensité, durée, côté, type de douleur, symptômes, déclencheurs cochés, traitements (heure de prise et effet noté), notes.</li><li><b>Vos pré-crises</b> : signes annonciateurs, leur évolution heure par heure, douleurs associées.</li><li><b>Votre journal</b> : sommeil, eau, café, alcool, écrans, activité, stress, humeur, tension de la nuque, météo, règles (si le suivi est activé), repas décrits, éléments importants et notes.</li><li><b>Votre profil</b> : âge, sexe, traitement de fond, pour certaines alertes (par exemple aura et contraception) et pour masquer ce qui ne vous concerne pas. Votre prénom ne sert que dans l’en-tête.</li></ul>`)}
+ ${C("#8250c8","📥","Ce qui est lu",`<ul><li><b>Vos crises</b> : date, intensité, durée, côté, type de douleur, symptômes, déclencheurs cochés, traitements (heure de prise et effet noté), notes.</li><li><b>Vos pré-crises</b> : signes annonciateurs, leur évolution heure par heure, douleurs associées.</li><li><b>Votre journal</b> : sommeil, eau, café, alcool, écrans, activité, stress, humeur, tension de la nuque, météo, règles (si le suivi est activé), repas décrits, éléments importants et notes.</li><li><b>Vos prises de médicaments</b> notées dans l’onglet Médicaments : elles comptent, avec celles des crises, pour repérer un risque d’abus médicamenteux.</li><li><b>Votre profil</b> : âge, sexe, traitement de fond, pour certaines alertes (par exemple aura et contraception) et pour masquer ce qui ne vous concerne pas. Votre prénom ne sert que dans l’en-tête.</li></ul>`)}
  ${C("#e0852d","🧮","Comment il raisonne, en 4 étapes",`<ul><li><b>1. Il compte</b> : combien de crises, quelle intensité, quelle durée, à quel moment de la journée.</li><li><b>2. Il compare</b> les <b>24 heures avant chaque crise</b> avec le reste du temps (sommeil, stress, humeur, nuque), et <b>la veille</b> d’une crise avec les autres veilles (eau, café, alcool, écrans, activité). Un écart n’est retenu que s’il est net et appuyé sur assez de saisies.</li><li><b>3. Il cherche des mots</b> dans vos repas, notes et éléments importants des 24 h avant les crises : fromage, chocolat, charcuterie, alcool, caféine, écrans, posture, repas sauté… et les compare aux jours sans crise.</li><li><b>4. Il rapproche le tout de repères médicaux</b> (classification internationale des céphalées) pour évoquer un type de migraine, repérer des alertes et construire un plan d’action.</li></ul>`)}
  ${C("#c9a227","🚦","Comment lire les niveaux de confiance",`<p>${tag("ok","élevée")} écart très net, vu sur au moins 6 saisies de chaque côté. ${tag("wn","moyenne")} écart net, sur au moins 4 saisies avant crise. ${tag("mu","faible")} écart modéré, sur au moins 3 saisies. En dessous, rien n’est affiché.</p><p>Pour les types de migraine, ${tag("ok","Évocateur")} veut dire que les critères sont réunis dans la majorité de vos crises, ${tag("wn","Possible")} dans une partie seulement.</p>`)}
  ${C("#d6504a","⚠️","Ce qu’il ne fait pas",`<ul><li>Il <b>ne pose pas de diagnostic</b> : seul un médecin le peut.</li><li>Il <b>ne prouve pas une cause</b> : « souvent avant la crise » ne veut pas dire « provoque la crise ».</li><li>Il ne voit que ce que vous notez : un journal rempli un jour sur deux donne des pistes fragiles.</li><li>Il ne remplace pas un avis médical, surtout si les crises changent, s’aggravent ou s’accompagnent de signes inhabituels.</li></ul>`)}
@@ -920,12 +924,126 @@ function aiExplain(){
  ${C("#1f9fb0","🛠️","Pour de meilleurs résultats",`<ul><li>Remplissez le journal <b>matin, midi et soir</b>.</li><li>Notez l’<b>heure de chaque traitement</b>, la <b>fin de la crise</b> et si le traitement a <b>fonctionné</b> (totalement, partiellement, rebond, sans effet).</li><li>Signalez vos <b>pré-crises</b> et cochez les <b>éléments importants</b> (3 h d’écran, mauvaise posture, repas sauté…).</li><li>Décrivez vos repas : l’analyse les lit.</li></ul>`)}
  <button class="btn" id="aix" style="margin-top:8px">🔬 Ouvrir le rapport d’analyse</button>`);
  $("#x").onclick=close;$("#aix").onclick=()=>aiReport()}
+/* ---------- v3.2 : onglet Médicaments (prises prévues, prises hors horaire, rappels) ---------- */
+/* S.meds = {on, list:[{id,name,dose,t:"HH:MM",since:"AAAA-MM-JJ"}], log:[{id,mid,name,dose,day,ts}]}
+   mid = identifiant de la prise prévue, ou null pour une prise hors horaire.
+   Une prise faite pendant une crise est enregistrée dans la crise (a.ev, k:"med"), comme avant. */
+function M(){if(!S.meds||typeof S.meds!=="object")S.meds={};const m=S.meds;if(!Array.isArray(m.list))m.list=[];if(!Array.isArray(m.log))m.log=[];m.on=!!m.on;return m}
+Object.assign(INFO,{
+ medr:"Ajoutez vos prises régulières (traitement de fond, complément…) avec leur heure. Si la prise n’est pas notée, une notification silencieuse vous le rappelle (dans les 2 h qui suivent l’heure prévue, quand l’app est ouverte ou récemment utilisée). Pour une alarme qui sonne même app fermée, ajoutez aussi les horaires au calendrier du téléphone. Ces rappels ne remplacent pas l’avis de votre médecin sur la façon de prendre votre traitement.",
+ medh:"Vos prises prévues aujourd’hui. Touchez « Noter la prise » quand c’est fait : l’heure est enregistrée. Touchez une prise déjà notée pour l’annuler. Le compteur repart à zéro chaque jour.",
+ medx:"Pour noter une prise en dehors des horaires prévus : un triptan pendant une crise, un antalgique, un anti-nauséeux… Vous pouvez corriger l’heure si vous notez après coup. Si une crise est en cours, la prise y est rattachée : elle apparaît dans le suivi de la crise et sert à mesurer l’efficacité du traitement.",
+ medl:"Vos prises des 14 derniers jours (touchez « Tout afficher » pour remonter plus loin) : prévues, hors horaire et pendant une crise. Touchez une prise faite pendant une crise pour ouvrir la crise. Ces prises comptent aussi dans l’analyse pour repérer un risque d’abus médicamenteux."});
+const nowHM=()=>{const d=new Date();return String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0")};
+const medTaken=(x,day)=>M().log.find(l=>l.mid===x.id&&l.day===day);
+const medLabel=x=>esc(x.name)+(x.dose?` <span class="sm">${esc(x.dose)}</span>`:"");
+const medSorted=()=>M().list.slice().sort((a,b)=>a.t<b.t?-1:a.t>b.t?1:a.id-b.id);
+const medLate=()=>{const d=tdy(),nt=nowHM();return M().list.filter(x=>!medTaken(x,d)&&x.t<=nt).length};
+function medLog(o){const Mx=M();let id=Date.now();while(Mx.log.some(l=>l.id===id))id++;Mx.log.push(Object.assign({id},o));save()}
+function medTake(x){const day=tdy();if(medTaken(x,day))return;medLog({mid:x.id,name:x.name,dose:x.dose||"",day,ts:new Date().toISOString()})}
+function medToggle(id){const x=M().list.find(z=>z.id===id);if(!x)return;const tk=medTaken(x,tdy());
+ if(tk)sure("Annuler la prise de "+esc(x.name)+" notée à "+hm(tk.ts)+" ?",()=>{S.meds.log=M().log.filter(l=>l!==tk);save();render()});else{medTake(x);render()}}
+/* --- prise hors horaire (par ex. triptan pendant une crise) --- */
+const NODRUG=/repos|froid|glace|noir|chaud|massage|sommeil/i;
+function medChoices(){const u={};S.attacks.forEach(a=>(a.trt||[]).forEach(t=>u[t]=(u[t]||0)+1));M().log.forEach(l=>{if(!l.mid)u[l.name]=(u[l.name]||0)+2});
+ const names=[...new Set([...(S.cfg.trt||[]),...M().list.map(x=>x.name),...M().log.filter(l=>!l.mid).map(l=>l.name)])].filter(v=>v&&v!=="Aucun"&&!NODRUG.test(v));
+ return names.map((v,i)=>[v,i]).sort((a,b)=>(u[b[0]]||0)-(u[a[0]]||0)||a[1]-b[1]).map(x=>x[0])}
+const lastDose=n=>{const l=M().log.filter(z=>nz(z.name)===nz(n)&&z.dose).sort((a,b)=>a.ts<b.ts?1:-1)[0];return l?l.dose:""};
+function medNow(name){const Mx=M(),day=tdy(),sch=Mx.list.find(x=>nz(x.name)===nz(name)&&!medTaken(x,day)),act=active()[0];let link=!!act;
+ dlg(`<b>💊 ${esc(name)}</b><div class="sm" style="margin:10px 0 4px">Dose (facultatif)</div><input type="text" id="xd" maxlength="40" placeholder="ex. 1 comprimé, 400 mg" value="${esc((sch&&sch.dose)||lastDose(name))}">
+ <div class="sm" style="margin:10px 0 4px">Heure de prise</div><input type="datetime-local" id="xt" value="${iso(new Date())}">
+ ${act?`<div class="chips" style="margin-top:12px"><button class="chip on" id="xc">🔴 Pour la crise en cours (depuis ${hm(act.date)})</button></div>`:""}
+ ${sch?`<div class="sm" style="margin-top:10px">Comptera comme la prise prévue de ${sch.t}.</div>`:""}
+ <div class="row" style="margin-top:4px"><button class="btn alt" id="no">Annuler</button><button class="btn" id="ok">Enregistrer</button></div>`);
+ $("#no").onclick=shut;if($("#xc"))$("#xc").onclick=()=>{link=!link;$("#xc").classList.toggle("on",link)};
+ $("#ok").onclick=()=>{const dose=$("#xd").value.trim(),tv=$("#xt").value,t=(tv?new Date(tv):new Date()).toISOString();
+  if(!S.cfg.trt.includes(name))S.cfg.trt.push(name);
+  if(act&&link){act.trt=act.trt||[];if(!act.trt.includes(name))act.trt.push(name);(act.ev=act.ev||[]).push({t,k:"med",v:name});save()}
+  if(sch)medLog({mid:sch.id,name:sch.name,dose:dose||sch.dose||"",day:dayKey(t),ts:t});
+  else if(!(act&&link))medLog({mid:null,name,dose,day:dayKey(t),ts:t});
+  shut();render();dlg(`<b>Prise enregistrée ✓</b><div class="sm" style="margin-top:6px">${esc(name)} à ${hm(t)}${act&&link?" · ajoutée à la crise en cours":""}.</div>`);setTimeout(shut,1600)}}
+/* --- historique des prises --- */
+let MHALL=false;
+function medHist(){const since=MHALL?"":shift(tdy(),-13),it=[];
+ M().log.forEach(l=>{if(l.day>=since){const x=M().list.find(z=>z.id===l.mid);it.push({ts:l.ts,name:l.name,dose:l.dose,tag:l.mid?"Prise prévue"+(x?" ("+x.t+")":""):"Hors horaire",lid:l.id})}});
+ S.attacks.forEach(a=>(a.ev||[]).forEach(e=>{if(e.k==="med"&&dayKey(e.t)>=since)it.push({ts:e.t,name:e.v,tag:"Pendant la crise du "+fmt(a.date),aid:a.id})}));
+ it.sort((a,b)=>a.ts<b.ts?1:-1);if(!it.length)return`<div class="empty">Aucune prise notée${MHALL?"":" sur les 14 derniers jours"}.</div>`;
+ const g={};it.forEach(x=>(g[dayKey(x.ts)]=g[dayKey(x.ts)]||[]).push(x));
+ return Object.keys(g).sort().reverse().map(k=>`<div class="wk" style="margin:0 -16px">${new Date(k+"T12:00").toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"})} · ${g[k].length} prise${g[k].length>1?"s":""}</div>`+g[k].map(x=>`<div class="item"${x.aid?` data-oa="${x.aid}"`:""}><div class="dot" style="background:${x.aid?col(7):"var(--ac2)"}">💊</div><div class="t"><div>${hm(x.ts)} · ${esc(x.name)}${x.dose?` <span class="sm">${esc(x.dose)}</span>`:""}</div><div>${esc(x.tag)}${x.aid?" ›":""}</div></div>${x.lid?`<button class="del" data-mdel="${x.lid}" aria-label="Supprimer cette prise">🗑</button>`:""}</div>`).join("")).join("")}
+/* --- onglet --- */
+function medToday(){const L=medSorted();if(!L.length)return `<div class="empty">Aucune prise programmée. Ajoutez vos traitements réguliers dans « Rappels de médicament » juste en dessous.</div>`;const day=tdy(),nt=nowHM(),done=L.filter(x=>medTaken(x,day)).length;
+ return `<div class="sub" style="margin:0 0 4px">${done} prise${done>1?"s":""} notée${done>1?"s":""} sur ${L.length}</div>${L.map(x=>{const tk=medTaken(x,day),late=!tk&&x.t<=nt;
+  return `<div class="fl"><span style="min-width:0"><b>${x.t}</b> · ${medLabel(x)}</span>${tk?`<button class="chip on" style="flex:none;white-space:nowrap" data-mtake="${x.id}" aria-label="Annuler la prise">✓ Pris à ${hm(tk.ts)}</button>`:`<button class="chip${late?" s2":""}" style="flex:none;white-space:nowrap" data-mtake="${x.id}">${late?"⏰ ":""}Noter la prise</button>`}</div>`}).join("")}`}
+function medsView(){const V=$("#v-med");if(!V)return;const act=active()[0],ch=medChoices();
+ V.innerHTML=`<h3 style="margin-top:0">Prendre un médicament${I("medx")}</h3><div class="card"><div class="sm" style="margin-bottom:10px">${act?`🔴 <b>Crise en cours</b> depuis ${hm(act.date)} : la prise y sera rattachée.`:"Une prise en dehors des horaires prévus : triptan pendant une crise, antalgique…"}</div><div class="chips opt">${ch.slice(0,10).map(v=>`<button class="chip" data-mnow="${esc(v)}">${esc(v)}</button>`).join("")}<button class="chip more" data-mnowadd="1">＋ Autre</button></div></div>
+ <h3>Prises prévues aujourd’hui${I("medh")}</h3><div class="card">${medToday()}</div>
+ ${medCard()}
+ <h3>Historique des prises${I("medl")}</h3><div class="card">${medHist()}<button class="btn alt" id="mhall" style="margin-top:10px">${MHALL?"Afficher les 14 derniers jours":"Tout afficher"}</button></div>`;medBadge()}
+function medBadge(){const b=document.querySelector('nav button[data-v="med"]');if(!b)return;const n=medLate();let s=b.querySelector(".bdg");
+ if(!n){if(s)s.remove();return}if(!s){s=document.createElement("span");s.className="bdg";b.appendChild(s)}s.textContent=n;b.setAttribute("aria-label","Médicaments, "+n+" prise"+(n>1?"s":"")+" en retard")}
+setInterval(medBadge,6e4);
+function medsBind(){const V=$("#v-med");if(!V||V.dataset.b)return;V.dataset.b=1;
+ V.addEventListener("click",e=>{const T=q=>e.target.closest(q);let i;
+  if(i=T("[data-mnow]"))medNow(i.dataset.mnow);
+  else if(T("[data-mnowadd]"))ask("Nom du médicament pris :",n=>medNow(n));
+  else if(i=T("[data-mdel]"))sure("Supprimer cette prise de l’historique ?",()=>{S.meds.log=M().log.filter(l=>String(l.id)!==i.dataset.mdel);save();render()});
+  else if(T("#mhall")){MHALL=!MHALL;medsView()}
+  else medClick(e)});
+ V.addEventListener("change",e=>{if(e.target.dataset.mt)medTime(e.target)})}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-mtake]");if(b){e.stopPropagation();medToggle(+b.dataset.mtake)}});
+/* --- rappels (gestion) --- */
+function medCard(){const Mx=M(),L=medSorted(),sup=typeof Notification!=="undefined",perm=sup?Notification.permission:"none",on=Mx.on&&perm==="granted";
+ let h=`<h3>Rappels de médicament${I("medr")}</h3><div class="card"><div class="sm" style="margin-bottom:10px">Pour ne pas oublier un traitement régulier : un rappel silencieux à l’heure choisie, seulement si la prise n’est pas déjà notée.</div>`;
+ if(!sup)h+=`<div class="sm" style="margin-bottom:10px">Les notifications ne sont pas disponibles ici. Sur iPhone : ouvrez l’app depuis l’écran d’accueil (Partager → Sur l’écran d’accueil). La liste et le suivi des prises fonctionnent quand même.</div>`;
+ else if(perm==="denied")h+=`<div class="sm" style="color:#c0392b;margin-bottom:10px">Les notifications sont bloquées pour cette app. Autorisez-les dans les réglages du téléphone ou du navigateur, puis revenez ici.</div>`;
+ else h+=`<div class="chips" style="margin-bottom:6px"><button class="chip${on?" on":""}" data-medon="1">Rappels activés</button><button class="chip${on?"":" on"}" data-medon="0">Désactivés</button></div>`;
+ h+=`<div>${L.length?L.map(x=>`<div class="fl"><div style="flex:1;min-width:0"><div><b>${esc(x.name)}</b>${x.dose?` <span class="sm">${esc(x.dose)}</span>`:""}</div><div style="display:flex;align-items:center;gap:10px;margin-top:6px"><input type="time" data-mt="${x.id}" value="${x.t}" aria-label="Heure de prise" style="width:auto"><span class="sm">chaque jour</span></div></div><button class="del" data-mx="${x.id}" aria-label="Supprimer ce rappel">✕</button></div>`).join(""):`<div class="sm" style="padding:6px 0">Aucun médicament programmé pour l’instant.</div>`}</div>`;
+ if(L.length<8)h+=`<button class="btn alt" id="med-add" style="margin-top:10px">＋ Ajouter un médicament régulier</button>`;
+ if(on&&L.length)h+=`<button class="btn alt" id="med-test" style="margin-top:10px">🔔 Tester le rappel</button><div class="sm" id="medmsg" style="margin-top:6px"></div>`;
+ if(L.length)h+=`<button class="btn alt" id="med-ics" style="margin-top:10px">📅 Ajouter au calendrier</button><div class="sm" style="margin-top:8px">Le fichier calendrier contient aussi les rappels du journal. Pour une prise deux fois par jour, ajoutez le médicament deux fois, avec deux heures différentes.</div>`;
+ return h+`</div>`}
+function medAdd(){const used=M().list.map(x=>x.t),t0=["08:00","20:00","12:00"].find(x=>!used.includes(x))||"09:00";
+ dlg(`<b>Nouveau médicament régulier</b><div class="sm" style="margin:10px 0 4px">Nom du médicament</div><input type="text" id="mn1" placeholder="ex. Propranolol, Magnésium…" maxlength="60"><div class="sm" style="margin:10px 0 4px">Dose (facultatif)</div><input type="text" id="md1" placeholder="ex. 40 mg, 1 comprimé" maxlength="40"><div class="sm" style="margin:10px 0 4px">Heure de prise</div><input type="time" id="mt1" value="${t0}"><div class="hint" id="mh1">Indiquez le nom du médicament.</div><div class="row" style="margin-top:4px"><button class="btn alt" id="no">Annuler</button><button class="btn" id="ok">Ajouter</button></div>`);
+ $("#mn1").focus();$("#no").onclick=shut;
+ $("#ok").onclick=async()=>{const n=$("#mn1").value.trim(),t=$("#mt1").value||t0,ds=$("#md1").value.trim();if(!n){$("#mh1").style.display="block";return}
+  const Mx=M();Mx.list.push({id:Date.now(),name:n,dose:ds,t,since:tdy()});shut();
+  if(typeof Notification!=="undefined"){let p=Notification.permission;if(p==="default"&&!Mx.on){try{p=await Notification.requestPermission()}catch(x){}}if(p==="granted"&&Mx.list.length===1)Mx.on=true}
+  save();render()}}
+async function medNotify(x,test){const ti=(test?"Test · ":"")+"💊 "+x.name,opt={body:(x.dose?x.dose+" · ":"")+"prévu à "+x.t+". Touchez pour noter la prise.",tag:"med-"+x.id,silent:true,icon:"icon-192.png",badge:"icon-192.png",data:{med:x.id}};
+ try{const reg=navigator.serviceWorker&&await navigator.serviceWorker.getRegistration();if(reg&&reg.showNotification){await reg.showNotification(ti,opt);return true}}catch(e){}
+ try{const n=new Notification(ti,opt);n.onclick=()=>{window.focus();deepLink({med:x.id})};return true}catch(e){return false}}
+async function medClick(e){const t=e.target.closest("[data-medon],#med-add,#med-test,#med-ics,[data-mx]");if(!t)return;const Mx=M();
+ if(t.dataset.medon==="1"){let p="denied";try{p=await Notification.requestPermission()}catch(x){}Mx.on=p==="granted";save();render();remCheck();return}
+ if(t.dataset.medon==="0"){Mx.on=false;save();render();return}
+ if(t.id==="med-add"){medAdd();return}
+ if(t.dataset.mx){const x=Mx.list.find(z=>String(z.id)===t.dataset.mx);if(x)sure("Supprimer le rappel « "+esc(x.name)+" » ? Les prises déjà notées restent dans l’historique.",()=>{Mx.list=Mx.list.filter(z=>z!==x);save();render()});return}
+ if(t.id==="med-test"){const ok=await medNotify(medSorted()[0],true),m=$("#medmsg");if(m)m.textContent=ok?"Rappel envoyé. Si rien n’apparaît, vérifiez les réglages de notification de l’app.":"Impossible d’afficher la notification sur cet appareil.";return}
+ if(t.id==="med-ics"){const ok=await saveFile("rappels-migraine-assistant.ics",remICS(),"text/calendar");if(!ok)dlg("<b>Export impossible</b><div class=\"sm\" style=\"margin-top:6px\">Votre navigateur n’a pas pu créer le fichier de calendrier.</div>")}}
+function medTime(el){const x=M().list.find(z=>String(z.id)===el.dataset.mt);if(x&&el.value){x.t=el.value;save();render();remCheck()}}
+/* --- notification touchée : journal ou médicament --- */
+function goTab(v){const b=document.querySelector(`nav button[data-v="${v}"]`);if(b)b.click()}
+function medPrompt(id){const x=M().list.find(z=>z.id===id);goTab("med");if(!x)return;const tk=medTaken(x,tdy());
+ if(tk){dlg(`<b>💊 ${esc(x.name)}</b><div class="sm" style="margin-top:6px">Prise déjà notée aujourd’hui à ${hm(tk.ts)}.</div><button class="btn" id="ok">Parfait</button>`);$("#ok").onclick=shut;return}
+ dlg(`<b>💊 ${medLabel(x)}</b><div class="sm" style="margin-top:6px">Prévu à ${x.t}. L’avez-vous pris ?</div><button class="btn" id="ok">✓ Oui, je l’ai pris</button><button class="btn alt" id="no" style="margin-top:10px">Pas encore</button>`);
+ $("#no").onclick=shut;$("#ok").onclick=()=>{medTake(x);shut();render()}}
+function deepLink(o){if(o.j&&MM[o.j]){goTab("home");journalWiz(o.j)}else if(o.med)medPrompt(+o.med)}
+/* --- rapport : prises notées sur la période --- */
+function medTable(){const Mx=M(),today=tdy(),start=per()?shift(today,-(per()-1)):null,lg=Mx.log.filter(l=>!start||l.day>=start),nd=(a,b)=>Math.round((Date.parse(b)-Date.parse(a))/864e5)+1;
+ const ids=[...new Set([...Mx.list.map(x=>x.id),...lg.filter(l=>l.mid).map(l=>l.mid)])],rows=ids.map(id=>{const x=Mx.list.find(z=>z.id===id),l=lg.filter(z=>z.mid===id),o=x||l[0]||{},s0=x&&x.since?(start&&start>x.since?start:x.since):null,days=s0?nd(s0,today):null;
+  return[esc(o.name||"?")+(o.dose?" ("+esc(o.dose)+")":""),x?"prévue à "+x.t:"rappel supprimé",days?l.length+" / "+days+" jour"+(days>1?"s":""):String(l.length),l.length?fmt(l.map(z=>z.ts).sort().pop()):"–"]});
+ const xg={};lg.filter(l=>!l.mid).forEach(l=>{const k=nz(l.name);(xg[k]=xg[k]||{n:l.name,l:[]}).l.push(l)});
+ Object.values(xg).forEach(g=>rows.push([esc(g.n),"hors horaire (hors crise)",g.l.length+" prise"+(g.l.length>1?"s":"")+" · "+new Set(g.l.map(z=>z.day)).size+" jour(s)",fmt(g.l.map(z=>z.ts).sort().pop())]));
+ if(!rows.length)return"";
+ return `<h3>Médicaments : prises notées</h3><p class="sm">Les prises faites pendant une crise figurent dans les traitements de chaque crise.</p>`+tbl(["Médicament","Type","Prises notées","Dernière prise"],rows)}
 /* --- démarrage : hors connexion, notifications, raccourci --- */
 if("serviceWorker" in navigator&&/^https?:$/.test(location.protocol)){
  navigator.serviceWorker.register("sw.js").then(()=>navigator.serviceWorker.ready).then(r=>{if(r.active)r.active.postMessage({cache:location.href.split("#")[0]})}).catch(()=>{});
- navigator.serviceWorker.addEventListener("message",e=>{if(e.data&&e.data.j&&MM[e.data.j])journalWiz(e.data.j)})}
+ navigator.serviceWorker.addEventListener("message",e=>{if(e.data&&(e.data.j||e.data.med))deepLink(e.data)})}
 
-load();applyTheme();render();setTimeout(remCheck,1500);
+load();applyTheme();medsBind();render();setTimeout(remCheck,1500);
+/* lien venant d’une notification touchée app fermée (#j=matin ou #med=123) */
+function hashLink(){if(location.hash.length<2)return;const q=new URLSearchParams(location.hash.slice(1));if(!q.get("j")&&!q.get("med"))return;try{history.replaceState(null,"",location.pathname+location.search)}catch(e){}deepLink({j:q.get("j"),med:q.get("med")})}
+hashLink();window.addEventListener("hashchange",hashLink);
 </script>
 </body>
 </html>
