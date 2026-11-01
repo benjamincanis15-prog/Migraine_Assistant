@@ -1,0 +1,16 @@
+{
+  "name": "Migraine Assistant",
+  "short_name": "Migraine",
+  "description": "Suivi des migraines : crises, journal quotidien, analyse et rapports pour votre médecin.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "lang": "fr",
+  "background_color": "#eef1f5",
+  "theme_color": "#4a5ba8",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
