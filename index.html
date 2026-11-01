@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22256%22%20height%3D%22256%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22lg%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%238fa3ee%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%234a5ba8%22/%3E%3C/linearGradient%3E%3ClinearGradient%20id%3D%22br%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23b9c6fa%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%237d92e6%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2216%22%20fill%3D%22url%28%23lg%29%22/%3E%3Cellipse%20cx%3D%2232%22%20cy%3D%2231%22%20rx%3D%2229%22%20ry%3D%229.5%22%20transform%3D%22rotate%28-14%2032%2031%29%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-opacity%3D%22.45%22%20stroke-width%3D%221.4%22/%3E%3Cpath%20d%3D%22M19%2059V51C13%2047%2010%2039%2011%2031C12%2018%2021%2010%2033%2010C44%2010%2051%2017%2052%2026C52%2029%2053%2031%2054%2033C55%2036%2057%2039%2058%2041C58%2043%2055%2044%2054%2044C55%2046%2055%2047%2054%2048C54%2049%2053%2050%2052%2050C52%2053%2050%2055%2046%2055H40V59Z%22%20fill%3D%22%23fff%22/%3E%3Cpath%20d%3D%22M17%2031C15%2023%2022%2016%2031%2017C40%2016%2047%2021%2047%2028C48%2034%2043%2039%2037%2039C34%2041%2027%2041%2024%2038C20%2037%2018%2034%2017%2031Z%22%20fill%3D%22url%28%23br%29%22%20stroke%3D%22%234a5ba8%22%20stroke-width%3D%221.2%22%20stroke-linejoin%3D%22round%22/%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%234a5ba8%22%20stroke-width%3D%221.1%22%20stroke-linecap%3D%22round%22%3E%3Cpath%20d%3D%22M24%2024C27%2022%2029%2026%2032%2024C35%2022%2038%2025%2041%2023%22/%3E%3Cpath%20d%3D%22M22%2031C26%2029%2028%2033%2032%2031C36%2029%2039%2033%2043%2030%22/%3E%3Cpath%20d%3D%22M27%2036C30%2034%2033%2037%2037%2035%22/%3E%3Cpath%20d%3D%22M32%2017V23%22/%3E%3C/g%3E%3Cpath%20d%3D%22M34%2040L36%2047%22%20stroke%3D%22%237d92e6%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M29%202L19%2015H25L21%2024L33%2010H27L31%202Z%22%20fill%3D%22%23e5484d%22%20stroke%3D%22%23fff%22%20stroke-width%3D%221.2%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E">
+<title>Migraine Assistant</title>
+<style>
+:root{--bg:#eef1f5;--card:#fff;--tx:#1d2733;--mu:#6b7785;--ln:#dde2e9;--ac:#4a5ba8;--ac2:#e5e9f7;--on:#fff;--sh:0 1px 2px rgba(20,30,50,.06);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#11141a;--card:#1a1f29;--tx:#dfe4ec;--mu:#8d97a6;--ln:#2a313d;--ac:#8ea3ee;--ac2:#252c44;--on:#11141a;--sh:none}}
+:root[data-theme="dark"]{--bg:#11141a;--card:#1a1f29;--tx:#dfe4ec;--mu:#8d97a6;--ln:#2a313d;--ac:#8ea3ee;--ac2:#252c44;--on:#11141a;--sh:none}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.45 ui-rounded,-apple-system,"SF Pro Rounded","Segoe UI",Roboto,sans-serif}
+#app{max-width:520px;margin:0 auto;padding:16px 16px 112px}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+h1{font-size:24px;margin:0}h2{font-size:18px;margin:0}
+h3{font-size:15px;margin:18px 0 8px;color:var(--mu);font-weight:600}
+.sub{color:var(--mu);font-size:14px}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+.ib{width:42px;height:42px;border-radius:50%;background:var(--card);box-shadow:var(--sh);font-size:19px}
+.i{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--ac2);color:var(--ac);font-size:13px;font-weight:700;font-style:italic;margin-left:6px;cursor:pointer;vertical-align:middle}
+.card{background:var(--card);border-radius:20px;padding:16px;margin-bottom:12px;box-shadow:var(--sh)}
+.big{width:100%;padding:24px 16px;border-radius:26px;background:var(--ac);color:var(--on);font-size:22px;font-weight:700;margin:6px 0 10px;box-shadow:0 8px 22px -8px var(--ac)}
+.big small{display:block;font-size:14px;font-weight:500;opacity:.85}
+.big.pre{padding:16px;font-size:18px;background:var(--ac2);color:var(--ac);box-shadow:none}
+.rel{display:flex;align-items:center;gap:10px}.rel .big,.rel .btn{flex:1;width:auto;min-width:0}.rel .i{position:static;flex:none;margin:0;width:32px;height:32px;font-size:16px}
+.row{display:flex;gap:10px}.row>*{flex:1}
+.stat{text-align:center}.stat b{display:block;font-size:28px;line-height:1.1}
+.item{display:flex;gap:12px;align-items:center;padding:10px 0;border-top:1px solid var(--ln)}
+.item:first-of-type{border-top:0}
+.dot{flex:none;width:42px;height:42px;border-radius:14px;display:grid;place-items:center;font-weight:700;color:#10151c}
+.item .t{flex:1;min-width:0}.item .t div:first-child{font-weight:600}
+.item .t div+div{font-size:13px;color:var(--mu);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.del{color:var(--mu);font-size:18px;padding:6px 10px}
+.btn{width:100%;padding:15px;border-radius:16px;background:var(--ac);color:var(--on);font-weight:700;font-size:17px}
+.btn.alt{background:var(--ac2);color:var(--ac)}.btn:disabled{opacity:.5}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--ln);display:flex;justify-content:center;padding-bottom:env(safe-area-inset-bottom,0px);z-index:5}
+nav div{display:flex;width:100%;max-width:520px}
+nav button{flex:1;margin:6px 3px;padding:7px 0 5px;font-size:12px;color:var(--mu);border:1.5px solid transparent;border-radius:14px;transition:background .15s,border-color .15s}
+nav button svg{display:block;width:25px;height:25px;margin:0 auto 2px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}nav button.on{color:var(--ac);font-weight:700;border-color:var(--ac);background:var(--ac2)}
+.v{display:none}.v.on{display:block}
+#ov,#tip{position:fixed;inset:0;background:rgba(5,8,14,.55);display:none;z-index:10;align-items:flex-end;justify-content:center}
+#tip{z-index:20;align-items:center;padding:24px}
+#ov.on,#tip.on{display:flex}
+.tb{background:var(--card);border-radius:20px;padding:20px;max-width:420px;width:100%;font-size:15px}
+.tb .btn{margin-top:14px}
+#sh{background:var(--bg);width:100%;max-width:520px;max-height:93%;overflow-y:auto;border-radius:26px 26px 0 0;padding:10px 16px calc(24px + env(safe-area-inset-bottom,0px));animation:up .22s ease-out}
+@keyframes up{from{transform:translateY(40px);opacity:0}}
+@media (prefers-reduced-motion:reduce){#sh{animation:none}}
+.gr{width:44px;height:5px;border-radius:3px;background:var(--ln);margin:0 auto 10px}
+.sh-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:10px 14px;border-radius:999px;background:var(--card);border:1.5px solid var(--ln);font-size:15px}
+.chip.on{background:var(--ac2);border-color:var(--ac);color:var(--ac);font-weight:600}
+.chip.s2{border-color:#c9822b;color:#c9822b;background:rgba(201,130,43,.12)}.chip.s3{border-color:var(--mu);color:var(--mu)}
+.ints{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.int{height:50px;border-radius:14px;font-size:19px;font-weight:700;color:#10151c;opacity:.45;border:3px solid transparent}
+.int.on{opacity:1;border-color:var(--tx);transform:scale(1.05)}
+input[type=datetime-local],input[type=text],input[type=number],input[type=date],textarea{width:100%;font:inherit;color:var(--tx);background:var(--card);border:1.5px solid var(--ln);border-radius:14px;padding:12px}
+textarea{min-height:64px}
+.bar{display:flex;align-items:center;gap:10px;margin:8px 0;font-size:14px}
+.bar .n{width:46%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar .tr{flex:1;height:10px;background:var(--ac2);border-radius:6px;overflow:hidden}
+.bar .tr i{display:block;height:100%;background:var(--ac)}.bar .p{width:34px;text-align:right;color:var(--mu)}
+.fl{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-top:1px solid var(--ln);gap:8px}
+.fl:first-child{border-top:0}
+.step{display:flex;align-items:center;gap:8px}
+.step button{width:40px;height:40px;border-radius:50%;background:var(--ac2);color:var(--ac);font-size:22px;font-weight:700}
+.step b{min-width:70px;text-align:center}
+.empty{color:var(--mu);text-align:center;padding:16px 6px}
+.hint{color:#c0392b;font-size:14px;margin:8px 0 0;display:none}
+table{width:100%;border-collapse:collapse;font-size:14px}td,th{padding:6px 4px;border-top:1px solid var(--ln);text-align:right}td:first-child,th:first-child{text-align:left}th{font-weight:600;color:var(--mu)}
+#aiout{white-space:pre-wrap;font-size:15px;margin-top:12px}
+.sm{font-size:13px;color:var(--mu)}.rp td,.rp th{text-align:left;vertical-align:top;font-size:13px}.rp table{display:block;overflow-x:auto}.rp pre{white-space:pre-wrap;font:inherit;font-size:15px}
+.ver{text-align:center;color:var(--mu);font-size:12px;margin:22px 0 4px;opacity:.85}
+.mo{margin-bottom:10px;background:var(--card);border-radius:18px;box-shadow:var(--sh);overflow:hidden}
+.mo>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:1fr auto;gap:3px 8px;padding:12px 14px;align-items:center}
+.mo>summary::-webkit-details-marker{display:none}
+.mo>summary:after{content:"›";grid-row:1/4;grid-column:2;font-size:24px;color:var(--mu);transform:rotate(90deg);transition:transform .2s}
+.mo[open]>summary:after{transform:rotate(-90deg)}
+.mo .mn{font-weight:700;text-transform:capitalize}.mo .ms{grid-column:1;font-size:13px;color:var(--mu)}
+.mo .dots{grid-column:1;display:flex;gap:3px;margin-top:2px;min-height:9px}.mo .dots i{width:9px;height:9px;border-radius:50%;display:block}
+.mo .item{padding:10px 14px;border-top:1px solid var(--ln)}
+.wk{padding:6px 14px;font-size:11.5px;font-weight:700;color:var(--mu);background:rgba(128,128,128,.09);text-transform:uppercase;letter-spacing:.04em;border-top:1px solid var(--ln)}
+html{touch-action:manipulation;-webkit-text-size-adjust:100%}
+.lnk{color:var(--ac);text-decoration:underline;font-size:inherit;padding:2px}
+.wp{display:flex;gap:5px;margin:8px 0 4px}.wp i{flex:1;height:5px;border-radius:3px;background:var(--ln)}.wp i.d{background:var(--ac);opacity:.5}.wp i.on{background:var(--ac)}
+.wc{font-size:12.5px;color:var(--mu);margin-bottom:2px}
+.wq{font-size:22px;font-weight:700;margin:4px 0 10px;line-height:1.25}
+.wh{font-size:15px;margin:16px 0 8px;color:var(--tx)}
+.opt .chip{padding:13px 16px;font-size:16px}.chip.more{background:transparent;border-style:dashed;color:var(--mu)}
+.wnav{position:sticky;bottom:0;display:flex;gap:10px;margin:20px -16px 0;padding:12px 16px 6px;background:linear-gradient(to top,var(--bg) 78%,transparent)}.wnav .btn{flex:1}
+.pill{padding:6px 12px;border-radius:999px;background:var(--ac2);color:var(--ac);font-size:14px;font-weight:600}
+.vr{padding:9px 0;border-top:1px solid var(--ln)}.vr:first-child{border-top:0}.vl{font-size:11.5px;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
+.zs .zr{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 0;border-top:1px solid var(--ln)}.zs .zr:first-child{border-top:0}
+.seg{display:flex;border:1.5px solid var(--ln);border-radius:12px;overflow:hidden;flex:none}.seg button{padding:10px 13px;font-size:14px;background:var(--card)}.seg button.on{background:var(--ac);color:var(--on);font-weight:700}
+.mts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.mt{border-radius:16px;padding:12px 4px;text-align:center;border:1.5px solid var(--ln);background:var(--card);display:flex;flex-direction:column;align-items:center;gap:2px}
+.mt svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.mt b{font-size:15px}.mt small{font-size:11.5px;color:var(--mu);line-height:1.2}
+.mt.now{background:var(--ac);color:var(--on);border-color:var(--ac);box-shadow:0 8px 18px -8px var(--ac);transform:scale(1.05)}.mt.now small{color:var(--on);font-weight:700;opacity:.95}
+.mt.done{background:rgba(47,158,107,.14);border-color:#2f9e6b;color:#2f9e6b}.mt.done small{color:#2f9e6b;font-weight:700}
+.mt.miss{border-style:dashed;border-color:#d9892b}.mt.miss small{color:#c77a1d}.mt.later{opacity:.6}
+</style>
+</head>
+<body>
+<div id="app">
+<header><div><h1 style="font-size:21px;display:flex;align-items:center;gap:10px"><svg width="38" height="38" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="lg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8fa3ee"/><stop offset="1" stop-color="#4a5ba8"/></linearGradient><linearGradient id="br" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b9c6fa"/><stop offset="1" stop-color="#7d92e6"/></linearGradient></defs><rect width="64" height="64" rx="16" fill="url(#lg2)"/><ellipse cx="32" cy="31" rx="29" ry="9.5" transform="rotate(-14 32 31)" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width="1.4"/><path d="M19 59V51C13 47 10 39 11 31C12 18 21 10 33 10C44 10 51 17 52 26C52 29 53 31 54 33C55 36 57 39 58 41C58 43 55 44 54 44C55 46 55 47 54 48C54 49 53 50 52 50C52 53 50 55 46 55H40V59Z" fill="#fff"/><path d="M17 31C15 23 22 16 31 17C40 16 47 21 47 28C48 34 43 39 37 39C34 41 27 41 24 38C20 37 18 34 17 31Z" fill="url(#br)" stroke="#4a5ba8" stroke-width="1.2" stroke-linejoin="round"/><g fill="none" stroke="#4a5ba8" stroke-width="1.1" stroke-linecap="round"><path d="M24 24C27 22 29 26 32 24C35 22 38 25 41 23"/><path d="M22 31C26 29 28 33 32 31C36 29 39 33 43 30"/><path d="M27 36C30 34 33 37 37 35"/><path d="M32 17V23"/></g><path d="M34 40L36 47" stroke="#7d92e6" stroke-width="2.4" stroke-linecap="round"/><path d="M29 2L19 15H25L21 24L33 10H27L31 2Z" fill="#e5484d" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/></svg>Migraine Assistant</h1><div class="sub" id="dt"></div></div><div style="display:flex;gap:8px"><button class="ib" id="th" aria-label="Thème">🌓</button><button class="ib" id="st" aria-label="Paramètres">⚙️</button></div></header>
+<section class="v on" id="v-home"></section><section class="v" id="v-hist"></section><section class="v" id="v-stats"></section><section class="v" id="v-ana"></section>
+<div class="ver" id="ver"></div>
+</div>
+<nav><div>
+<button class="on" data-v="home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/><path d="M10 19.5v-5h4v5"/></svg>Accueil</button><button data-v="hist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1"/><path d="M3.5 4.5v4h4"/><path d="M12 8v4.2l2.8 1.8"/></svg>Historique</button><button data-v="stats"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="11" width="3.5" height="9" rx="1"/><rect x="10.2" y="4" width="3.5" height="16" rx="1"/><rect x="16.5" y="8" width="3.5" height="12" rx="1"/></svg>Stats</button><button data-v="ana"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m20 20-4.9-4.9"/><path d="M7 10.5h1.8l1.2-2.5 1.6 5 1.1-2.5H14"/></svg>Analyse</button>
+</div></nav>
+<div id="ov"><div id="sh"></div></div><div id="tip"></div>
+
+<script>
+const $=s=>document.querySelector(s);
+const D={loc:["Côté gauche","Côté droit","Front","Nuque","Derrière l’œil","Tout le crâne"],qual:["Pulsatile (battements)","Pression / étau","Sourde et continue","Coup de poignard / brûlure"],sym:["Nausées / vomissements","Photophobie (lumière)","Phonophobie (bruit)","Vertiges","Aura visuelle","Aura sensitive (fourmillements)","Larmoiement / nez bouché","Faiblesse / trouble de la parole"],pain:["Cervicales","Mâchoire (ATM)","Œil","Visage / face","Épaules"],trg:["Manque de sommeil","Stress / forte émotion","Écrans prolongés (3 h et plus)","Mauvaise posture / cou penché","Météo / orage","Repas sauté ou en retard","Alcool / excès de café","Règles / hormones","Fatigue / effort physique","Lumière, bruit ou odeur forte","Longue conduite / transport","Changement de rythme / voyage"],trt:["Triptan","Antalgique","Anti-inflammatoire","Repos dans le noir","Froid / glace"],pre:["Bâillements","Fatigue inhabituelle","Irritabilité / humeur basse","Fringale / envie de sucré","Raideur de nuque","Sensibilité lumière / bruit / odeurs","Nausée légère","Difficulté de concentration","Vision floue / picotements"],ctx:["3 h et plus d’écran sans pause","Mauvaise posture (canapé, lit…)","Long trajet / conduite","Effort physique intense","Repas sauté ou en retard","Forte émotion / dispute","Bruit, lumière ou odeur forte","Pièce chaude / mal aérée"],wk:["Mal de tête au réveil","Mâchoire serrée / courbatue","Nuit agitée / réveils","Ronflements / arrêts respiratoires"]};
+const OLDD={loc:["Côté gauche","Côté droit","Front","Nuque","Derrière l’œil","Tout le crâne"],qual:["Pulsatile (battements)","Pression / étau","Sourde et continue","Brûlure","Coup de poignard"],sym:["Nausées","Vomissements","Photophobie (lumière)","Phonophobie (bruit)","Sensibilité aux odeurs","Vertiges","Aura visuelle","Aura sensitive (fourmillements)","Trouble de la parole","Larmoiement / nez bouché","Cuir chevelu sensible au toucher","Faiblesse d’un côté du corps"],fn:["Aggravée par l’effort / les escaliers","Besoin de rester immobile","Besoin de bouger (agitation)","Activités normales possibles","Activités ralenties","Obligé(e) de m’arrêter / alité(e)"],pain:["Cervicales","Mâchoire (ATM)","Œil","Visage / face","Épaules"],trg:["Manque de sommeil","Stress","Écrans","Météo / pression","Saut de repas","Caféine / alcool","Règles / hormones","Fatigue / surmenage","Odeur forte","Lumière vive / reflets","Chaleur / déshydratation","Changement de rythme"],ctx:["3 h ou plus devant un écran","Mauvaise posture (canapé, lit…)","Cou penché / en avant","Longue conduite / transport","Effort physique intense","Peu ou pas de pauses","Forte émotion / dispute","Bruit prolongé","Lumière vive / soleil","Odeur forte / parfum","Pièce chaude / mal aérée","Mal dormi / sommeil haché","Repas sauté","Repas en retard","Voyage / changement de rythme"],trt:["Triptan","Antalgique","Anti-inflammatoire","Repos dans le noir","Caféine","Froid / glace"],pre:["Bâillements","Fatigue inhabituelle","Irritabilité","Fringale","Envie de sucré","Soif","Besoin d’uriner fréquent","Raideur de nuque","Sensibilité lumière/bruit","Sensibilité aux odeurs","Nausée légère","Difficulté de concentration","Humeur basse","Euphorie / hyperactivité","Vision floue / picotements"],wk:["Mal de tête au réveil","Mâchoire serrée / courbatue","Nuit agitée / réveils","Ronflements / pauses respiratoires"]};
+const LBL={loc:"Où (localisation)",qual:"Type de douleur",sym:"Symptômes",pain:"Autres douleurs",trg:"Déclencheurs",trt:"Traitements",pre:"Signes de pré-crise",ctx:"Éléments importants (journal)",wk:"Au réveil (journal)"};
+const PL=["","avant","après","incertain"],PW=["","avant la migraine","après / pendant la migraine","chronologie incertaine"];
+const F=[["sleepH","Sommeil (h)",.5,0,14,7,"h","Durée de la nuit. Sur iPhone : app Santé > Sommeil (lecture automatique possible seulement dans la version native)."],["water","Eau bue",.25,0,6,0,"L","Litres bus sur cette période ; les périodes s’additionnent sur la journée (repère : 1,5 à 2 L/jour)."],["coffee","Cafés / thés",1,0,15,0,"","Nombre de boissons caféinées aujourd’hui. Un excès comme un sevrage peuvent jouer."],["alcohol","Verres d’alcool",1,0,15,0,"","Nombre de verres aujourd’hui."],["screens","Écrans (h)",.5,0,16,0,"h","Temps d’écrans sur cette période. Sur iPhone : Réglages > Temps d’écran (lecture automatique possible seulement dans la version native)."],["meals","Repas pris",1,0,6,0,"","Nombre de repas pris aujourd’hui. Sauter un repas est un déclencheur classique."],["activity","Activité physique",15,0,300,0,"min","Minutes d’activité physique aujourd’hui."]];
+const C=[["sleepQ","Qualité du sommeil","1 = très mauvaise, 5 = excellente."],["stress","Stress","1 = serein, 5 = très stressé."],["mood","Humeur","1 = très basse, 5 = excellente."],["neck","Tension nuque / épaules","1 = aucune, 5 = très tendues."]];
+const WE=["Stable","Chaud / lourd","Orageux","Froid","Pluie","Vent"];
+const INFO={go:"Déclare une crise. Seule l’intensité est obligatoire : le reste est facultatif et peut être complété plus tard.",pre:"À utiliser dès les premiers signes (bâillements, nuque raide…) alors que la migraine n’est pas là. Ces signes seront automatiquement rattachés à la prochaine crise déclarée dans les 48 h.",jr:"Le journal collecte vos habitudes (sommeil, eau, stress…). Chaque saisie est horodatée avec précision. Vous pouvez en faire plusieurs par jour : c’est ce qui permet de repérer ce qui précède une crise.",hist:"Toutes vos crises, avec leurs signes de pré-crise rattachés. Touchez 🗑 pour supprimer.",stats:"Comptages simples : fréquence, intensité, éléments les plus souvent cochés.",ana:"Corrélations calculées sur votre appareil, puis analyse approfondie par IA sur demande.",when:"Date et heure de début. Par défaut : maintenant. Modifiable si vous déclarez après coup.",int:"Intensité de 1 (légère) à 10 (insupportable). Le vert correspond à une douleur faible, le rouge à une douleur forte.",loc:"Où la douleur est située. « Aucun » = aucune localisation précise ; « ＋ Autre » ajoute un élément mémorisé pour la prochaine fois.",sym:"Signes qui accompagnent la douleur. « Aucun » = aucun symptôme associé ; « ＋ Autre » ajoute un élément mémorisé.",pain:"Douleurs cervicales, mâchoire, œil, face… Touchez un élément pour choisir sa chronologie : « avant » (précède la migraine, possible déclencheur), « après » (conséquence), « incertain ». Touchez encore pour effacer. C’est ce qui permettra de savoir si ces douleurs causent la migraine ou en découlent.",trg:"Ce que vous soupçonnez d’avoir déclenché la crise. Cochez large : l’analyse départagera. « Aucun » = aucun déclencheur identifié.",trt:"Ce que vous avez pris ou fait pour soulager. « ＋ Autre » mémorise un nouveau traitement pour les prochaines fois.",lp:"Signes de pré-crise récents (48 h) non encore rattachés. Cochés = liés à cette crise ; décochez ceux qui n’ont aucun rapport.",note:"Texte libre : contexte, lieu, activité, évolution.",prep:"Symptômes ressentis AVANT la douleur. Les repérer permet d’anticiper et de traiter plus tôt. « Aucun » = rien de particulier.",ai:"Envoie vos données (sans votre nom) à Claude pour une analyse approfondie : déclencheurs probables, chronologie des douleurs, pistes de prévention. Aide à la réflexion, pas un diagnostic. L’envoi n’a lieu que lorsque vous touchez le bouton.",prof:"Âge, poids, taille, antécédents… ces éléments affinent l’analyse. Tout reste sur votre appareil.",lists:"Retirez (✕) ou ajoutez des éléments dans chaque questionnaire. Les ajouts faits dans une crise apparaissent aussi ici.",corr:"Compare vos moyennes dans les 24 h avant une crise avec celles des autres moments. Un écart marqué est une piste, pas une preuve.",chr:"Pour chaque zone douloureuse : combien de fois elle est apparue avant, après, ou avec chronologie incertaine par rapport à la migraine."};
+const clone=o=>JSON.parse(JSON.stringify(o));
+let S={attacks:[],pre:[],journal:[],profile:{},cfg:clone(D),theme:"auto",ai:null};
+function load(){try{const r=JSON.parse(localStorage.getItem("migraine-v2")||localStorage.getItem("migraine-v1")||"null");if(r)Object.assign(S,r)}catch(e){}
+ if(!Array.isArray(S.journal))S.journal=[];if(!Array.isArray(S.pre))S.pre=[];S.cfg=Object.assign(clone(D),S.cfg||{});if((S.cfgv||0)<4){const OA=new Set(Object.values(OLDD).flat());Object.keys(D).forEach(g=>{const cu=(S.cfg[g]||[]).filter(v=>!OA.has(v)&&!D[g].includes(v));S.cfg[g]=[...D[g],...cu]});S.cfgv=4}S.attacks.forEach(a=>{a.pain=a.pain||{};a.pre=a.pre||[]})}
+function save(){try{localStorage.setItem("migraine-v2",JSON.stringify(S))}catch(e){if(S.arch&&S.arch.length>2){S.arch.splice(Math.ceil(S.arch.length/2));save()}}}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const I=k=>`<span class="i" data-i="${k}" role="button" aria-label="Information">i</span>`;
+const col=n=>`hsl(${130-(n-1)*14},58%,${n>7?62:58}%)`;
+const iso=d=>new Date(d-d.getTimezoneOffset()*6e4).toISOString().slice(0,16);
+const dayKey=d=>iso(new Date(d)).slice(0,10);
+const fmt=d=>new Date(d).toLocaleString("fr-FR",{weekday:"short",day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"});
+const sorted=()=>[...S.attacks].sort((a,b)=>b.date.localeCompare(a.date));
+const avg=l=>l.length?l.reduce((s,a)=>s+a.intensity,0)/l.length:0;
+const mean=x=>x.length?Math.round(x.reduce((s,v)=>s+v,0)/x.length*100)/100:"–";
+const APP_VER="3.0",APP_DATE="31/10/2026";
+const isMale=()=>!!(S.profile&&S.profile.sex==="Homme"),FEMRE=/r[eè]gles|menstru|hormon|cycle|pilule|contracep|ovulat/i,visOK=v=>!(isMale()&&FEMRE.test(v)),real=a=>(a||[]).filter(x=>x!=="Aucun"&&visOK(x));
+
+/* dialogues (pas de alert/prompt : bloqués en page publiée) */
+function dlg(h){$("#tip").innerHTML=`<div class="tb">${h}</div>`;$("#tip").classList.add("on")}
+const shut=()=>$("#tip").classList.remove("on");
+$("#tip").onclick=e=>{if(e.target.id==="tip")shut()};
+function tip(k){dlg(INFO[k]||"");$(".tb").insertAdjacentHTML("beforeend",`<button class="btn alt" id="ok">Compris</button>`);$("#ok").onclick=shut}
+function ask(t,cb){dlg(`<b>${t}</b><input type="text" id="ai1" style="margin:10px 0"><button class="btn" id="ok">Ajouter</button>`);const i=$("#ai1");i.focus();const go=()=>{const v=i.value.trim();shut();if(v)cb(v)};$("#ok").onclick=go;i.onkeydown=e=>{if(e.key==="Enter")go()}}
+function sure(t,cb){dlg(`<b>${t}</b><div class="row" style="margin-top:12px"><button class="btn alt" id="no">Annuler</button><button class="btn" id="ok">Confirmer</button></div>`);$("#no").onclick=shut;$("#ok").onclick=()=>{shut();cb()}}
+document.addEventListener("click",e=>{const i=e.target.closest(".i");if(i){e.stopPropagation();e.preventDefault();tip(i.dataset.i)}},true);
+
+function applyTheme(){const r=document.documentElement;S.theme==="auto"?r.removeAttribute("data-theme"):r.setAttribute("data-theme",S.theme);$("#th").textContent={auto:"🌓",light:"☀️",dark:"🌙"}[S.theme]}
+$("#th").onclick=()=>{S.theme={auto:"light",light:"dark",dark:"auto"}[S.theme];save();applyTheme()};
+$("#st").onclick=()=>settings();
+
+/* ---------- vues ---------- */
+const linked=a=>S.pre.filter(p=>p.att===a.id);
+function item(a,del){const n=linked(a).length,meta=(n?"🌀"+n+" · ":"")+(a.end?"✓ "+pd(dur(a))+" · ":"");return `<div class="item" data-oa="${a.id}"><div class="dot" style="background:${col(a.intensity)}">${a.intensity}</div><div class="t"><div>${fmt(a.date)}</div><div>${meta}${esc([...real(a.loc),...real(a.sym),...real(a.trt)].join(", ")||"Aucun détail")}</div></div>${del?`<button class="del" data-da="${a.id}" aria-label="Supprimer">🗑</button>`:""}</div>`}
+function tally(list,key){const c={};list.forEach(a=>real(a[key]).forEach(x=>c[x]=(c[x]||0)+1));return Object.entries(c).sort((a,b)=>b[1]-a[1]).slice(0,6)}
+const bars=(rows,n)=>rows.length?rows.map(([k,v])=>`<div class="bar"><span class="n">${esc(k)}</span><span class="tr"><i style="width:${v/n*100}%"></i></span><span class="p">${Math.round(v/n*100)}%</span></div>`).join(""):`<div class="empty">Pas encore de données.</div>`;
+function painTally(){const c={},add=(o,f)=>Object.entries(o||{}).forEach(([z,s])=>{if(z==="Aucun")return;(c[z]=c[z]||[0,0,0,0])[f||s]++});S.attacks.forEach(a=>add(a.pain));S.pre.forEach(p=>add(p.pain,1));return c}
+function stats(){
+ const n=S.attacks.length,m=S.attacks.filter(a=>a.date.startsWith(iso(new Date()).slice(0,7))),pt=painTally();
+ $("#v-stats").innerHTML=`<div class="row"><div class="card stat"><b>${m.length}</b><span class="sub">ce mois-ci</span></div><div class="card stat"><b>${n}</b><span class="sub">au total</span></div><div class="card stat"><b>${n?avg(S.attacks).toFixed(1):"–"}</b><span class="sub">intensité moy.</span></div></div>
+ <h3>Déclencheurs fréquents${I("trg")}</h3><div class="card">${bars(tally(S.attacks,"trg"),n)}</div>
+ <h3>Symptômes fréquents${I("sym")}</h3><div class="card">${bars(tally(S.attacks,"sym"),n)}</div>
+ <h3>Signes de pré-crise${I("prep")}</h3><div class="card">${bars(tally(S.pre,"sym"),S.pre.length)}</div>
+ <h3>Traitements utilisés${I("trt")}</h3><div class="card">${bars(tally(S.attacks,"trt"),n)}</div>
+ <h3>Douleurs associées : chronologie${I("chr")}</h3><div class="card">${Object.keys(pt).length?Object.entries(pt).map(([z,c])=>`<div class="fl"><b>${esc(z)}</b><span class="sm">avant ${c[1]} · après ${c[2]} · incertain ${c[3]}</span></div>`).join(""):`<div class="empty">Pas encore de données.</div>`}</div>`;
+}
+const NUM=[...F.map(f=>[f[0],f[1]]),...C.map(c=>[c[0],c[1]])];
+function corr(){
+ const A=S.attacks.map(a=>+new Date(a.date)),pre=j=>{const t=+new Date(j.ts);return A.some(a=>a-t>0&&a-t<864e5)};
+ const rows=NUM.map(([k,l])=>{const x=S.journal.filter(j=>pre(j)&&j[k]!=null).map(j=>j[k]),y=S.journal.filter(j=>!pre(j)&&j[k]!=null).map(j=>j[k]);return x.length<2||y.length<2?"":`<tr><td>${l}</td><td>${mean(x)}</td><td>${mean(y)}</td></tr>`}).join("");
+ return rows?`<table><tr><th></th><th>24 h avant crise</th><th>autres moments</th></tr>${rows}</table>`:`<div class="empty">Faites plusieurs saisies de journal (dont certaines avant des crises) pour voir apparaître des comparaisons.</div>`;
+}
+function render(){home();hist();stats();ana();$("#v-stats").insertAdjacentHTML("afterbegin",todayCard());$("#dt").textContent=new Date().toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"})}
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("on",x===b));document.querySelectorAll(".v").forEach(v=>v.classList.toggle("on",v.id==="v-"+b.dataset.v));window.scrollTo(0,0)});
+
+/* ---------- feuilles ---------- */
+function sheet(h){$("#sh").innerHTML=`<div class="gr"></div>`+h+verHTML();$("#ov").classList.add("on");$("#sh").scrollTop=0}
+function close(){$("#ov").classList.remove("on")}
+$("#ov").onclick=e=>{if(e.target.id==="ov")close()};
+function settings(again){
+ const P=S.profile,keep=again?$("#sh").scrollTop:0;
+ const fld=(k,l,t,ph)=>`<h3>${l}</h3><input type="${t}" data-p="${k}" value="${esc(P[k]||"")}" placeholder="${ph||""}">`;
+ const bmi=P.weight&&P.height?(P.weight/Math.pow(P.height/100,2)).toFixed(1):null;
+ sheet(`<div class="sh-h"><h2>Paramètres</h2><button class="ib" id="x">✕</button></div>
+ <h3>Profil${I("prof")}</h3><div class="card">
+ ${fld("name","Prénom / nom","text")}${fld("birth","Date de naissance","date")}
+ <h3>Sexe</h3><div class="chips">${["Femme","Homme","Autre"].map(v=>`<button class="chip${P.sex===v?" on":""}" data-pc="sex|${v}">${v}</button>`).join("")}</div>
+ <div class="row">${[["weight","Poids (kg)"],["height","Taille (cm)"]].map(([k,l])=>`<div>${fld(k,l,"number")}</div>`).join("")}</div>${bmi?`<div class="sm" style="margin-top:6px">IMC : ${bmi}</div>`:""}
+ ${isMale()?"":`<h3>Suivi du cycle menstruel</h3><div class="chips">${["Oui","Non"].map(v=>`<button class="chip${(!!P.cycle)===(v==="Oui")?" on":""}" data-pc="cycle|${v}">${v}</button>`).join("")}</div>`}
+ <h3>Antécédents familiaux de migraine</h3><div class="chips">${["Oui","Non","Je ne sais pas"].map(v=>`<button class="chip${P.fam===v?" on":""}" data-pc="fam|${v}">${v}</button>`).join("")}</div>
+ ${fld("bg","Traitement de fond","text","ex. bêtabloquant, contraception…")}${fld("cond","Autres conditions / allergies","text","ex. bruxisme, hypertension…")}</div>
+ <h3>Sauvegarde et transfert${I("bk")}</h3><div class="card"><button class="btn" id="bx">📤 Exporter mes données</button><button class="btn alt" id="bi" style="margin-top:10px">📥 Importer des données</button><input type="file" id="bf" accept=".json,application/json" hidden><div class="sm" style="margin-top:8px">Pour changer d’appareil ou garder une copie. Vos données ne sont stockées que sur cet appareil.</div></div>
+ <h3>Listes de réponses${I("lists")}</h3>
+ ${Object.keys(LBL).map(g=>`<div class="card"><b>${LBL[g]}</b><div class="chips" style="margin-top:8px">${S.cfg[g].filter(visOK).map(v=>`<button class="chip" data-rm="${g}|${esc(v)}">${esc(v)} ✕</button>`).join("")}<button class="chip on" data-ad="${g}">＋ Ajouter</button></div></div>`).join("")}
+ <button class="btn alt" id="dm" style="margin-top:12px">🧪 Charger 1 mois de données de démo</button><button class="btn alt" id="dr" style="margin-top:10px">Retirer les données de démo</button><button class="btn alt" id="rs" style="margin-top:10px">Remettre les listes par défaut</button>
+ <button class="btn alt" id="rd" style="margin-top:10px;color:#c0392b">Effacer toutes mes données</button>`);
+ $("#sh").scrollTop=keep;$("#x").onclick=close;
+ $("#sh").onchange=e=>{const k=e.target.dataset.p;if(k){P[k]=e.target.value;save()}if(e.target.id==="bf"&&e.target.files[0]){const fr=new FileReader();fr.onload=()=>importText(String(fr.result));fr.readAsText(e.target.files[0]);e.target.value=""}};
+ $("#sh").onclick=e=>{const c=e.target.closest(".chip");if(e.target.closest("#bx"))exportData();if(e.target.closest("#bi"))importAsk();
+  if(c&&c.dataset.pc){const[k,v]=c.dataset.pc.split("|");P[k]=k==="cycle"?v==="Oui":v;if(k==="sex"&&v==="Homme")P.cycle=false;save();settings(1)}
+  if(c&&c.dataset.rm){const[g,v]=c.dataset.rm.split("|");S.cfg[g]=S.cfg[g].filter(x=>x!==v);save();settings(1)}
+  if(c&&c.dataset.ad){const g=c.dataset.ad;ask("Nouvel élément :",n=>{if(!S.cfg[g].includes(n))S.cfg[g].push(n);save();settings(1)})}
+  if(e.target.id==="dm"){demo();save();close();render()}if(e.target.id==="dr"){["attacks","pre","journal"].forEach(g=>S[g]=S[g].filter(x=>!x.demo));save();close();render()}if(e.target.id==="rs")sure("Remettre toutes les listes par défaut ?",()=>{S.cfg=clone(D);save();settings(1)});
+  if(e.target.id==="rd")sure("Effacer définitivement toutes les données de cet appareil ?",()=>{S={attacks:[],pre:[],journal:[],profile:{},cfg:clone(D),theme:S.theme,ai:null};save();close();render()})};
+}
+
+/* ---------- analyse ---------- */
+/* ---------- v3 : moments, suivi de crise, démo ---------- */
+const MM={matin:{t:"☀️ Matin",s:"Nuit + petit-déjeuner",f:["sleepH","water","coffee"],c:["sleepQ","stress","mood"],food:"Petit-déjeuner"},midi:{t:"🌤 Midi",s:"Matinée + déjeuner",f:["water","coffee","screens","activity"],c:["stress","mood","neck"],food:"Déjeuner",w:1},soir:{t:"🌙 Soir",s:"Après-midi + dîner",f:["water","coffee","alcohol","screens","activity"],c:["stress","mood","neck"],food:"Dîner",w:1}};
+Object.assign(INFO,{jr:"Trois saisies par jour : matin (nuit + petit-déjeuner), midi (matinée + déjeuner), soir (après-midi + dîner). Le bouton mis en avant correspond à l’heure ; les autres restent ouverts pour corriger. Chaque saisie est horodatée.",jm:"Renseignez cette période. Les quantités (eau, cafés, écrans…) concernent uniquement la période ; elles s’additionnent sur la journée. Revenir ici modifie la saisie existante.",food:"Décrivez ce que vous avez mangé et bu. L’analyse IA cherchera des liens entre aliments (fromage, chocolat, charcuterie, alcool, repas sautés…) et vos crises.",sv:"Journal de la crise : chaque traitement pris, changement d’intensité ou fin de crise est horodaté à l’instant du clic. Cela permet de mesurer le délai d’efficacité des traitements.",tod:"Cumul de la journée : les saisies matin, midi et soir s’additionnent. Le compteur repart de zéro à minuit ; les valeurs de chaque jour sont conservées pour les stats et l’analyse.",mt:"Utilise votre position GPS pour récupérer la météo et la pression actuelles. Si cela ne fonctionne pas, choisissez la météo à la main."});
+const hm=t=>new Date(t).toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"}),tdy=()=>dayKey(new Date());
+const entry=(m,k)=>S.journal.find(z=>z.m===m&&dayKey(z.ts)===k);
+const active=()=>S.attacks.filter(a=>!a.end&&Date.now()-new Date(a.date)<864e5);
+const lv=(k,n)=>[1,3,5,7,10][(k==="stress"||k==="neck"?n:6-n)-1];
+function jours(){const d={};S.journal.forEach(j=>{const k=dayKey(j.ts),o=d[k]=d[k]||{date:k,eau_L:0,cafes:0,alcool:0,ecrans_h:0,activite_min:0,repas:{},stress:[],humeur:[],meteo:[]};
+ o.eau_L+=j.water||0;o.cafes+=j.coffee||0;o.alcool+=j.alcohol||0;o.ecrans_h+=j.screens||0;o.activite_min+=j.activity||0;
+ if(j.m==="matin"){o.sommeil_h=j.sleepH;o.qualite_sommeil=j.sleepQ}if(j.m&&j.food)o.repas[j.m]=j.food;if(j.stress)o.stress.push(j.stress);if(j.mood)o.humeur.push(j.mood);if(j.weather)o.meteo.push(j.weather);if(j.press)o.pression_hPa=j.press;if(j.period)o.regles=j.period;o.ctx=[...new Set([...(o.ctx||[]),...(j.ctx||[])])];o.wake=[...new Set([...(o.wake||[]),...(j.wake||[])])];if(j.note)o.notes=(o.notes?o.notes+" · ":"")+j.note;if(j.neck)(o.neck=o.neck||[]).push(j.neck)});
+ return Object.values(d).sort((a,b)=>a.date<b.date?-1:1).slice(-120)}
+const dayAgg=k=>jours().find(o=>o.date===k)||{eau_L:0,cafes:0,ecrans_h:0,activite_min:0};
+function todayCard(){const t=dayAgg(tdy());return `<h3 style="margin-top:0">Aujourd’hui${I("tod")}</h3><div class="row">${[[t.eau_L,"L d’eau"],[t.cafes,"cafés"],[t.ecrans_h,"h d’écrans"],[t.activite_min,"min d’activité"]].map(([v,l])=>`<div class="card stat"><b>${v}</b><span class="sub" style="font-size:12px">${l}</span></div>`).join("")}</div>`}
+async function meteo(j,paint,msg){try{const p=await new Promise((ok,ko)=>navigator.geolocation.getCurrentPosition(ok,ko,{timeout:8000}));
+ const r=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${p.coords.latitude}&longitude=${p.coords.longitude}&current=temperature_2m,surface_pressure,weather_code,wind_speed_10m`),c=(await r.json()).current,w=c.weather_code;
+ j.temp=c.temperature_2m;j.press=Math.round(c.surface_pressure);j.weather=w>=95?"Orageux":w>=51?"Pluie":c.wind_speed_10m>35?"Vent":c.temperature_2m>27?"Chaud / lourd":c.temperature_2m<5?"Froid":"Stable";paint();msg(`${c.temperature_2m} °C · ${j.press} hPa`)}
+ catch(e){msg("Indisponible ici : choisissez la météo à la main.")}}
+/* ---------- v8 : saisie pas à pas ---------- */
+Object.assign(INFO,{pre:"Signes qui annoncent une crise possible (bâillements, nuque raide…). Une seule pré-crise peut être ouverte à la fois : si elle est déjà en cours, ce bouton permet de la mettre à jour, et chaque changement est enregistré avec l’heure pour suivre l’évolution. Si une crise survient, elle lui est rattachée automatiquement.",go:"Déclare une crise. Seule l’intensité est demandée d’abord : la crise est enregistrée tout de suite, puis chaque étape suivante est facultative. Vous noterez ensuite les traitements et la fin de crise.",bk:"Exporte toutes vos données dans un fichier (ou un code à copier) pour les importer dans cette app sur un autre appareil. Pensez-y régulièrement : vos données ne sont stockées que sur cet appareil.",jr:"Trois saisies par jour : matin, midi et soir. Le moment en cours est mis en avant en bleu, les saisies faites sont en vert avec leur heure. Touchez un moment pour le remplir ou le corriger."});
+const TOPN=8,NN=[1,2,3,4,5,6,7,8,9,10],FNE="L’effort aggrave la douleur",FNS="Obligé(e) de m’arrêter / alité(e)";
+function usage(g){const c={},add=v=>{c[v]=(c[v]||0)+1};
+ if(g==="pre")S.pre.forEach(p=>(p.sym||[]).forEach(add));else if(g==="pain")S.attacks.forEach(a=>Object.keys(a.pain||{}).forEach(add));
+ else if(g==="wk")S.journal.forEach(j=>(j.wake||[]).forEach(add));else if(g==="ctx")S.journal.forEach(j=>(j.ctx||[]).forEach(add));
+ else S.attacks.forEach(a=>(a[g]||[]).forEach(add));return c}
+const optList=g=>{const u=usage(g);return(S.cfg[g]||[]).filter(visOK).map((v,i)=>[v,i]).sort((a,b)=>(u[b[0]]||0)-(u[a[0]]||0)||a[1]-b[1]).map(x=>x[0])};
+const openPre=()=>S.pre.filter(p=>!p.att&&!p.end&&Date.now()-new Date(p.date)<1728e5).sort((a,b)=>b.date<a.date?-1:1)[0];
+/* --- moteur d’assistant --- */
+let WZ=null;
+function wiz(W){W.i=W.i||0;W.more=W.more||{};WZ=W;wzDraw()}
+function wzRedraw(){const y=$("#sh").scrollTop;wzDraw();$("#sh").scrollTop=y}
+function wzDraw(){const W=WZ,s=W.steps[W.i],last=W.i===W.steps.length-1;
+ sheet(`<div class="sh-h"><h2>${W.title}</h2><button class="ib" id="x" aria-label="Fermer">✕</button></div>
+ <div class="wp">${W.steps.map((_,k)=>`<i class="${k<W.i?"d":k===W.i?"on":""}"></i>`).join("")}</div>
+ <div class="wc">Étape ${W.i+1} sur ${W.steps.length}${s.opt?" · facultatif":""}</div>
+ <div class="wq">${s.q}</div>${s.sub?`<div class="sub" style="margin-bottom:10px">${s.sub}</div>`:""}
+ <div id="wb">${s.html()}</div><div class="hint" id="whint"></div>
+ <div class="wnav">${W.i?`<button class="btn alt" id="wback">← Retour</button>`:""}<button class="btn" id="wnext">${last?(W.final||"Terminer"):"Suivant →"}</button></div>`);
+ $("#x").onclick=wzExit;$("#wnext").onclick=wzNext;if($("#wback"))$("#wback").onclick=()=>{if(s.leave)s.leave();W.i--;wzDraw()};
+ $("#sh").onclick=wzClick;$("#sh").oninput=e=>{if(s.input)s.input(e)};$("#sh").onchange=e=>{if(s.change)s.change(e)};
+ if(s.after)s.after()}
+function wzNext(){const W=WZ,s=W.steps[W.i];if(s.need){const m=s.need();if(m){const h=$("#whint");h.textContent=m;h.style.display="block";return}}
+ if(s.leave)s.leave();if(W.i<W.steps.length-1){W.i++;wzDraw()}else if(W.finish)W.finish();else{close();render()}}
+function wzExit(){const W=WZ,s=W.steps[W.i];if(s.leave)s.leave();if(W.exit)W.exit();close();render()}
+function wzClick(e){const W=WZ,s=W.steps[W.i];if(s.click&&s.click(e))return;
+ const c=e.target.closest("[data-c]");
+ if(c){const k=c.dataset.c.indexOf("|"),g=c.dataset.c.slice(0,k),v=c.dataset.c.slice(k+1),set=W.sel[g],single=W.single&&W.single[g];
+  if(single){const had=set.has(v);set.clear();if(!had)set.add(v)}else set.has(v)?set.delete(v):set.add(v);
+  if(W.chg)W.chg(g);document.querySelectorAll(`[data-c^="${g}|"]`).forEach(b=>b.classList.toggle("on",set.has(b.dataset.c.slice(g.length+1))));
+  if(single&&set.size&&s.auto)setTimeout(wzNext,220);return}
+ const m=e.target.closest("[data-more]");if(m){W.more[m.dataset.more]=1;wzRedraw();return}
+ const ad=e.target.closest("[data-add]");if(ad){const g=ad.dataset.add;ask("Nouvel élément (sera mémorisé) :",n=>{if(!S.cfg[g].includes(n))S.cfg[g].push(n);const set=W.sel[g];if(W.single&&W.single[g])set.clear();set.add(n);save();if(W.chg)W.chg(g);wzRedraw()})}}
+const wzChips=g=>{const W=WZ,set=W.sel[g],all=optList(g),base=W.more[g]?all:all.slice(0,TOPN),
+  shown=[...new Set([...base,...[...set]])];
+ return `<div class="chips opt">${shown.map(v=>`<button class="chip${set.has(v)?" on":""}" data-c="${g}|${esc(v)}">${esc(v)}</button>`).join("")}${!W.more[g]&&all.length>TOPN?`<button class="chip more" data-more="${g}">Plus…</button>`:""}<button class="chip more" data-add="${g}">＋ Autre</button></div>`};
+const wh=t=>`<h3 class="wh">${t}</h3>`;
+/* --- vue lecture (n’affiche que ce qui a été choisi) --- */
+const pills=(l,arr)=>{arr=(arr||[]).filter(x=>x&&x!=="Aucun"&&visOK(x));return arr.length?`<div class="vr"><div class="vl">${l}</div><div class="chips">${arr.map(x=>`<span class="pill">${esc(x)}</span>`).join("")}</div></div>`:""};
+const rowv=(l,t)=>t?`<div class="vr"><div class="vl">${l}</div><div>${t}</div></div>`:"";
+const painList=o=>Object.entries(o||{}).filter(([z])=>z!=="Aucun").map(([z,s])=>z+(PL[s]?" ("+PL[s]+")":""));
+/* --- CRISE : assistant --- */
+function crisisWiz(a){
+ const edit=!!a,sel={loc:new Set(a&&a.loc),qual:new Set(a&&a.qual),sym:new Set(a&&a.sym),trg:new Set(a&&a.trg)};let when=a?a.date:iso(new Date());const no={};
+ const W={title:edit?"Modifier la crise":"Nouvelle crise",sel,single:{qual:1},A:a||null};
+ const persist=()=>{const A=W.A;if(!A)return;A.loc=[...sel.loc];A.qual=[...sel.qual];A.sym=[...sel.sym];A.trg=[...sel.trg];save()};
+ W.chg=persist;
+ const create=n=>{const id=Date.now(),pp=S.pre.filter(p=>!p.att&&Date.now()-new Date(p.date)<1728e5);
+  W.A={id,date:when,intensity:n,cur:n,loc:[],qual:[],sym:[],fn:[],trg:[],ctx:[],trt:[],pain:{},pre:pp.map(p=>p.id),note:"",ev:[]};
+  pp.forEach(p=>{p.att=id;(p.log=p.log||[]).push({t:new Date().toISOString(),k:"att"})});S.attacks.push(W.A);save()};
+ const hasF=l=>W.A&&(W.A.fn||[]).includes(l);
+ const yn=(l,t)=>`${wh(t)}<div class="chips"><button class="chip${hasF(l)?" on":""}" data-yn="${esc(l)}|1">Oui</button><button class="chip${no[l]?" on":""}" data-yn="${esc(l)}|0">Non</button></div>`;
+ const med=v=>{const A=W.A;if(!A||A.trt.includes(v))return;A.trt.push(v);(A.ev=A.ev||[]).push({t:new Date().toISOString(),k:"med",v});save()};
+ W.steps=[
+ {q:"Quelle est l’intensité de la douleur ?",info:"int",need:()=>W.A?"":"Choisissez une intensité pour enregistrer.",
+  html:()=>`<div class="ints">${NN.map(n=>`<button class="int${W.A&&W.A.intensity===n?" on":""}" data-n="${n}" style="background:${col(n)}">${n}</button>`).join("")}</div><div class="sm" style="margin-top:14px">Début : <b>${edit?fmt(a.date):"maintenant"}</b> · <button class="lnk" id="wchg">changer l’heure</button></div><div id="wwhen"></div>`,
+  click:e=>{const b=e.target.closest("[data-n]");if(b){const n=+b.dataset.n;if(!W.A)create(n);else{W.A.intensity=n;if(!edit)W.A.cur=n;save()}
+    document.querySelectorAll("[data-n]").forEach(x=>x.classList.toggle("on",x===b));if(!edit)setTimeout(wzNext,230);return 1}
+   if(e.target.closest("#wchg")){$("#wwhen").innerHTML=`<input type="datetime-local" id="when" value="${when}" style="margin-top:8px">`;return 1}},
+  change:e=>{if(e.target.id==="when"){when=e.target.value||when;if(W.A){W.A.date=when;save()}}}},
+ {q:"Où et comment ?",opt:1,html:()=>wh("Où a lieu la douleur ?")+wzChips("loc")+wh("Elle ressemble à…")+wzChips("qual")},
+ {q:"Quels symptômes ?",opt:1,html:()=>wzChips("sym")+yn(FNE,"Bouger ou monter un escalier aggrave-t-il la douleur ?")+yn(FNS,"Avez-vous dû vous arrêter ou vous allonger ?"),
+  click:e=>{const b=e.target.closest("[data-yn]");if(!b||!W.A)return;const k=b.dataset.yn.lastIndexOf("|"),l=b.dataset.yn.slice(0,k),on=b.dataset.yn.slice(k+1)==="1";
+   W.A.fn=(W.A.fn||[]).filter(x=>x!==l);if(on)W.A.fn.push(l);no[l]=!on;save();wzRedraw();return 1}},
+ {q:"Autres douleurs ?",sub:"Cervicales, mâchoire, œil… Quand sont-elles apparues par rapport à la migraine ?",opt:1,
+  html:()=>`<div class="zs">${optList("pain").map(z=>`<div class="zr"><span>${esc(z)}</span><div class="seg">${[[1,"Avant"],[2,"Après"],[3,"?"]].map(([v,l])=>`<button class="${W.A&&W.A.pain&&W.A.pain[z]===v?"on":""}" data-z="${esc(z)}|${v}">${l}</button>`).join("")}</div></div>`).join("")}</div>`,
+  click:e=>{const b=e.target.closest("[data-z]");if(!b||!W.A)return;const k=b.dataset.z.lastIndexOf("|"),z=b.dataset.z.slice(0,k),v=+b.dataset.z.slice(k+1);
+   W.A.pain=W.A.pain||{};delete W.A.pain.Aucun;if(W.A.pain[z]===v)delete W.A.pain[z];else W.A.pain[z]=v;save();wzRedraw();return 1}},
+ {q:"Qu’est-ce qui a pu la provoquer ?",opt:1,html:()=>wzChips("trg")},
+ {q:"Avez-vous pris un traitement ?",sub:"Touchez ce que vous venez de prendre : l’heure est enregistrée.",opt:1,
+  html:()=>`<div class="chips opt">${optList("trt").slice(0,6).map(v=>`<button class="chip${W.A&&W.A.trt.includes(v)?" on":""}" data-med="${esc(v)}">${esc(v)}</button>`).join("")}<button class="chip more" data-medadd="1">＋ Autre</button></div>`,
+  click:e=>{const b=e.target.closest("[data-med]");if(b){med(b.dataset.med);b.classList.add("on");return 1}
+   if(e.target.closest("[data-medadd]")){ask("Nouveau traitement pris :",n=>{if(!S.cfg.trt.includes(n))S.cfg.trt.push(n);med(n);wzRedraw()});return 1}}},
+ {q:"Autre chose d’important ?",opt:1,sub:"Ex. : 3 h sur l’ordinateur sans pause, mal assis dans le canapé…",html:()=>`<textarea id="note" placeholder="Facultatif">${W.A?esc(W.A.note||""):""}</textarea>`,
+  input:e=>{if(e.target.id==="note"&&W.A){W.A.note=e.target.value.trim();save()}}}];
+ W.final="Terminer";W.finish=()=>{close();render();if(W.A)crisisView(W.A)};
+ wiz(W)}
+/* --- CRISE : vue --- */
+function crisisView(a){
+ const act=!a.end,fu=act?`<div class="card"><b>💊 J’ai pris un traitement</b><div class="chips" style="margin:8px 0 14px">${optList("trt").slice(0,6).map(v=>`<button class="chip${(a.trt||[]).includes(v)?" on":""}" data-med="${esc(v)}">${esc(v)}</button>`).join("")}<button class="chip more" data-medadd="1">＋ Autre</button></div>
+  <b>Intensité maintenant</b><div class="ints" style="margin:8px 0 14px">${NN.map(n=>`<button class="int${(a.cur||a.intensity)===n?" on":""}" data-cur="${n}" style="background:${col(n)}">${n}</button>`).join("")}</div>
+  <button class="btn" data-end="1">✅ La crise est passée</button></div>`:`<div class="card"><div class="sub">✅ Terminée à ${hm(a.end)} · durée ${pd(dur(a))}</div><button class="btn alt" data-reopen="1" style="margin-top:8px">Rouvrir la crise</button></div>`;
+ const lab=e=>e.k==="med"?"💊 "+esc(e.v):e.k==="int"?"Intensité "+e.v+"/10":"✅ Crise passée",pre=linked(a);
+ const evs=[{t:new Date(a.date).toISOString(),x:`Début · intensité ${a.intensity}/10`},...(a.ev||[]).map(e=>({t:e.t,x:lab(e)}))].sort((x,y)=>x.t<y.t?-1:1);
+ sheet(`<div class="sh-h"><h2>Crise du ${fmt(a.date)}</h2><button class="ib" id="x">✕</button></div>${fu}
+ <div class="card">${rowv("Intensité","<b>"+a.intensity+"/10</b> au début"+(a.cur&&a.cur!==a.intensity?" · "+a.cur+"/10 en dernier":""))}${pills("Où",a.loc)}${pills("Douleur",a.qual)}${pills("Symptômes",a.sym)}${pills("Pendant la crise",a.fn)}${pills("Autres douleurs",painList(a.pain))}${pills("Déclencheurs",[...(a.trg||[]),...(a.ctx||[])])}${pills("Traitements",a.trt)}${pre.length?rowv("Pré-crise",pre.map(p=>"🌀 "+esc(fmt(p.date))+(real(p.sym).length?" – "+esc(real(p.sym).join(", ")):"")).join("<br>")):""}${a.note?rowv("Notes",esc(a.note)):""}</div>
+ <div class="card"><b>Évolution</b><div style="margin-top:6px">${evs.map(e=>`<div class="fl"><span class="sm">${hm(e.t)}</span><span>${e.x}</span></div>`).join("")}</div></div>
+ <button class="btn alt" data-edit="1">✏️ Modifier les détails</button>`);
+ $("#x").onclick=()=>{close();render()};
+ const keep=fn=>{fn();const y=$("#sh").scrollTop;crisisView(a);$("#sh").scrollTop=y;render()},ev=(k,v)=>keep(()=>{(a.ev=a.ev||[]).push({t:new Date().toISOString(),k,v});if(k==="end")a.end=new Date().toISOString();if(k==="int")a.cur=v;save()});
+ const med=v=>keep(()=>{a.trt=a.trt||[];if(!a.trt.includes(v))a.trt.push(v);(a.ev=a.ev||[]).push({t:new Date().toISOString(),k:"med",v});save()});
+ $("#sh").onclick=e=>{const T=q=>e.target.closest(q);let i;
+  if(i=T("[data-med]"))med(i.dataset.med);else if(T("[data-medadd]"))ask("Nouveau traitement pris :",n=>{if(!S.cfg.trt.includes(n))S.cfg.trt.push(n);med(n)});
+  else if(i=T("[data-cur]"))ev("int",+i.dataset.cur);else if(T("[data-end]"))ev("end");
+  else if(T("[data-reopen]"))keep(()=>{delete a.end;save()});else if(T("[data-edit]"))crisisWiz(a)}}
+/* --- PRÉ-CRISE : assistant (une seule à la fois, évolution horodatée) --- */
+function preWiz(p){
+ const cur=new Set(p?(p.cur||p.sym||[]):[]),painSel=Object.assign({},p&&p.pain);delete painSel.Aucun;let noteV=p?p.note||"":"";
+ const W={title:p?"Mettre à jour la pré-crise":"Début de symptômes",sel:{pre:cur},P:p||null};
+ const commit=()=>{const now=new Date().toISOString(),c=[...cur];
+  if(!W.P){if(!c.length&&!Object.keys(painSel).length&&!noteV)return;W.P={id:Date.now(),date:iso(new Date()),sym:[...c],cur:[...c],pain:{...painSel},ctx:[],note:noteV,att:null,log:[{t:now,k:"sym",add:[...c],rm:[]}]};S.pre.push(W.P);save();return}
+  const P=W.P,old=P.cur||P.sym||[],add=c.filter(x=>!old.includes(x)),rm=old.filter(x=>!c.includes(x));
+  if(add.length||rm.length){(P.log=P.log||[]).push({t:now,k:"sym",add,rm});P.cur=[...c];P.sym=[...new Set([...(P.sym||[]),...c])]}
+  P.pain={...painSel};P.note=noteV;save()};
+ W.exit=commit;
+ W.steps=[
+ {q:"Quels signes ressentez-vous ?",sub:p?"Ajoutez ou retirez des signes : l’évolution est enregistrée avec l’heure.":"Quelque chose commence, mais pas (encore) de migraine.",html:()=>wzChips("pre"),leave:commit,need:()=>cur.size?"":"Choisissez au moins un signe (ou passez à l’étape suivante).",},
+ {q:"Une douleur associée ?",opt:1,html:()=>`<div class="chips opt">${optList("pain").map(z=>`<button class="chip${painSel[z]?" on":""}" data-pz="${esc(z)}">${esc(z)}</button>`).join("")}</div>`,
+  click:e=>{const b=e.target.closest("[data-pz]");if(!b)return;const z=b.dataset.pz;painSel[z]?delete painSel[z]:painSel[z]=1;b.classList.toggle("on");return 1}},
+ {q:"Autre chose d’important ?",opt:1,sub:"Ex. : 3 h sur l’ordinateur sans pause, mal assis dans le canapé…",html:()=>`<textarea id="note" placeholder="Facultatif">${esc(noteV)}</textarea>`,input:e=>{if(e.target.id==="note")noteV=e.target.value.trim()}}];
+ W.steps[0].need=()=>cur.size||p?"":"Choisissez au moins un signe pour continuer.";
+ W.final="Enregistrer";W.finish=()=>{commit();close();render();if(W.P)preView(W.P)};
+ wiz(W)}
+/* --- PRÉ-CRISE : vue --- */
+function preView(p){
+ const open=!p.att&&!p.end,curS=p.cur||p.sym||[],past=(p.sym||[]).filter(x=>!curS.includes(x)),crisis=p.att&&S.attacks.find(a=>a.id===p.att);
+ const lab=e=>e.k==="sym"?[e.add&&e.add.length?"＋ "+esc(e.add.join(", ")):"",e.rm&&e.rm.length?"✖ "+esc(e.rm.join(", ")):""].filter(Boolean).join(" · "):e.k==="trend"?({mieux:"🙂 Ça va mieux",pareil:"😐 Pareil",pire:"😣 Ça empire"})[e.v]:e.k==="end"?"✅ Disparu, pas de migraine":"⚠️ Devenue une crise";
+ const log=(p.log&&p.log.length?p.log:[{t:new Date(p.date).toISOString(),k:"sym",add:p.sym||[],rm:[]}]).slice().sort((a,b)=>a.t<b.t?-1:1);
+ sheet(`<div class="sh-h"><h2>Pré-crise du ${fmt(p.date)}</h2><button class="ib" id="x">✕</button></div>
+ ${open?`<div class="card"><b>Comment ça évolue ?</b><div class="row" style="margin:8px 0 12px">${[["mieux","🙂 Mieux"],["pareil","😐 Pareil"],["pire","😣 Pire"]].map(([v,l])=>`<button class="btn alt" style="padding:12px 4px;font-size:15px" data-tr="${v}">${l}</button>`).join("")}</div><button class="btn" data-up="1">➕ Mettre à jour mes signes</button><button class="btn alt" data-mig="1" style="margin-top:10px">⚠️ C’est devenu une migraine</button><button class="btn alt" data-fin="1" style="margin-top:10px">✅ C’est passé, pas de migraine</button></div>`:""}
+ <div class="card">${pills("Signes actuels",open?curS:p.sym)}${open?pills("Signes passés",past):""}${pills("Douleurs associées",painList(p.pain))}${p.note?rowv("Notes",esc(p.note)):""}${crisis?rowv("Suite","Devenue la crise du "+esc(fmt(crisis.date))):""}${p.end?rowv("Fin",esc(fmt(p.end))+" · pas de migraine"):""}</div>
+ <div class="card"><b>Évolution</b><div style="margin-top:6px">${log.map(e=>`<div class="fl"><span class="sm">${hm(e.t)}</span><span>${lab(e)}</span></div>`).join("")}</div></div>
+ ${open?"":`<button class="btn alt" data-up="1">✏️ Modifier</button>`}${crisis?`<button class="btn alt" data-oc="1" style="margin-top:10px">Voir la crise</button>`:""}`);
+ $("#x").onclick=()=>{close();render()};
+ const keep=fn=>{fn();const y=$("#sh").scrollTop;preView(p);$("#sh").scrollTop=y;render()};
+ $("#sh").onclick=e=>{const T=q=>e.target.closest(q);let i;
+  if(i=T("[data-tr]"))keep(()=>{(p.log=p.log||[]).push({t:new Date().toISOString(),k:"trend",v:i.dataset.tr});save()});
+  else if(T("[data-up]"))preWiz(p);else if(T("[data-mig]"))crisisWiz(null);
+  else if(T("[data-fin]"))keep(()=>{p.end=iso(new Date());(p.log=p.log||[]).push({t:new Date().toISOString(),k:"end"});save()});
+  else if(T("[data-oc]"))crisisView(crisis)}}
+/* --- JOURNAL : assistant --- */
+const JST={matin:[["Votre nuit",["sleepH","sleepQ","wake"]],["Petit-déjeuner",["food","water","coffee"]],["Comment vous sentez-vous ?",["stress","mood"]],["À noter",["ctx","note"],1]],
+ midi:[["Votre matinée",["water","coffee","screens","activity"]],["Déjeuner",["food"]],["Comment vous sentez-vous ?",["stress","mood","neck"]],["Météo et à noter",["weather","ctx","note"],1]],
+ soir:[["Votre après-midi",["water","coffee","alcohol","screens","activity"]],["Dîner",["food"]],["Comment vous sentez-vous ?",["stress","mood","neck","period"]],["Météo et à noter",["weather","ctx","note"],1]]};
+function journalWiz(m){
+ const M=MM[m];let ex=entry(m,tdy());const P=S.profile,j=ex?Object.assign({},ex):{m,ts:iso(new Date()),weather:null,period:null,food:""};let dirty=false;
+ if(!ex){F.forEach(f=>j[f[0]]=f[0]==="sleepH"?7:0);C.forEach(c=>j[c[0]]=null)}j.ctx=j.ctx||[];j.wake=j.wake||[];
+ F.forEach(f=>INFO["jf_"+f[0]]=f[7]);C.forEach(c=>INFO["jf_"+c[0]]=c[2]);INFO.jf_weather="Ressenti du temps : orage, chaleur lourde ou chute de pression sont des déclencheurs fréquents.";INFO.jf_period="Les variations hormonales sont un déclencheur majeur chez de nombreuses personnes.";
+ const W={title:M.t,sel:{ctx:new Set(j.ctx),wk:new Set(j.wake)}};
+ W.chg=g=>{dirty=true;if(g==="ctx")j.ctx=[...W.sel.ctx];if(g==="wk")j.wake=[...W.sel.wk]};
+ const commit=()=>{const f=$("#food"),n=$("#jnote");if(f){if(f.value.trim()!==(j.food||""))dirty=true;j.food=f.value.trim()}if(n){if(n.value.trim()!==(j.note||""))dirty=true;j.note=n.value.trim()}
+  if(!dirty)return;j.rec=new Date().toISOString();if(ex){Object.assign(ex,j)}else{j.id=Date.now();S.journal.push(j);ex=j}save()};
+ const isF=k=>!!F.find(f=>f[0]===k),isC=k=>!!C.find(c=>c[0]===k);
+ const stp=k=>{const f=F.find(z=>z[0]===k);return `<div class="fl"><span>${f[1]}${I("jf_"+k)}</span><div class="step"><button data-a="${k}-">−</button><b id="n-${k}">${j[k]}${f[6]?" "+f[6]:""}</b><button data-a="${k}+">+</button></div></div>`};
+ const scl=k=>{const c=C.find(z=>z[0]===k);return `${wh(c[1]+I("jf_"+k))}<div class="chips">${[1,2,3,4,5].map(n=>`<button class="int${j[k]===n?" on":""}" style="flex:1;height:46px;background:${col(lv(k,n))}" data-ck="${k}" data-cv="${n}">${n}</button>`).join("")}</div>`};
+ const blk=b=>b==="wake"?wh("Au réveil")+wzChips("wk"):b==="ctx"?wh("Éléments importants")+wzChips("ctx"):b==="note"?wh("Autre chose d’important ?")+`<textarea id="jnote" placeholder="Ex. : 3 h sur l’ordinateur sans pause, mal assis dans le canapé…">${esc(j.note||"")}</textarea>`
+  :b==="food"?`<textarea id="food" placeholder="Ex. : 2 œufs, pain complet, café, jus d’orange…">${esc(j.food||"")}</textarea>`
+  :b==="weather"?wh("Météo"+I("jf_weather"))+`<div class="chips">${WE.map(w=>`<button class="chip${j.weather===w?" on":""}" data-ck="weather" data-cv="${w}">${w}</button>`).join("")}</div><div class="rel" style="margin-top:8px"><button class="btn alt" id="mt">📍 Météo actuelle (GPS)</button>${I("mt")}</div><div class="sm" id="mm" style="margin-top:4px"></div>`
+  :b==="period"?(P.cycle&&!isMale()?wh("Règles en cours"+I("jf_period"))+`<div class="chips">${["Oui","Non"].map(w=>`<button class="chip${j.period===w?" on":""}" data-ck="period" data-cv="${w}">${w}</button>`).join("")}</div>`:""):isC(b)?scl(b):"";
+ const hb=m==="matin"&&window.webkit&&window.webkit.messageHandlers&&window.webkit.messageHandlers.health?`<button class="btn alt" id="hl" style="margin-bottom:12px">🍎 Importer le sommeil depuis Santé</button>`:"";
+ const paintN=k=>{const f=F.find(z=>z[0]===k);if($("#n-"+k))$("#n-"+k).textContent=j[k]+(f[6]?" "+f[6]:"")};
+ W.steps=JST[m].map(([q,bl,opt],ix)=>({q,opt,sub:ix===0&&ex?"Déjà rempli : vous pouvez corriger.":"",leave:commit,
+  html:()=>{let h=ix===0&&m==="matin"?hb:"",st="";bl.forEach(b=>{if(isF(b))st+=stp(b);else{if(st){h+=`<div class="card">${st}</div>`;st=""}h+=blk(b)}});if(st)h+=`<div class="card">${st}</div>`;return h},
+  input:e=>{if(e.target.id==="food"||e.target.id==="jnote")dirty=true},
+  click:e=>{const a=e.target.closest("[data-a]");
+   if(a){const k=a.dataset.a.slice(0,-1),s=a.dataset.a.slice(-1)==="+"?1:-1,f=F.find(z=>z[0]===k);j[k]=Math.min(f[4],Math.max(f[3],Math.round((j[k]+s*f[2])*100)/100));dirty=true;paintN(k);return 1}
+   const c=e.target.closest("[data-ck]");if(c){const k=c.dataset.ck,v=isNaN(c.dataset.cv)?c.dataset.cv:+c.dataset.cv;j[k]=j[k]===v?null:v;dirty=true;document.querySelectorAll(`[data-ck="${k}"]`).forEach(b=>b.classList.toggle("on",(isNaN(b.dataset.cv)?b.dataset.cv:+b.dataset.cv)===j[k]));return 1}
+   if(e.target.closest("#mt")&&!e.target.closest(".i")){meteo(j,()=>{dirty=true;document.querySelectorAll('[data-ck="weather"]').forEach(b=>b.classList.toggle("on",b.dataset.cv===j.weather))},t=>$("#mm").textContent=t);return 1}
+   if(e.target.closest("#hl")){window.nativeSleep=h=>{j.sleepH=Math.round(h*2)/2;dirty=true;paintN("sleepH")};window.webkit.messageHandlers.health.postMessage("sleep");return 1}}}));
+ W.exit=commit;W.final="Enregistrer";W.finish=()=>{commit();close();render()};
+ wiz(W)}
+/* --- ACCUEIL --- */
+const MI={matin:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>',midi:'<svg viewBox="0 0 24 24"><path d="M6.5 16a5.5 5.5 0 0 1 11 0"/><path d="M3 16h18M12 4.5v3M4.8 8.8l2 2M19.2 8.8l-2 2M5 20h14"/></svg>',soir:'<svg viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></svg>'},MN={matin:"Matin",midi:"Midi",soir:"Soir"};
+function home(){
+ const P=S.profile,nm=(P.name||"").trim().split(" ")[0],hr=new Date().getHours(),cur=hr<11?"matin":hr<17?"midi":"soir",ord=["matin","midi","soir"],ci=ord.indexOf(cur),m=S.attacks.filter(a=>a.date.startsWith(iso(new Date()).slice(0,7))),op=openPre(),t=dayAgg(tdy()),act=active();
+ const tile=k=>{const e=entry(k,tdy()),i=ord.indexOf(k),st=e?"done":k===cur?"now":i<ci?"miss":"later",lb={done:"✓ Rempli à "+(e?hm(e.ts):""),now:"À remplir maintenant",miss:"Non rempli",later:"Plus tard"}[st];
+  return `<button class="mt ${st}" data-jm="${k}">${MI[k]}<b>${MN[k]}</b><small>${lb}</small></button>`};
+ $("#v-home").innerHTML=`<h2 style="font-size:26px;margin:0 0 12px">Bonjour${nm?" "+esc(nm):""} 👋${nm?"":`<div class="sub" style="font-size:14px;font-weight:400">Ajoutez votre prénom dans ⚙️</div>`}</h2>
+ ${act.map(a=>`<div class="card" data-oa="${a.id}" style="border:2px solid ${col(a.cur||a.intensity)}"><b>🔴 Crise en cours</b> depuis ${hm(a.date)}<div class="sub">Intensité actuelle ${a.cur||a.intensity}/10 · touchez pour noter un traitement, une amélioration ou la fin</div></div>`).join("")}
+ ${act.length?"":`<div class="rel"><button class="big" id="go">⚠️ J’ai une migraine<small>Déclarer une crise en quelques secondes</small></button>${I("go")}</div>`}
+ ${act.length?"":`<div class="rel"><button class="big pre" id="pr">${op?"🌀 Pré-crise en cours":"🌀 Début de symptômes (pré-crise)"}${op?`<small>depuis ${hm(op.date)} · touchez pour mettre à jour</small>`:""}</button>${I("pre")}</div>`}
+ <div class="row"><div class="card stat"><b>${m.length}</b><span class="sub">crise${m.length>1?"s":""} ce mois-ci</span></div><div class="card stat"><b>${m.length?avg(m).toFixed(1):"–"}</b><span class="sub">intensité moyenne</span></div></div>
+ <div class="card"><h2>📝 Journal du jour${I("jr")}</h2><div class="mts">${ord.map(tile).join("")}</div><div class="sub" style="margin-top:10px">Aujourd’hui : ${t.eau_L} L d’eau · ${t.cafes} café${t.cafes>1?"s":""} · ${t.ecrans_h} h d’écrans</div></div>
+ <h3>Dernières crises</h3><div class="card">${S.attacks.length?sorted().slice(0,3).map(a=>item(a)).join(""):`<div class="empty">Aucune crise enregistrée pour l’instant.<br><br><button class="btn alt" id="dm0">🧪 Charger 1 mois de démo</button></div>`}</div>`;
+ if($("#go"))$("#go").onclick=()=>crisisWiz(null);if($("#pr"))$("#pr").onclick=()=>op?preView(op):preWiz(null);document.querySelectorAll("[data-jm]").forEach(b=>b.onclick=()=>journalWiz(b.dataset.jm));
+ if($("#dm0"))$("#dm0").onclick=()=>{demo();save();render()}}
+document.addEventListener("click",e=>{if(e.target.closest(".del,.i"))return;const o=e.target.closest("[data-oa]"),p=e.target.closest("[data-op]");if(o)crisisView(S.attacks.find(a=>a.id==o.dataset.oa));else if(p)preView(S.pre.find(x=>x.id==p.dataset.op))});
+function itemP(p){const open=!p.att&&!p.end&&Date.now()-new Date(p.date)<1728e5,sy=real(open?p.cur||p.sym:p.sym);return `<div class="item" data-op="${p.id}"><div class="dot" style="background:var(--ac2)">🌀</div><div class="t"><div>${fmt(p.date)} · pré-crise${open?" en cours":""}</div><div>${(p.log||[]).length>1?"↗ "+((p.log||[]).length)+" mises à jour · ":""}${esc(sy.join(", ")||"–")}</div></div>${open?"":`<button class="del" data-dp="${p.id}" aria-label="Supprimer">🗑</button>`}</div>`}
+/* --- SAUVEGARDE / TRANSFERT --- */
+async function saveFile(name,text,mime){try{const f=new File([text],name,{type:mime});if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f]});return true}
+  const u=URL.createObjectURL(f),a=document.createElement("a");a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();return true}catch(e){return e&&e.name==="AbortError"}}
+async function exportData(){const txt=JSON.stringify({app:"Migraine Assistant",format:1,version:APP_VER,exported:new Date().toISOString(),data:S});
+ const ok=await saveFile("migraine-assistant-sauvegarde-"+dayKey(new Date())+".json",txt,"application/json");
+ if(!ok){dlg(`<b>Copiez ce code de sauvegarde</b><div class="sm" style="margin:6px 0">Collez-le ensuite dans « Importer » sur l’autre appareil.</div><textarea id="bk" readonly style="height:120px">${esc(txt)}</textarea><button class="btn" id="bkc">Copier</button>`);$("#bkc").onclick=()=>{try{$("#bk").select();navigator.clipboard.writeText(txt);$("#bkc").textContent="Copié ✓"}catch(e){}}}}
+function importAsk(){dlg(`<b>Importer des données</b><div class="sm" style="margin:6px 0 10px">Choisissez le fichier de sauvegarde, ou collez le code copié.</div><button class="btn" id="bif">📂 Choisir un fichier</button><textarea id="bit" placeholder="…ou collez le code ici" style="margin-top:10px;height:80px"></textarea><button class="btn alt" id="bic" style="margin-top:8px">Importer le code collé</button><button class="btn alt" id="bin" style="margin-top:8px">Annuler</button>`);
+ $("#bin").onclick=shut;$("#bif").onclick=()=>{shut();$("#bf").click()};$("#bic").onclick=()=>{const t=$("#bit").value.trim();if(t){shut();importText(t)}}}
+function importText(t){let o;try{o=JSON.parse(t)}catch(e){dlg("Ce contenu n’est pas une sauvegarde valide.");return}
+ const d=o&&o.data?o.data:o;if(!d||!Array.isArray(d.attacks)||!Array.isArray(d.journal)){dlg("Ce contenu n’est pas une sauvegarde de Migraine Assistant.");return}
+ dlg(`<b>Sauvegarde reconnue</b><div class="sm" style="margin:6px 0 12px">${d.attacks.length} crise(s) · ${(d.pre||[]).length} pré-crise(s) · ${d.journal.length} saisie(s) de journal.</div><button class="btn" id="im1">🔀 Fusionner avec mes données</button><div class="sm" style="margin:4px 0 8px">Garde ce qui est déjà ici et ajoute le reste.</div><button class="btn alt" id="im2">♻️ Remplacer mes données</button><button class="btn alt" id="im3" style="margin-top:8px">Annuler</button>`);
+ $("#im3").onclick=shut;
+ const fin=()=>{save();shut();close();applyTheme();render();dlg("<b>Import terminé ✓</b>");setTimeout(shut,1600)};
+ $("#im1").onclick=()=>{["attacks","pre","journal"].forEach(g=>{const ids=new Set((S[g]||[]).map(x=>x.id));S[g]=[...(S[g]||[]),...(d[g]||[]).filter(x=>!ids.has(x.id))]});
+  S.profile=Object.assign({},d.profile||{},S.profile);S.cfg=Object.assign({},d.cfg||{},S.cfg);Object.keys(S.cfg).forEach(g=>{if(Array.isArray(S.cfg[g])&&d.cfg&&Array.isArray(d.cfg[g]))S.cfg[g]=[...new Set([...S.cfg[g],...d.cfg[g]])]});
+  const ai=new Set((S.arch||[]).map(x=>x.id));S.arch=[...(S.arch||[]),...(d.arch||[]).filter(x=>!ai.has(x.id))].sort((a,b)=>b.id-a.id);fin()};
+ $("#im2").onclick=()=>{const th=S.theme;S={attacks:[],pre:[],journal:[],profile:{},cfg:clone(D),theme:th,ai:null};try{localStorage.setItem("migraine-v2",JSON.stringify(Object.assign({},d,{theme:th})))}catch(e){}load();fin()}}
+/* --- zoom bloqué --- */
+["gesturestart","gesturechange","gestureend"].forEach(t=>document.addEventListener(t,e=>e.preventDefault(),{passive:false}));
+
+/* ---------- v4 : rapports, IA, démo complète ---------- */
+Object.assign(INFO,{per:"Choisissez la période prise en compte par les rapports et l’analyse IA : 7, 14, 30, 90 jours, tout l’historique, ou un nombre de jours personnalisé (Autre…).",rap:"Export = synthèse chiffrée. Export complet = toutes les données de la période (crises avec suivi horodaté, pré-crises, journal jour par jour, repas). Rapport d’analyse IA = lecture rédigée par l’analyse intégrée. Chaque rapport peut être enregistré ou copié pour votre médecin."});
+const per=()=>S.per==null?30:S.per,inP=d=>!per()||+new Date(d)>=Date.now()-per()*864e5;
+function W(){const so=(a,b)=>a.date<b.date?-1:1;return{A:S.attacks.filter(a=>inP(a.date)).sort(so),P:S.pre.filter(p=>inP(p.date)).sort(so),D:jours().filter(o=>inP(o.date))}}
+const tbl=(h,r)=>r.length?`<table><tr>${h.map(x=>`<th>${x}</th>`).join("")}</tr>${r.map(x=>`<tr>${x.map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}</table>`:`<p class="sm">Aucune donnée sur la période.</p>`;
+const dur=a=>a.end?Math.round((new Date(a.end)-new Date(a.date))/6e4):null,pd=n=>n==null?"–":Math.floor(n/60)+" h "+String(n%60).padStart(2,"0");
+const pl=o=>Object.entries(o||{}).filter(([z])=>z!=="Aucun").map(([z,s])=>esc(z)+" ("+PL[s]+")").join(", ")||"–";
+const tt=(l,k,N)=>tbl(["Élément","Fois","%"],tally(l,k).map(([x,v])=>[esc(x),v,Math.round(v/N*100)+" %"]));
+function head(t){const P=S.profile,age=P.birth?Math.floor((Date.now()-new Date(P.birth))/31557600000):"";
+ return `<h2>${t}</h2><p class="sm">Migraine Assistant v${APP_VER} · généré le ${fmt(new Date())} · période : ${per()?per()+" derniers jours":"toutes les données"}</p><p>${[P.name,age?age+" ans":"",P.sex,P.weight?P.weight+" kg":"",P.height?P.height+" cm":"",P.bg?"Traitement de fond : "+P.bg:"",P.cond].filter(Boolean).map(esc).join(" · ")}</p>`}
+function rapport(det){
+ const{A,P,D}=W(),n=A.length,du=A.map(dur).filter(x=>x!=null),days=per()||Math.max(1,Math.ceil((Date.now()-new Date((A[0]||{date:Date.now()}).date))/864e5)),mv=k=>mean(D.map(o=>o[k]).filter(v=>v!=null)),pc={};
+ A.forEach(a=>Object.entries(a.pain||{}).forEach(([z,s])=>{if(z!=="Aucun")(pc[z]=pc[z]||[0,0,0,0])[s]++}));P.forEach(p=>Object.keys(p.pain||{}).forEach(z=>{if(z!=="Aucun")(pc[z]=pc[z]||[0,0,0,0])[1]++}));
+ let h=head(det?"Export complet":"Export (synthèse)")+`<h3>Vue d’ensemble</h3>`+tbl(["Indicateur","Valeur"],[["Crises",n],["Fréquence",(n/days*7).toFixed(1)+" / semaine"],["Intensité moyenne / max",n?avg(A).toFixed(1)+" / "+Math.max(...A.map(a=>a.intensity)):"–"],["Durée moyenne",du.length?pd(Math.round(mean(du))):"–"],["Crises précédées d’une pré-crise",A.filter(a=>a.pre.length).length+" / "+n],["Pré-crises sans migraine",P.filter(p=>!p.att).length]])
+ +`<h3>Déclencheurs suspectés</h3>`+tt(A,"trg",n)+`<h3>Symptômes associés</h3>`+tt(A,"sym",n)+`<h3>Localisation</h3>`+tt(A,"loc",n)+`<h3>Type de douleur</h3>`+tt(A,"qual",n)+`<h3>Pendant la crise</h3>`+tt(A,"fn",n)+`<h3>Éléments importants avant la crise</h3>`+tt(A,"ctx",n)+`<h3>Traitements pris</h3>`+tt(A,"trt",n)
+ +`<h3>Douleurs associées : chronologie</h3>`+tbl(["Zone","Avant","Après","Incertain"],Object.entries(pc).map(([z,c])=>[esc(z),c[1],c[2],c[3]]))
+ +`<h3>Signes de pré-crise</h3>`+tt(P,"sym",P.length||1)
+ +`<h3>Habitudes (moyenne par jour)</h3>`+tbl(["Sommeil h","Eau L","Cafés","Alcool","Écrans h","Activité min"],D.length?[[mv("sommeil_h"),mv("eau_L"),mv("cafes"),mv("alcool"),mv("ecrans_h"),mv("activite_min")]]:[])
+ +`<h3>24 h avant une crise, comparé aux autres moments</h3>`+corr();
+ if(det)h+=`<h3>Détail des crises</h3>`+tbl(["Date","Int.","Durée","Localisation","Symptômes","Déclencheurs","Traitements","Douleurs associées","Type de douleur / retentissement","Éléments importants","Suivi / notes"],A.map(a=>[fmt(a.date),a.intensity,pd(dur(a)),esc(real(a.loc).join(", ")||"–"),esc(real(a.sym).join(", ")||"–"),esc(real(a.trg).join(", ")||"–"),esc(real(a.trt).join(", ")||"–"),pl(a.pain),esc([...real(a.qual),...real(a.fn)].join(", ")||"–"),esc(real(a.ctx).join(", ")||"–"),(a.ev||[]).map(e=>"+"+Math.round((new Date(e.t)-new Date(a.date))/6e4)+" min : "+(e.k==="med"?"💊 "+esc(e.v):e.k==="int"?"intensité "+e.v+"/10":"crise passée")).join("<br>")+(a.note?"<br>"+esc(a.note):"")]))
+ +`<h3>Pré-crises</h3>`+tbl(["Date","Signes","Douleurs","Rattachée à"],P.map(p=>[fmt(p.date),esc(real(p.sym).join(", ")||"–"),pl(p.pain),p.att?"crise du "+fmt((S.attacks.find(a=>a.id===p.att)||{}).date):"aucune crise"]))
+ +`<h3>Journal jour par jour</h3>`+tbl(["Jour","Sommeil","Eau L","Cafés","Alcool","Écrans h","Activité","Stress","Humeur","Météo"].concat(isMale()?[]:["Règles"]).concat(["Éléments importants"]),D.map(o=>[o.date,(o.sommeil_h??"–")+" h"+(o.qualite_sommeil?" ("+o.qualite_sommeil+"/5)":""),o.eau_L,o.cafes,o.alcool,o.ecrans_h,o.activite_min,mean(o.stress),mean(o.humeur),esc([...new Set(o.meteo)].join(", ")||"–")].concat(isMale()?[]:[o.regles||"–"]).concat([esc((o.ctx||[]).concat(o.notes?[o.notes]:[]).join(", ")||"–")])))
+ +`<h3>Repas</h3>`+tbl(["Jour","Matin","Midi","Soir"],D.map(o=>[o.date,esc(o.repas.matin||"–"),esc(o.repas.midi||"–"),esc(o.repas.soir||"–")]));
+ return h}
+const docHTML=b=>`<!DOCTYPE html><html lang="fr"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Migraine Assistant</title><style>body{font:15px/1.5 -apple-system,sans-serif;max-width:900px;margin:20px auto;padding:0 14px;color:#1d2733}table{width:100%;border-collapse:collapse;font-size:13px;margin:8px 0}td,th{border-top:1px solid #ccd;padding:5px;text-align:left;vertical-align:top}th{color:#667}.sm{color:#667;font-size:13px}pre{white-space:pre-wrap;font:inherit}h3{color:#4a5ba8}${ACSS}</style><body>${b}`;
+async function saveDoc(name,html){const doc=docHTML(html);let dl=null;try{dl=await window.claude?.use("downloads")}catch(e){}
+ try{if(dl)await dl.save({filename:name+".html",data:doc});else{const f=new File([doc],name+".html",{type:"text/html"});if(navigator.canShare&&navigator.canShare({files:[f]}))await navigator.share({files:[f]});else{const u=URL.createObjectURL(f),a=document.createElement("a");a.href=u;a.download=f.name;a.click()}}}catch(e){}}
+function showReport(html,title,name){sheet(`<div class="sh-h"><h2>${title}</h2><button class="ib" id="x">✕</button></div><div class="rp">${html}</div><div class="row" style="margin-top:14px"><button class="btn alt" id="rc">Copier le texte</button><button class="btn" id="rs2">Enregistrer</button></div>`);
+ $("#x").onclick=close;$("#rs2").onclick=()=>saveDoc(name,html);$("#rc").onclick=()=>{try{navigator.clipboard.writeText($(".rp").innerText);$("#rc").textContent="Copié ✓"}catch(e){}}}
+function demo(){
+ if(S.journal.some(x=>x.demo))return;
+ let s=11,id=Date.now();const r=()=>(s=s*16807%2147483647)/2147483647,rn=(a,b)=>a+Math.floor(r()*(b-a+1)),pk=a=>a[Math.floor(r()*a.length)],pad=n=>String(n).padStart(2,"0"),T=(k,h,mi)=>`${k}T${pad(h)}:${pad(mi)}`,E=o=>S.journal.push(Object.assign({id:++id,demo:1,rec:new Date().toISOString()},o)),
+ FOOD=[["Tartines beurre-confiture, café noir","Salade de quinoa, poulet grillé","Poisson, riz, haricots verts"],["Café seul, rien d’autre","Sandwich jambon-fromage, chips","Pizza 4 fromages, 2 verres de vin rouge"],["Yaourt, banane, thé","Pâtes sauce tomate, fromage râpé","Soupe de légumes, pain complet"],["Croissant, café, jus d’orange","Burger, frites, soda","Charcuterie, fromage vieilli, chocolat noir"]],
+ AT=[{sym:["Nausées / vomissements","Photophobie (lumière)"],loc:"Côté gauche",trg:["Manque de sommeil","Stress / forte émotion"],pain:{"Cervicales":1,"Mâchoire (ATM)":3},note:"Semaine chargée, peu dormi."},{sym:["Aura visuelle","Photophobie (lumière)","Nausées / vomissements"],loc:"Derrière l’œil",trg:["Météo / orage"],pain:{"Œil":2,"Visage / face":2},note:"Orage dans l’après-midi, aura d’environ 20 min."},{sym:["Phonophobie (bruit)","Vertiges"],loc:"Nuque",trg:["Écrans prolongés (3 h et plus)","Mauvaise posture / cou penché","Stress / forte émotion"],pain:{"Cervicales":1,"Épaules":1},note:"Longue journée devant l’écran, mal assis dans le canapé."},{sym:["Nausées / vomissements","Phonophobie (bruit)"],loc:"Tout le crâne",trg:["Repas sauté ou en retard","Alcool / excès de café"],pain:{"Mâchoire (ATM)":1,"Cervicales":2},note:"Repas sauté ce midi, vin la veille."}],
+ AQ=["Pulsatile (battements)","Pulsatile (battements)","Pression / étau","Pression / étau"],AF=[[FNE],[FNS],[],[FNE]],AC=[[],[],[],[]],
+ pf=S.profile;[["name","Camille"],["birth","1988-04-12"],["sex","Femme"],["weight",62],["height",168],["cycle",true],["fam","Oui"],["bg","Propranolol 40 mg le soir"],["cond","Bruxisme nocturne, tensions cervicales"]].forEach(([k,v])=>{if(pf[k]==null||pf[k]==="")pf[k]=v});
+ ["Magnésium","Huiles essentielles menthe"].forEach(v=>{if(!S.cfg.trt.includes(v))S.cfg.trt.push(v)});if(!S.cfg.trg.includes("Chocolat / fromage vieilli"))S.cfg.trg.push("Chocolat / fromage vieilli");
+ const BD={29:0,26:3,23:2,20:1,17:0,14:3,11:2,8:1,5:0,3:3,1:2};
+ for(let i=30;i>=1;i--){const d=new Date();d.setDate(d.getDate()-i);const k=iso(d).slice(0,10),ty=BD[i],bad=ty!=null,at=AT[ty||0],f=bad?(ty===3?FOOD[1]:FOOD[3]):pk([FOOD[0],FOOD[2]]),pe=(i>=5&&i<=9)||i>=29?"Oui":"Non",st=ty===1,pr=st?1002:rn(1014,1022),tp=st?29:rn(14,24);
+  E({m:"matin",ts:T(k,7,rn(0,40)),sleepH:bad?rn(4,5)+.5:rn(6,8),sleepQ:bad?rn(1,2):rn(3,5),stress:bad?rn(3,5):rn(1,3),mood:bad?rn(2,3):rn(3,5),water:.25,coffee:bad?2:1,wake:bad&&ty===0?["Mâchoire serrée / courbatue"]:[],food:f[0]});
+  E({m:"midi",ts:T(k,12,rn(0,40)),water:bad?.25:.75,coffee:bad?2:1,screens:bad?5:(i%6===2?4.5:2.5),activity:bad?0:(i%5===0?0:15),stress:bad?rn(4,5):rn(1,3),mood:bad?rn(1,3):rn(4,5),weather:st?"Orageux":"Stable",temp:tp,press:pr,neck:bad?rn(3,5):rn(1,3),ctx:bad&&ty===2?["3 h et plus d’écran sans pause","Mauvaise posture (canapé, lit…)"]:bad&&ty===3?["Repas sauté ou en retard"]:[],food:f[1]});
+  E({m:"soir",ts:T(k,19,rn(0,40)),water:bad?.5:1,coffee:bad?1:0,alcohol:bad?rn(1,2):0,screens:bad?4:1.5,activity:bad?0:rn(2,4)*15,stress:bad?rn(3,5):rn(1,3),mood:bad?rn(2,3):rn(3,5),weather:st?"Orageux":"Stable",temp:tp-4,press:pr,period:pe,neck:bad?rn(3,5):rn(1,3),food:f[2]});
+  if(i===9||i===21)S.pre.push({id:++id,demo:1,date:T(k,16,10),sym:["Bâillements","Raideur de nuque"],pain:{"Cervicales":1},note:"Magnésium et repos : la crise n’est pas venue.",att:null,cur:["Bâillements"],end:T(k,19,30),log:[{t:new Date(T(k,16,10)).toISOString(),k:"sym",add:["Bâillements","Raideur de nuque"],rm:[]},{t:new Date(T(k,17,40)).toISOString(),k:"trend",v:"pareil"},{t:new Date(T(k,18,30)).toISOString(),k:"sym",add:[],rm:["Raideur de nuque"]},{t:new Date(T(k,19,30)).toISOString(),k:"end"}]});
+  if(bad){const aid=++id,pid=++id,h=rn(13,17),mi=rn(0,50),st0=new Date(T(k,h,mi)).getTime(),t=n=>new Date(st0+n*6e4).toISOString(),ip=rn(5,9),sev=ip>=7,m1=sev?"Triptan":pk(["Antalgique","Magnésium"]);
+   S.pre.push({id:pid,demo:1,date:T(k,h-rn(1,2),rn(0,40)),sym:[...new Set([pk(D.pre),pk(D.pre),"Raideur de nuque"])],pain:{"Cervicales":1},note:"",att:aid});
+   const ev=[{t:t(15),k:"med",v:m1}];if(sev){ev.push({t:t(45),k:"int",v:Math.min(10,ip+1)},{t:t(90),k:"med",v:"Antalgique"})}
+   ev.push({t:t(sev?140:90),k:"int",v:Math.max(1,ip-(sev?5:3))},{t:t(sev?250:160),k:"end"});
+   S.attacks.push({id:aid,demo:1,date:T(k,h,mi),intensity:ip,cur:Math.max(1,ip-3),loc:[at.loc],sym:[...at.sym],trg:[...at.trg,...(f===FOOD[3]?["Chocolat / fromage vieilli"]:[]),...(pe==="Oui"?["Règles / hormones"]:[])],pain:{...at.pain},trt:[...new Set([...ev.filter(e=>e.k==="med").map(e=>e.v),...(sev?["Repos dans le noir"]:[])])],pre:[pid],note:at.note,qual:[AQ[AT.indexOf(at)]],fn:AF[AT.indexOf(at)],ctx:AC[AT.indexOf(at)],ev,end:ev[ev.length-1].t})}}
+}
+
+/* ---------- v5 : analyse intégrée (gratuite, sans clé) ---------- */
+Object.assign(INFO,{
+ qual:"Comment la douleur se ressent : pulsatile (battements au rythme du cœur) est typique de la migraine ; en étau ou sourde évoque plutôt une céphalée de tension ou cervicale ; en coup de poignard ou brûlure autour de l’œil mérite d’être signalé au médecin.",fn:"Ce que la crise vous a fait faire. Une douleur aggravée par l’effort et qui oblige à s’immobiliser est typique de la migraine ; le besoin de bouger avec larmoiement évoque autre chose (à signaler).",ctx:"Faits concrets qui ont précédé : 3 h devant un ordinateur, mauvaise posture dans le canapé, long trajet, repas en retard… Ils ne sont pas forcément ressentis comme des déclencheurs, mais l’analyse les compare à vos jours sans crise.",wk:"À renseigner le matin : mal de tête au réveil, mâchoire serrée, nuit agitée, ronflements. Ils orientent vers le bruxisme ou des troubles du sommeil.",
+ ai:"Analyse réalisée directement dans l’app, sur votre appareil : gratuite, sans clé API et sans envoi de vos données. Elle croise vos crises, votre journal, vos repas et vos traitements (statistiques et règles médicales usuelles). Aide à la réflexion, pas un diagnostic.",
+ prof:"Âge, poids, taille, antécédents… ces éléments affinent l’analyse. Tout reste sur votre appareil.",
+ rap:"Export = synthèse chiffrée. Export complet = toutes les données de la période. Rapport d’analyse IA = lecture rédigée par l’analyse intégrée. Chaque rapport peut être enregistré ou copié pour votre médecin."
+});
+const nz=s=>String(s||"").toLowerCase().replace(/œ/g,"oe").normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+const mn=a=>a.length?a.reduce((s,v)=>s+v,0)/a.length:NaN;
+const sdv=a=>{if(a.length<2)return 0;const m=mn(a);return Math.sqrt(a.reduce((s,v)=>s+(v-m)*(v-m),0)/(a.length-1))};
+const med=a=>{if(!a.length)return NaN;const s=[...a].sort((x,y)=>x-y),h=s.length>>1;return s.length%2?s[h]:(s[h-1]+s[h])/2};
+const r1=v=>Math.round(v*10)/10,fr=v=>String(r1(v)).replace(".",","),pc=(a,b)=>b?Math.round(a/b*100)+" %":"–";
+function eff(x,y){const n1=x.length,n2=y.length;if(n1<2||n2<2)return null;const mx=mn(x),my=mn(y),sp=Math.sqrt(((n1-1)*sdv(x)**2+(n2-1)*sdv(y)**2)/(n1+n2-2));
+ const d=sp>0?(mx-my)/sp:(mx===my?0:(mx>my?3:-3));return{mx,my,n1,n2,d}}
+const conf=e=>{const a=Math.abs(e.d);return a>=1&&e.n1>=6&&e.n2>=6?"élevée":a>=.8&&e.n1>=4?"moyenne":a>=.5&&e.n1>=3?"faible":null};
+const shift=(k,n)=>{const d=new Date(k+"T12:00");d.setDate(d.getDate()+n);return dayKey(d)};
+const GR=[
+["f","fromages affinés / produits fermentés",/fromage|brie|camembert|gruyere|emmental|roquefort|chevre|parmesan|comte|cheddar|raclette|fondue|saucisson sec|vieilli/],
+["f","chocolat / cacao",/chocolat|cacao|nutella/],
+["f","charcuterie / viandes transformées",/charcuterie|jambon|saucisson|salami|\bpate\b|bacon|lardon|chorizo|hot.?dog|knack|merguez/],
+["f","alcool",/\bvin\b|biere|alcool|whisky|champagne|cocktail|rhum|vodka|aperitif|pastis|cidre|spritz|digestif/],
+["f","caféine (café, thé, sodas, boissons énergisantes)",/cafe|\bthe\b|soda|cola|energy|red bull|boisson energisante/],
+["f","plats très salés / ultra-transformés",/burger|frites|chips|pizza|kebab|nuggets|nouilles|chinois|fast.?food|plat prepare|bouillon|surgele/],
+["f","édulcorants (boissons « light » / « zéro »)",/\blight\b|\bzero\b|aspartame|edulcor|sucralose|\bdiet\b/],
+["f","poissons fumés / conserves",/saumon fume|poisson fume|anchois|sardine|thon en boite|conserve/],
+["f","agrumes",/orange|citron|pamplemousse|mandarine|clementine|agrume/],
+["f","repas sauté, très léger ou tardif",/\brien\b|saute|jeun|pas mange|cafe seul|juste un cafe|peu mange|en retard|tardif|pas de petit/],
+["c","longue durée devant un écran",/ecran|ordinateur|\bpc\b|telephone|tablette|\btele\b|jeu video|visio|teletravail/],
+["c","mauvaise posture / cou penché",/posture|canape|avachi|penche|mal assis|cou en avant|de travers|\blit\b/],
+["c","longs trajets / conduite",/conduit|voiture|train|avion|transport|trajet|route/],
+["c","effort physique intense",/effort|sport|course a pied|musculation|velo|marche rapide|demenag/],
+["c","absence de pauses",/pause|sans arret|non stop/],
+["c","bruit ou lumière intenses",/bruit|lumiere|soleil|neon|concert|reflet|eblouis/],
+["c","émotion forte / tension",/dispute|colere|angoisse|stress|pleur|emotion|conflit/],
+["c","odeur forte / parfum / fumée",/odeur|parfum|fumee|peinture|cigarette|encens/],
+["c","sommeil perturbé",/mal dormi|sommeil|insomnie|nuit agitee|reveils/],
+["c","chaleur / air confiné",/chaud|chaleur|mal aere|confine|canicule|climatisation/],
+["c","changement de rythme / voyage",/voyage|decalage|changement de rythme|week-end|weekend/],
+["c","mâchoire serrée au réveil (bruxisme possible)",/machoire serree|bruxisme|grince|courbatue/],
+["c","mal de tête au réveil",/mal de tete au reveil/]];
+const ZONE={"Cervicales":["une tension cervicale (posture, écrans) pouvant déclencher ou entretenir la crise, ou un signe très précoce de la phase prodromique","une conséquence probable (contraction musculaire réflexe)","Un avis kiné/ostéopathe et un travail de posture peuvent être utiles."],"Mâchoire (ATM)":["un bruxisme ou une dysfonction de l’articulation temporo-mandibulaire pouvant jouer un rôle déclenchant","une contraction réflexe de la mâchoire pendant la douleur","Un avis dentiste/spécialiste de l’ATM (gouttière) peut être utile."],"Œil":["une fatigue visuelle ou un signe prodromique visuel","une douleur rétro-orbitaire liée à la crise elle-même","Un contrôle de la vue est une piste simple."],"Visage / face":["une atteinte sinusienne ou trigéminale à distinguer de la migraine","une extension de la douleur migraineuse vers le visage","À évoquer avec le médecin si la douleur faciale est intense ou isolée."],"Épaules":["des tensions musculaires liées à la posture ou au stress","une crispation secondaire à la douleur","Étirements, pauses et gestion du stress peuvent aider."]};
+const cut=(s,n)=>{s=String(s).replace(/\s+/g," ").trim();return s.length>n?s.slice(0,n-1)+"…":s};
+function expertText(){
+ const{A,P,D}=W(),J=S.journal.filter(j=>inP(j.ts)),pf=S.profile,male=isMale(),L=[],H=t=>L.push("","▌ "+t.toUpperCase()),B=t=>L.push("• "+t),N=A.length;
+ const span=per()||Math.max(30,Math.ceil((Date.now()-(N?new Date(A[0].date):Date.now()))/864e5)),per30=N?N*30/span:0;
+ L.push("Analyse automatique réalisée sur votre appareil à partir de "+N+" crise(s), "+D.length+" jour(s) de journal et "+P.length+" pré-crise(s) ("+(per()?per()+" derniers jours":"toutes les données")+").");
+ L.push("Les écarts signalés sont des pistes statistiques, pas des preuves : plus il y a de données, plus la lecture est fiable.");
+ const T=A.map(a=>+new Date(a.date)),aDays=new Set(A.map(a=>dayKey(a.date))),eve=new Set([...aDays].map(k=>shift(k,-1))),Dm=Object.fromEntries(D.map(o=>[o.date,o]));
+ const flags={g:{},s:{}},alerts=[],qs=[],plan=[],add=(p,t,why,how)=>plan.push({p,t,why,how});
+ const has=(a,k,re)=>real(a[k]).some(x=>re.test(nz(x))),cnt=f=>A.filter(f).length,rk={"élevée":4,"moyenne":3,"faible":2};
+ const aD=D.filter(o=>aDays.has(o.date)),oD=D.filter(o=>!aDays.has(o.date));
+ const near=k=>[shift(k,-1),k,shift(k,1)].some(x=>Dm[x]&&Dm[x].regles==="Oui");
+ const zs={};A.forEach(a=>Object.entries(a.pain||{}).forEach(([z,v])=>{if(z!=="Aucun")(zs[z]=zs[z]||[0,0,0,0,0])[v]++}));P.forEach(p=>Object.keys(p.pain||{}).forEach(z=>{if(z!=="Aucun")(zs[z]=zs[z]||[0,0,0,0,0])[4]++}));
+ /* fenêtres de texte : repas + éléments importants + notes */
+ const joinT=(js,ex)=>nz([...js.map(j=>[j.food,(j.ctx||[]).join(" "),(j.wake||[]).join(" "),j.note].filter(Boolean).join(" ")),...ex].filter(Boolean).join(" . "));
+ const WA=A.map(a=>{const t=+new Date(a.date);return joinT(J.filter(j=>{const d=t-+new Date(j.ts);return d>0&&d<864e5}),[(a.ctx||[]).join(" "),a.note||"",...S.pre.filter(p=>p.att===a.id).map(p=>(p.ctx||[]).join(" ")+" "+(p.note||""))])}).filter(s=>s.trim());
+ const WB=D.filter(o=>!aDays.has(o.date)&&!eve.has(o.date)&&o.date!==tdy()).map(o=>joinT(J.filter(j=>dayKey(j.ts)===o.date),[])).filter(s=>s.trim());
+ const cmp=kind=>GR.filter(g=>g[0]===kind).map(([,l,re])=>{const a=WA.filter(t=>re.test(t)).length,b=WB.filter(t=>re.test(t)).length,na=WA.length,nb=WB.length;
+  if(na>=2&&a>=2){if(nb>=2&&a/na-b/nb>=.25)return{l,a,na,b,nb,m:"d",x:a/na-b/nb};if(nb<2&&a/na>=.5)return{l,a,na,b,nb,m:"f",x:a/na-.2}}return null}).filter(Boolean).sort((x,y)=>y.x-x.x);
+ const gtxt=g=>g.m==="d"?"noté avant "+g.a+"/"+g.na+" crises ("+pc(g.a,g.na)+") contre "+g.b+"/"+g.nb+" jours sans crise ("+pc(g.b,g.nb)+")":"noté avant "+g.a+"/"+g.na+" crises ("+pc(g.a,g.na)+") ; trop peu de jours sans crise pour comparer";
+ /* 1 */ H("1) Profil des crises");
+ if(!N)B("Aucune crise enregistrée sur cette période.");else{
+  const ints=A.map(a=>a.intensity),sev=ints.filter(v=>v>=7).length,ds=A.map(dur).filter(v=>v!=null);
+  B(N+" crise(s) en "+span+" jours, soit environ "+fr(per30)+" par mois ("+fr(N/span*7)+" par semaine).");
+  B("Intensité moyenne "+fr(mn(ints))+"/10, maximum "+Math.max(...ints)+"/10 ; "+sev+" crise(s) sévère(s) (7/10 ou plus), soit "+pc(sev,N)+".");
+  if(ds.length)B("Durée moyenne "+pd(Math.round(mn(ds)))+" (médiane "+pd(Math.round(med(ds)))+"), d’après "+ds.length+" crise(s) où la fin a été notée.");else B("Aucune durée connue : touchez « La crise est passée » à la fin de chaque crise pour la mesurer.");
+  if(N>=3){const g=[];for(let i=1;i<N;i++)g.push((T[i]-T[i-1])/864e5);B("Intervalle moyen entre deux crises : "+fr(mn(g))+" jours (minimum "+fr(Math.min(...g))+").")}
+  const hb=[["la nuit ou au réveil",0,6],["le matin",6,12],["l’après-midi",12,18],["en soirée",18,24]].map(([l,a,b])=>[l,cnt(x=>{const h=new Date(x.date).getHours();return h>=a&&h<b})]).sort((x,y)=>y[1]-x[1]);
+  if(N>=4&&hb[0][1]/N>=.4)B("Moment de survenue : "+hb[0][1]+" crise(s) sur "+N+" débutent plutôt "+hb[0][0]+" ("+pc(hb[0][1],N)+").");
+  const we=cnt(x=>[0,6].includes(new Date(x.date).getDay()));if(N>=5&&we/N>=.45)B("Plus d’une crise sur deux survient le week-end ("+we+"/"+N+") : piste « migraine de décompression » (changement de rythme, grasse matinée, caféine réduite).");
+  const stop=cnt(a=>has(a,"fn",/alite|immobile|arreter/));if(stop)B("Retentissement : "+stop+" crise(s) vous ont obligé(e) à vous arrêter ou à rester immobile ("+pc(stop,N)+").");
+  if(per30>=15){alerts.push("Fréquence très élevée (≥ 15 jours de migraine par mois) : on parle de migraine chronique, une consultation spécialisée est recommandée.");flags.freq=1}
+  else if(per30>=4){flags.freq=1;if(per30>=8)alerts.push("Fréquence élevée (≈ "+fr(per30)+" crises par mois) : un traitement de fond (prévention) peut se discuter avec le médecin.")}
+  if(N>=7){const g=[];for(let i=1;i<N;i++)g.push((T[i]-T[i-1])/864e5);const hh=g.length>>1;if(mn(g.slice(hh))<mn(g.slice(0,hh))*.6)alerts.push("Les crises semblent plus rapprochées récemment : à signaler au médecin.")}
+  if(ints.some(v=>v>=9))alerts.push(cnt(a=>a.intensity>=9)+" crise(s) à 9 ou 10/10 : douleur très intense, à mentionner en consultation.");
+  if(ds.some(v=>v>72*60))alerts.push("Au moins une crise a duré plus de 72 h (état de mal migraineux) : consultation médicale conseillée.")}
+ /* 2 */ H("2) Types de migraine et de céphalée évoqués par vos données");
+ if(!N)B("Enregistrez des crises pour obtenir cette lecture.");else{
+  L.push("Repères issus de la classification internationale des céphalées (ICHD-3). Seul un médecin peut poser un diagnostic.");
+  const mig=cnt(a=>[has(a,"loc",/gauche|droit/),has(a,"qual",/pulsat/),a.intensity>=4,has(a,"fn",/aggrav/)].filter(Boolean).length>=2&&(has(a,"sym",/nausee|vomiss/)||(has(a,"sym",/photophobie|lumiere/)&&has(a,"sym",/phonophobie|bruit/)))),
+   dsn=A.map(dur).filter(v=>v!=null),dOk=dsn.filter(v=>v>=240&&v<=4320).length,r=mig/N,lab=r>=.6?"Évocateur":r>=.3?"Possible":"Peu typique avec les informations actuelles";
+  B("Migraine sans aura — "+lab+" : "+mig+"/"+N+" crise(s) cumulent au moins 2 caractéristiques de douleur migraineuse (un seul côté, pulsatile, modérée à forte, aggravée par l’effort) et des signes associés (nausées/vomissements, ou lumière + bruit)."+(dsn.length?" Durée de 4 à 72 h pour "+dOk+"/"+dsn.length+" crise(s) mesurée(s).":"")+(r<.3?" Renseignez bien le côté, le type de douleur et l’effet de l’effort pour affiner.":"")+(N<5?" Il faut au moins 5 crises pour retenir ce diagnostic.":""));
+  const au=cnt(a=>has(a,"sym",/aura|fourmill|parole/));
+  if(au)B("Migraine avec aura — "+(au>=2?"Évocateur":"Possible")+" : un symptôme d’aura (visuel, fourmillements, trouble de la parole) noté dans "+au+"/"+N+" crise(s). L’aura dure normalement 5 à 60 minutes et précède ou accompagne la douleur ; les deux formes peuvent coexister.");
+  if(per30>=15)B("Migraine chronique — Évocateur : au moins 15 jours de crise par mois (à confirmer sur 3 mois par un médecin).");
+  if(!male&&pf.cycle&&D.some(o=>o.regles)&&N>=3){const mN=cnt(a=>near(dayKey(a.date))),base=D.filter(o=>near(o.date)).length/Math.max(1,D.length);
+   if(mN/N>=Math.max(.4,base+.3)){flags.reg=1;B("Migraine liée aux règles (cataméniale) — "+(mN/N>=.6?"Évocateur":"Possible")+" : "+mN+"/"+N+" crises surviennent autour des règles, contre environ "+pc(Math.round(base*100),100)+" des jours en général. Critère : au moins 2 cycles sur 3, de 2 jours avant à 3 jours après le début des règles.")}}
+  const ve=cnt(a=>has(a,"sym",/vertige/));if(ve>=2&&ve/N>=.4)B("Migraine vestibulaire — Possible : des vertiges accompagnent "+ve+"/"+N+" crises. Elle se caractérise par des vertiges récurrents de 5 minutes à 72 h chez une personne migraineuse. À signaler (ORL / neurologue).");
+  const tq=cnt(a=>has(a,"qual",/pression|etau|sourde/)&&!has(a,"sym",/nausee|vomiss|photophobie|lumiere|phonophobie|bruit/)&&a.intensity<=5);
+  if(tq>=2&&tq/N>=.4){flags.tth=1;B("Céphalée de tension — "+(tq/N>=.6?"Évocateur":"Possible")+" : "+tq+"/"+N+" crise(s) ressemblent à une douleur en étau, modérée, sans nausées ni gêne à la lumière ou au bruit. Souvent liée au stress, à la posture et aux écrans ; peut coexister avec la migraine.")}
+  const z1=zs["Cervicales"],nq=cnt(a=>has(a,"loc",/nuque/));
+  if(z1&&z1[1]+z1[4]>=3&&(z1[1]+z1[4])/(z1[1]+z1[2]+z1[3]+z1[4])>=.6&&nq/N>=.4){flags.cerv=1;B("Composante cervicogénique — Possible : douleur de nuque présente avant la crise et localisation fréquente à la nuque ("+nq+"/"+N+"). Une céphalée née du cou est souvent régulière, non pulsatile et liée aux mouvements ou à la posture ; un examen cervical est utile.")}
+  const z2=zs["Mâchoire (ATM)"],bx=J.filter(j=>(j.wake||[]).some(w=>/machoire/.test(nz(w)))).length;
+  if((z2&&z2[1]+z2[4]>=3)||bx>=3){flags.atm=1;B("Dysfonction de la mâchoire (ATM) / bruxisme — Possible : douleur de mâchoire avant les crises"+(bx?" et mâchoire serrée au réveil à "+bx+" reprise(s)":"")+".")}
+  const cl=cnt(a=>(has(a,"sym",/larmoi|nez/)||has(a,"fn",/agitation|bouger/))&&(has(a,"loc",/oeil/)||Object.keys(a.pain||{}).some(z=>/oeil/.test(nz(z))))&&a.intensity>=8);
+  if(cl)alerts.push("Douleur très intense autour de l’œil avec larmoiement, nez bouché ou agitation ("+cl+" crise(s)) : cela évoque une algie vasculaire de la face, qui se traite autrement que la migraine. Consultez rapidement.");
+  if(cnt(a=>has(a,"sym",/faiblesse|parole/)))alerts.push("Faiblesse d’un côté du corps ou trouble de la parole signalés : si cela survient pour la première fois, brutalement ou dure plus d’une heure, appelez le 15 (ou le 112). Sinon, parlez-en rapidement à un médecin (aura atypique).")}
+ /* 3 */ H("3) Déclencheurs probables");
+ if(!N)B("Enregistrez des crises pour identifier des déclencheurs.");else{
+  const tt=tally(A,"trg");B(tt.length?"Déclencheurs que vous suspectez : "+tt.map(([x,v])=>x+" ("+v+"/"+N+")").join(", ")+".":"Aucun déclencheur coché dans vos crises.");
+  const cx=tally(A,"ctx");if(cx.length)B("Éléments importants que vous avez notés avant vos crises : "+cx.map(([x,v])=>x+" ("+v+"/"+N+")").join(", ")+".");
+  const within=j=>{const t=+new Date(j.ts);return T.some(a=>a-t>0&&a-t<864e5)},fd=[];
+  [["sleepH","Durée de sommeil",-1," h"],["sleepQ","Qualité du sommeil",-1,"/5"],["stress","Stress",1,"/5"],["mood","Humeur",-1,"/5"],["neck","Tension nuque / épaules",1,"/5"]].forEach(([k,l,dir,u])=>{
+   const x=J.filter(j=>within(j)&&j[k]!=null).map(j=>+j[k]),y=J.filter(j=>!within(j)&&j[k]!=null).map(j=>+j[k]),e=eff(x,y),c=e&&conf(e);if(c)fd.push({l,e,c,dir,u,k})});
+  [["eau_L","Eau bue la veille",-1," L"],["cafes","Cafés/thés la veille",1,""],["alcool","Alcool la veille",1," verre(s)"],["ecrans_h","Écrans la veille",1," h"],["activite_min","Activité la veille",-1," min"]].forEach(([k,l,dir,u])=>{
+   const x=[...eve].filter(d=>Dm[d]&&!aDays.has(d)).map(d=>Dm[d][k]),y=D.filter(o=>!aDays.has(o.date)&&!eve.has(o.date)&&o.date!==tdy()).map(o=>o[k]),e=eff(x,y),c=e&&conf(e);if(c)fd.push({l,e,c,dir,u,k})});
+  fd.sort((a,b)=>Math.abs(b.e.d)-Math.abs(a.e.d)).forEach(f=>{const ok=f.e.d*f.dir>0;if(ok){flags[f.k]=1;flags.s[f.k]=rk[f.c]}
+   B(f.l+" : "+fr(f.e.mx)+f.u+" avant une crise contre "+fr(f.e.my)+f.u+" le reste du temps — confiance "+f.c+(ok?" (sens attendu).":" (sens inattendu : à prendre avec prudence)."))});
+  if(aD.length>=3&&oD.length>=3){const st=o=>(o.meteo||[]).some(w=>/orag|lourd/i.test(w)),a=aD.filter(st).length,b=oD.filter(st).length;
+   if(a>=2&&a/aD.length-b/oD.length>=.3){flags.meteo=1;B("Météo : temps orageux/lourd lors de "+a+" des "+aD.length+" jours de crise ("+pc(a,aD.length)+") contre "+b+" des "+oD.length+" autres jours ("+pc(b,oD.length)+").")}
+   const dp=o=>{const q=Dm[shift(o.date,-1)];return o.pression_hPa&&q&&q.pression_hPa?o.pression_hPa-q.pression_hPa:null},fa=aD.map(dp).filter(v=>v!=null),fo=oD.map(dp).filter(v=>v!=null);
+   if(fa.length>=3&&fo.length>=3){const a2=fa.filter(v=>v<=-5).length,b2=fo.filter(v=>v<=-5).length;if(a2>=2&&a2/fa.length-b2/fo.length>=.3){flags.meteo=1;B("Pression : baisse d’au moins 5 hPa en 24 h avant "+a2+"/"+fa.length+" crises contre "+b2+"/"+fo.length+" autres jours.")}}}
+  if(!male&&pf.cycle&&D.some(o=>o.regles)){const a=aD.filter(o=>near(o.date)).length,b=oD.filter(o=>near(o.date)).length;
+   if(aD.length>=3&&oD.length>=3&&a>=2&&a/aD.length-b/oD.length>=.3){flags.reg=1;B("Cycle : "+a+" crise(s) sur "+aD.length+" ("+pc(a,aD.length)+") surviennent autour des règles, contre "+pc(b,oD.length)+" des autres jours : possible composante hormonale.")}}
+  const cg=cmp("c");cg.forEach(g=>{flags.g[g.l]=g;B("Contexte « "+g.l+" » : "+gtxt(g)+".")});
+  if(!fd.length&&!flags.meteo&&!flags.reg&&!cg.length)B("Pas encore d’écart marqué entre les 24 h avant une crise et le reste du temps. Il faut en général plusieurs crises et une dizaine de jours de journal bien remplis.");
+  if(!J.some(j=>(j.ctx||[]).length||j.note)&&!A.some(a=>(a.ctx||[]).length))B("Aucun élément important noté (3 h d’écran, mauvaise posture, longs trajets…) : cochez-les dans le journal et les crises, ils sont pris en compte.")}
+ /* 4 */ H("4) Douleurs cervicales, mâchoire, œil, face : avant ou après ?");
+ if(!Object.keys(zs).length)B("Aucune douleur associée enregistrée.");
+ Object.entries(zs).forEach(([z,c])=>{const t=c[1]+c[2]+c[3],iz=ZONE[z]||["une douleur précurseur ou déclenchante","une conséquence de la crise","À évoquer avec le médecin."];
+  if(t+c[4]<3){B(z+" : "+(t+c[4])+" mention(s), trop peu pour conclure.");return}
+  const av=c[1]+c[4];let v;
+  if(av/(t+c[4])>=.6){v="plutôt AVANT la migraine ("+av+" fois avant, "+c[2]+" après, "+c[3]+" incertain) : cela évoque "+iz[0]+". "+iz[2];if(z==="Mâchoire (ATM)")flags.atm=1;if(z==="Cervicales")flags.cerv=1}
+  else if(c[2]/(t+c[4])>=.6)v="plutôt APRÈS / pendant ("+c[2]+" fois après, "+av+" avant) : cela évoque "+iz[1]+".";
+  else v="chronologie mêlée ("+av+" avant, "+c[2]+" après, "+c[3]+" incertain) : continuez à préciser le moment d’apparition pour trancher.";
+  B(z+" : "+v)});
+ /* 5 */ H("5) Signes annonciateurs (pré-crise)");
+ const linked=P.filter(p=>p.att&&S.attacks.some(a=>a.id===p.att)),unl=P.filter(p=>!p.att);let reliable=[];
+ if(!P.length)B("Aucun signe de pré-crise enregistré. Les repérer permet de traiter plus tôt : utilisez le bouton « Début de symptômes ».");else{
+  const sc={};linked.forEach(p=>real(p.sym).forEach(s=>(sc[s]=sc[s]||[0,0])[0]++));unl.forEach(p=>real(p.sym).forEach(s=>(sc[s]=sc[s]||[0,0])[1]++));
+  const rows=Object.entries(sc).map(([s,[l,u]])=>[s,l,u,l/(l+u)]).sort((a,b)=>b[3]-a[3]||b[1]-a[1]).slice(0,5);
+  rows.forEach(([s,l,u,r])=>{if(l+u>=3&&r>=.7)reliable.push(s);B(s+" : suivi d’une crise "+l+" fois sur "+(l+u)+" ("+pc(l,l+u)+")"+(l+u<3?" — trop peu de recul.":r>=.7?" — signal plutôt fiable.":r<=.4?" — souvent une fausse alerte.":"."))});
+  const lead=linked.map(p=>(+new Date(S.attacks.find(a=>a.id===p.att).date)-+new Date(p.date))/36e5).filter(v=>v>=0);
+  if(lead.length)B("Délai moyen entre les premiers signes et la douleur : "+fr(mn(lead))+" h. C’est la fenêtre pour agir.");
+  if(N)B(linked.length?"Des signes avaient été notés avant "+pc(new Set(linked.map(p=>p.att)).size,N)+" des crises.":"Aucune crise n’a de pré-crise rattachée pour l’instant.");
+  if(unl.length)B(unl.length+" alerte(s) sans crise ensuite : utile pour savoir quelles mesures ont peut-être évité la crise.")}
+ /* 6 */ H("6) Traitements");
+ const tr=tally(A,"trt");
+ if(!tr.length)B("Aucun traitement renseigné.");else tr.forEach(([t,c])=>{const q=A.filter(a=>real(a.trt).includes(t)),dd=q.map(dur).filter(v=>v!=null);B(t+" : utilisé dans "+c+" crise(s), intensité de départ moyenne "+fr(mn(q.map(a=>a.intensity)))+"/10"+(dd.length?", durée moyenne "+pd(Math.round(mn(dd))):"")+".")});
+ const ts={};A.forEach(a=>{const ev=(a.ev||[]).slice().sort((x,y)=>x.t<y.t?-1:1);ev.filter(e=>e.k==="med").forEach(m=>{const tm=+new Date(m.t);let bf=a.intensity;ev.forEach(e=>{if(e.k==="int"&&+new Date(e.t)<=tm)bf=+e.v});
+  const lt=ev.filter(e=>(e.k==="int"||e.k==="end")&&+new Date(e.t)>tm),nx=lt.find(e=>e.k==="int"),rl=lt.find(e=>(e.k==="int"&&+e.v<=bf-2)||e.k==="end"),o=ts[m.v]=ts[m.v]||{n:0,ok:0,dl:[],dr:[]};
+  o.n++;if(nx)o.dr.push(bf-nx.v);if(rl){o.ok++;o.dl.push(Math.round((+new Date(rl.t)-tm)/6e4))}})});
+ Object.entries(ts).forEach(([t,o])=>B(t+" (prises horodatées) : "+o.n+" prise(s) ; soulagement d’au moins 2 points ou fin de crise constaté après "+o.ok+" d’entre elles"+(o.dl.length?", délai médian "+Math.round(med(o.dl))+" min":"")+(o.dr.length?(mn(o.dr)>0?" ; baisse moyenne à la mesure suivante : "+fr(mn(o.dr))+" point(s)":" ; douleur stable ou en hausse à la mesure suivante (l’effet peut demander plus de temps)"):"")+(o.n<3?" — trop peu de prises pour conclure.":".")));
+ const early=[],late=[];A.forEach(a=>{const m=(a.ev||[]).filter(e=>e.k==="med").map(e=>+new Date(e.t)).sort((x,y)=>x-y)[0],d=dur(a);if(m==null||d==null)return;((m-+new Date(a.date))/6e4<=30?early:late).push(d)});
+ let earlyBetter=false;if(early.length>=2&&late.length>=2){B("Prise précoce (≤ 30 min après le début) : durée moyenne "+pd(Math.round(mn(early)))+" contre "+pd(Math.round(mn(late)))+" quand le traitement est pris plus tard.");earlyBetter=mn(early)<mn(late)}
+ const dayN=re=>new Set(A.filter(a=>real(a.trt).some(t=>re.test(nz(t)))||(a.ev||[]).some(e=>e.k==="med"&&re.test(nz(e.v)))).map(a=>dayKey(a.date))).size,k30=n=>n*30/span;
+ const nT=dayN(/triptan|imigrane|maxalt|zomig|relpax|naratriptan/),nA=dayN(/antalgique|paracetamol|doliprane|ibuprofene|anti-inflammatoire|aspirine|advil|nurofen|codeine|tramadol/);
+ if(nT>=6&&k30(nT)>=10){flags.mo=1;alerts.push("Triptans pris "+nT+" jour(s) sur la période (≈ "+Math.round(k30(nT))+" par mois) : au-delà de 10 jours/mois, risque de céphalée par abus médicamenteux. À discuter rapidement avec le médecin.")}
+ if(nA>=8&&k30(nA)>=15){flags.mo=1;alerts.push("Antalgiques / anti-inflammatoires pris "+nA+" jour(s) sur la période (≈ "+Math.round(k30(nA))+" par mois) : au-delà de 15 jours/mois, risque de céphalée par abus médicamenteux.")}
+ /* 7 */ H("7) Alimentation et repas");
+ if(!J.some(j=>j.food))B("Aucun repas décrit : notez ce que vous mangez et buvez (matin, midi, soir) pour que l’analyse cherche des liens.");else{
+  const mb=A.slice(-6).map(a=>{const t=+new Date(a.date),m=J.filter(j=>j.food&&+new Date(j.ts)<=t&&t-+new Date(j.ts)<108e6).sort((x,y)=>x.ts<y.ts?1:-1).slice(0,2).reverse();
+   return m.length?new Date(a.date).toLocaleDateString("fr-FR",{day:"numeric",month:"short"})+" : "+m.map(j=>(MM[j.m]?MM[j.m].food.toLowerCase()+" « ":"« ")+cut(j.food,70)+" »").join(" puis "):null}).filter(Boolean);
+  if(mb.length){B("Ce que vous aviez mangé juste avant vos dernières crises :");mb.forEach(x=>L.push("   – "+x))}
+  const fg=cmp("f");
+  if(fg.length)fg.forEach(g=>{flags.g[g.l]=g;B(g.l.charAt(0).toUpperCase()+g.l.slice(1)+" : "+gtxt(g)+".")});else B("Pas de lien net entre un aliment ou un type de repas et vos crises à ce stade (il faut quelques crises et plusieurs jours sans crise pour comparer).")}
+ B("Un lien alimentaire est plus souvent une piste qu’une cause : testez un seul changement à la fois, sur 3 à 4 semaines.");
+ {const trgT=tally(A,"trg");GR.forEach(([k,l,re])=>{const c=trgT.filter(([x])=>re.test(nz(x))).reduce((s,[,v])=>s+v,0);if(c>=2&&N&&c/N>=.25&&!flags.g[l])flags.g[l]={l,a:c,na:N,b:0,nb:0,m:"t",x:c/N-.3}})}
+ /* 8 */ H("8) Plan d’action pour éviter le retour des crises");
+ if(flags.sleepH||flags.sleepQ)add(Math.max(flags.s.sleepH||0,flags.s.sleepQ||0)+1,"Protéger votre sommeil","vos crises surviennent après des nuits plus courtes ou de moins bonne qualité.","couchez-vous et levez-vous à heures fixes (± 1 h, week-end compris), visez 7 à 8 h, coupez les écrans 1 h avant, chambre fraîche et sombre.");
+ if(flags.g["sommeil perturbé"]||flags.g["mal de tête au réveil"])add(3,"Explorer vos nuits","un sommeil perturbé ou des maux de tête au réveil précèdent vos crises.","en parler au médecin (apnée du sommeil, bruxisme) si vous ronflez, vous réveillez fatigué(e) ou avec la mâchoire serrée.");
+ if(flags.stress||flags.mood||flags.neck||flags.g["émotion forte / tension"])add(Math.max(flags.s.stress||0,flags.s.neck||0,flags.s.mood||0)+1,"Relâcher le stress et la tension de la nuque","stress, humeur basse ou nuque/épaules tendues précèdent vos crises.","5 minutes de respiration lente matin et soir, étirements doux de la nuque et des épaules, chaleur sur les trapèzes, une pause dans la journée pour souffler.");
+ if(flags.g["longue durée devant un écran"]||flags.ecrans_h)add(4,"Alléger la charge d’écran","de longues périodes d’écran sont notées avant vos crises.","règle 20-20-20 (toutes les 20 min, regarder au loin 20 s), vraie pause de 5 min toutes les 45 min, écran à hauteur des yeux, luminosité réduite, pas de reflets ; contrôle de la vue si besoin.");
+ if(flags.g["mauvaise posture / cou penché"]||flags.cerv||flags.tth)add(4,"Corriger la posture du cou","posture penchée, canapé ou lit sont liés à vos crises ou à vos douleurs cervicales.","évitez de lire ou regarder un écran le cou plié (canapé, lit) : calez la nuque et le dos avec des coussins ; au bureau, dos soutenu et écran face à vous ; un kiné ou ostéopathe peut proposer des exercices.");
+ if(flags.atm)add(3,"Soulager la mâchoire","douleur de mâchoire avant les crises ou mâchoire serrée au réveil.","évitez chewing-gum et aliments très durs, relâchez la mâchoire dans la journée (dents desserrées, langue au palais), chaleur sur les muscles de la joue ; avis dentiste/ATM pour une gouttière.");
+ if(flags.g["longs trajets / conduite"]||flags.g["absence de pauses"])add(2,"Faire des pauses","longs trajets ou absence de pauses précèdent vos crises.","arrêt toutes les 2 h en voiture, hydratation, étirements, repas légers.");
+ if(flags.eau_L)add((flags.s.eau_L||2)+1,"Mieux vous hydrater","vous buvez moins la veille des crises.","1,5 à 2 L par jour répartis, un verre à chaque repas, bouteille à portée ; davantage s’il fait chaud ou si vous faites du sport.");
+ if(flags.cafes)add((flags.s.cafes||2)+1,"Stabiliser la caféine","un excès de café/thé précède vos crises.","quantité stable chaque jour (autour de 1 à 2 tasses), à heures régulières, pas de café tardif, pas de sevrage brutal le week-end.");
+ if(flags.alcool)add((flags.s.alcool||2)+1,"Réduire l’alcool","l’alcool de la veille précède vos crises.","testez 4 semaines sans alcool, surtout vin rouge et bière le soir.");
+ if(flags.activite_min)add(2,"Bouger régulièrement","moins d’activité la veille des crises.","30 min d’activité modérée (marche rapide, vélo, natation) 3 fois par semaine, échauffement progressif, pas d’effort intense à jeun.");
+ if(flags.g["repas sauté, très léger ou tardif"])add(5,"Manger à heures régulières","repas sautés, très légers ou tardifs sont notés avant vos crises.","3 repas par jour, pas plus de 4 à 5 h entre deux prises, une collation si la journée est longue, ne sautez pas le petit-déjeuner.");
+ const fgl=GR.filter(g=>g[0]==="f"&&!/sauté/.test(g[1])&&flags.g[g[1]]).map(g=>flags.g[g[1]]).sort((x,y)=>y.x-x.x).slice(0,3);
+ if(fgl.length)add(fgl[0].m==="d"?4:3,"Tester l’arrêt de vos aliments suspects","ces aliments reviennent souvent autour de vos crises : "+fgl.map(g=>g.l+" ("+pc(g.a,g.na)+" des crises"+(g.m==="d"?" contre "+pc(g.b,g.nb)+" des jours sans crise":"")+")").join(" ; ")+".","retirez-les un par un pendant 3 à 4 semaines (un seul changement à la fois), puis réintroduisez-en un : si une crise suit la réintroduction, le lien est probable.");
+ if(flags.meteo)add(2,"Anticiper la météo","orages ou chutes de pression coïncident avec vos crises.","ces jours-là : hydratation, repas réguliers, calme, traitement de crise à portée, évitez de cumuler d’autres déclencheurs.");
+ if(flags.reg&&!male)add(4,"Anticiper les règles","vos crises se regroupent autour des règles.","notez la date des règles (journal) ; un traitement court ciblé autour des règles peut être proposé par le médecin.");
+ if(reliable.length||P.length)add(3,"Utiliser vos signes annonciateurs comme alarme",reliable.length?"« "+reliable.join(", ")+" » précèdent souvent une crise.":"vous repérez des signes avant la douleur.","dès qu’ils apparaissent : pause au calme, boire, manger léger, éloigner les écrans, et traitement précoce si votre médecin l’a prévu.");
+ if(earlyBetter)add(5,"Traiter tôt","vos crises sont plus courtes quand le traitement est pris dans les 30 minutes.","gardez votre traitement de crise sur vous et prenez-le dès les premiers signes de douleur, selon les consignes de votre médecin.");
+ if(flags.mo)add(6,"Limiter le traitement de crise","la fréquence de prise approche le seuil d’abus médicamenteux.","gardez les jours de prise sous 2 à 3 par semaine ; au-delà, consultez : un traitement de fond est plus adapté.");
+ if(flags.freq)add(3,"Parler d’un traitement de fond","vos crises sont assez fréquentes ou intenses.","une consultation (médecin traitant ou neurologue) permet d’évaluer un traitement préventif ; apportez le rapport détaillé de l’app.");
+ if(!plan.length)add(1,"Continuer le suivi","les données ne montrent pas encore de déclencheur net.","remplissez le journal 3 fois par jour et notez les éléments importants : les pistes apparaîtront après quelques crises.");
+ plan.sort((a,b)=>b.p-a.p).slice(0,8).forEach((x,i)=>L.push((i+1)+". "+x.t.toUpperCase()+"\n   Pourquoi : "+x.why+"\n   À faire : "+x.how));
+ L.push("","Méthode : changez une ou deux choses à la fois pendant 4 semaines, continuez le journal : l’analyse comparera ensuite avant et après.");
+ L.push("Compléments (magnésium, vitamine B2…) : des pistes de prévention existent, à valider avec votre médecin ou pharmacien, sans automédication.");
+ /* 9 */ H("9) Données manquantes");
+ const miss=[],fill=D.length/Math.max(1,Math.min(span,per()||span));
+ if(N<5)miss.push("Moins de 5 crises : les conclusions restent fragiles.");
+ if(fill<.6)miss.push("Journal rempli environ "+Math.round(fill*100)+" % des jours : visez au moins 3 saisies par jour sur plusieurs semaines.");
+ if(N&&cnt(a=>(a.ev||[]).length)<N/2)miss.push("Peu de crises avec suivi horodaté : notez l’heure de chaque prise et la fin de crise pour mesurer l’efficacité.");
+ if(N&&!A.some(a=>a.end))miss.push("Aucune fin de crise notée : la durée des crises est inconnue.");
+ if(N&&!A.some(a=>(a.qual||[]).length))miss.push("Type de douleur, côté et effet de l’effort non renseignés : ils servent à reconnaître le type de migraine.");
+ if(N&&!A.some(a=>Object.keys(a.pain||{}).length))miss.push("Douleurs cervicales/mâchoire/œil : renseignez-les pour analyser leur chronologie.");
+ if(!J.some(j=>j.food))miss.push("Repas non décrits.");
+ const pm=[["birth","date de naissance"],["sex","sexe"],["weight","poids"],["height","taille"],["fam","antécédents familiaux"],["bg","traitement de fond"]].filter(([k])=>pf[k]==null||pf[k]==="").map(x=>x[1]);
+ if(pm.length)miss.push("Profil incomplet : "+pm.join(", ")+".");
+ if(!miss.length)B("Rien de critique : vos données sont suffisamment complètes.");else miss.forEach(B);
+ /* 10 */ H("10) Signes d’alerte et questions pour le médecin");
+ if(!male&&/contracep|pilule|oestro|estro/.test(nz(pf.bg))&&A.some(a=>has(a,"sym",/aura/)))alerts.push("Aura migraineuse + contraception contenant des œstrogènes : cette association augmente le risque vasculaire. À signaler au médecin sans attendre.");
+ alerts.forEach(B);
+ L.push("Consultez en urgence si : douleur « en coup de tonnerre » inhabituelle, fièvre avec raideur de nuque, faiblesse ou paralysie, trouble de la parole, vision double, confusion, convulsion, ou après un choc à la tête. Une première migraine après 50 ans ou un changement net de vos crises justifie aussi un avis rapide.");
+ qs.push("Mes crises correspondent-elles à une migraine, à une céphalée de tension ou à une douleur d’origine cervicale ?","Mon traitement de crise est-il le bon, et à quel moment le prendre ?");
+ if(flags.freq)qs.push("Un traitement de fond est-il indiqué ?");
+ if(flags.atm||flags.cerv)qs.push("Un bilan cervical ou dentaire (ATM, bruxisme) est-il utile ?");
+ if(flags.reg&&!male)qs.push("Existe-t-il une option adaptée à mes migraines liées aux règles ?");
+ L.push("","Questions à poser : "+qs.join(" · "));
+ L.push("","Cette analyse est une aide à la réflexion calculée à partir de vos saisies et de repères médicaux usuels ; elle ne constitue pas un diagnostic médical.");
+ return L.join("\n").trim()}
+/* ---------- v7 : rapport d’analyse lisible, archives ---------- */
+const ACSS=`.an{--c:#4a5ba8;border-left:5px solid var(--c);background:rgba(128,128,128,.08);border-radius:14px;padding:12px 14px;margin:12px 0;font-size:15px;line-height:1.45}
+.an h4{margin:0 0 8px;font-size:16px;display:flex;align-items:center;gap:9px;color:var(--c)}
+.an h4 i{font-style:normal;display:grid;place-items:center;flex:none;width:30px;height:30px;border-radius:10px;background:var(--c);color:#fff;font-size:16px}
+.an ul{margin:0;padding:0;list-style:none}.an li{position:relative;padding:7px 0 7px 18px;border-top:1px solid rgba(128,128,128,.2)}.an li:first-child{border-top:0}
+.an li:before{content:"";position:absolute;left:2px;top:15px;width:8px;height:8px;border-radius:50%;background:var(--c)}
+.an li.sub{margin-left:14px;font-size:13.5px;opacity:.9}.an li.sub:before{width:5px;height:5px;top:16px;opacity:.6}
+.an p{margin:6px 0}.an .nt{font-size:13.5px;opacity:.8}
+.tg{display:inline-block;padding:1px 9px;border-radius:999px;font-size:12px;font-weight:700;color:#fff;margin:0 2px;vertical-align:1px;white-space:nowrap}
+.tg.ok{background:#2f9e6b}.tg.wn{background:#d9892b}.tg.mu{background:#8a94a3}.tg.bd{background:#d6504a}
+.pl{border-radius:12px;padding:10px 12px;margin:9px 0;background:rgba(47,158,107,.1);border:1px solid rgba(47,158,107,.4)}
+.pl .t{font-weight:700;display:flex;gap:9px;align-items:center}.pl .t b{flex:none;display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:#1f8f5a;color:#fff;font-size:13px}
+.pl .w,.pl .h{margin-top:5px;font-size:14px}.pl .w{opacity:.85}
+.an .al{border-radius:12px;padding:10px 12px;margin:8px 0;background:rgba(214,80,74,.12);border:1px solid rgba(214,80,74,.45)}
+.an .qs{border-radius:12px;padding:10px 12px;margin:8px 0;background:rgba(74,91,168,.1);border:1px solid rgba(74,91,168,.35)}
+.an .qs ul{margin-top:4px}.an.top{border-left-width:6px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .an .tt{filter:brightness(1.5)}}:root[data-theme="dark"] .an .tt{filter:brightness(1.5)}`;
+if(document.head)document.head.insertAdjacentHTML("beforeend","<style>"+ACSS+"</style>");
+const SECI={1:["📊","#4a5ba8"],2:["🧬","#8250c8"],3:["⚡","#e0852d"],4:["🦴","#1f9fb0"],5:["🌀","#c9a227"],6:["💊","#2f9e6b"],7:["🍽️","#d6704a"],8:["✅","#1f8f5a"],9:["🗂️","#7b8794"],10:["🚨","#d6504a"]},
+ SECT={1:"Profil des crises",2:"Types de migraine évoqués",3:"Déclencheurs probables",4:"Cervicales, mâchoire, œil, face",5:"Signes annonciateurs",6:"Traitements",7:"Alimentation et repas",8:"Plan d’action personnalisé",9:"Données manquantes",10:"Alertes et questions au médecin"};
+const tag=(c,x)=>`<span class="tg ${c}">${x}</span>`;
+function hl(s,n){let x=esc(s);
+ if(n===2)x=x.replace(/^(.*?) — /,"<b>$1</b> — ");else if([1,3,4,5,6,7].includes(n))x=x.replace(/^([^:]{2,60}?) : /,"<b>$1</b> : ");
+ return x.replace(/— (Évocateur)/,"— "+tag("ok","$1")).replace(/— (Possible)/,"— "+tag("wn","$1")).replace(/— (Peu typique avec les informations actuelles)/,"— "+tag("mu","$1"))
+  .replace(/confiance (élevée)/,"confiance "+tag("ok","$1")).replace(/confiance (moyenne)/,"confiance "+tag("wn","$1")).replace(/confiance (faible)/,"confiance "+tag("mu","$1"))
+  .replace("(sens attendu)",tag("ok","sens attendu")).replace("(sens inattendu : à prendre avec prudence)",tag("mu","sens inattendu : prudence"))
+  .replace("signal plutôt fiable",tag("ok","signal fiable")).replace("souvent une fausse alerte",tag("mu","souvent une fausse alerte"))
+  .replace(/plutôt (AVANT|APRÈS \/ pendant)/,m=>"<b>"+m+"</b>")}
+function anaHTML(t){const secs=[],intro=[];let cur=null;
+ t.split("\n").forEach(l=>{const m=l.match(/^▌ (\d+)\) /);if(m){cur={n:+m[1],L:[]};secs.push(cur)}else if(cur)cur.L.push(l);else if(l.trim())intro.push(l)});
+ const plans=[];let out=intro.length?`<p class="nt" style="margin:8px 0">${intro.map(esc).join("<br>")}</p>`:"";
+ let body="";
+ secs.forEach(s=>{const[ic,c]=SECI[s.n]||["•","#4a5ba8"];let ul=[],h="",pl=null;const fl=()=>{if(ul.length){h+=`<ul>${ul.join("")}</ul>`;ul=[]}};
+  s.L.forEach(l=>{if(!l.trim())return;let m;
+   if(l.startsWith("• ")){ul.push(`<li>${hl(l.slice(2),s.n)}</li>`);return}
+   if(l.startsWith("   – ")){ul.push(`<li class="sub">${esc(l.slice(5))}</li>`);return}
+   if(s.n===8&&(m=l.match(/^(\d+)\. (.+)$/))){fl();pl={n:m[1],t:m[2].charAt(0)+m[2].slice(1).toLowerCase(),w:"",h:""};plans.push(pl);return}
+   if(pl&&(m=l.match(/^ {3}Pourquoi : (.*)$/))){pl.w=m[1];return}
+   if(pl&&(m=l.match(/^ {3}À faire : (.*)$/))){pl.h=m[1];return}
+   fl();
+   if(l.startsWith("Consultez en urgence si"))h+=`<div class="al"><b>🚑 Consultez en urgence si</b> ${esc(l.replace(/^Consultez en urgence si :?/,""))}</div>`;
+   else if(l.startsWith("Questions à poser :"))h+=`<div class="qs"><b>💬 Questions pour votre médecin</b><ul>${l.slice(19).split(" · ").map(q=>`<li>${esc(q.trim())}</li>`).join("")}</ul></div>`;
+   else if(l.startsWith("Cette analyse est"))h+=`<p class="nt">${esc(l)}</p>`;
+   else h+=`<p class="${/^(Méthode|Compléments|Repères)/.test(l)?"nt":""}">${/^Méthode/.test(l)?"💡 ":/^Compléments/.test(l)?"🌿 ":""}${esc(l)}</p>`});
+  fl();
+  if(s.n===8)h=plans.map(p=>`<div class="pl"><div class="t"><b>${p.n}</b>${esc(p.t)}</div><div class="w">🎯 <b>Pourquoi :</b> ${esc(p.w)}</div><div class="h">🛠️ <b>À faire :</b> ${esc(p.h)}</div></div>`).join("")+h;
+  body+=`<div class="an" style="--c:${c}"><h4><i>${ic}</i><span class="tt">${SECT[s.n]}</span></h4>${h}</div>`});
+ const top=plans.slice(0,3);
+ return out+(top.length?`<div class="an top" style="--c:#1f8f5a"><h4><i>🎯</i><span class="tt">À retenir en priorité</span></h4><ul>${top.map(p=>`<li><b>${esc(p.t)}</b></li>`).join("")}</ul></div>`:"")+body}
+const ATYPE={s:["📄","#4a5ba8"],d:["📑","#8250c8"],a:["🤖","#1f8f5a"]};
+function archive(ty,title,html){S.arch=S.arch||[];const l=S.arch[0];if(l&&l.ty===ty&&l.html===html)return;
+ S.arch.unshift({id:Date.now(),d:new Date().toISOString(),ty,title,per:per(),html});let sz=0;S.arch=S.arch.filter((a,i)=>{sz+=a.html.length;return i<40&&sz<1.5e6});save()}
+function openReport(ty,html,title,name){archive(ty,title,html);ana();showReport(html,title,name)}
+function aiReport(){if(!S.attacks.length){dlg("Enregistrez au moins une crise avant de lancer l’analyse.");return}
+ sheet(`<div class="sh-h"><h2>Rapport d’analyse IA</h2><button class="ib" id="x">✕</button></div><div class="an" style="--c:#1f8f5a"><h4><i>🔬</i>Analyse en cours…</h4><p class="nt">Lecture de vos crises, du journal, des repas et des éléments importants notés.</p></div>`);$("#x").onclick=close;
+ setTimeout(()=>{if(!$("#ov").classList.contains("on"))return;let t;try{t=expertText()}catch(e){sheet(`<div class="sh-h"><h2>Analyse impossible</h2><button class="ib" id="x">✕</button></div><p>${esc(e.message||e)}</p>`);$("#x").onclick=close;return}
+  openReport("a",head("Rapport d’analyse IA")+anaHTML(t),"Rapport d’analyse IA","rapport-analyse-ia")},450)}
+let AALL=false;
+function ana(){const pp=[7,14,30,90,0],ar=S.arch||[],shown=AALL?ar:ar.slice(0,5);
+ $("#v-ana").innerHTML=`<h3 style="margin-top:0">Période${I("per")}</h3><div class="chips">${pp.map(d=>`<button class="chip${per()===d?" on":""}" data-per="${d}">${d?d+" jours":"Tout"}</button>`).join("")}${pp.includes(per())?"":`<button class="chip on">${per()} jours</button>`}<button class="chip" data-per="x">Autre…</button></div>
+ <h3>Exports et analyse${I("rap")}</h3><div class="card"><button class="btn" id="r1">📄 Export</button><button class="btn alt" id="r2" style="margin-top:10px">📑 Export complet</button><div class="rel" style="margin-top:10px"><button class="btn alt" id="r3">🤖 Rapport d’analyse IA</button>${I("ai")}</div><div class="sm" style="margin-top:8px">Le rapport d’analyse IA est refait à chaque ouverture, avec vos dernières données. Chaque rapport est archivé ci-dessous.</div></div>
+ <h3>Comparaison avant crise${I("corr")}</h3><div class="card">${corr()}</div>
+ <h3>Archives des rapports${I("arch")}</h3><div class="card">${ar.length?shown.map(a=>{const t=ATYPE[a.ty]||ATYPE.s;return `<div class="item" data-ar="${a.id}"><div class="dot" style="background:${t[1]};color:#fff">${t[0]}</div><div class="t"><div>${esc(a.title)}</div><div>${fmt(a.d)} · ${a.per?a.per+" jours":"tout l’historique"}</div></div><button class="del" data-dar="${a.id}" aria-label="Supprimer">🗑</button></div>`}).join("")+(ar.length>5?`<button class="btn alt" id="arall" style="margin-top:10px">${AALL?"Réduire":"Tout afficher ("+ar.length+")"}</button>`:""):`<div class="empty">Vos rapports seront archivés ici automatiquement.</div>`}</div>`;
+ $("#r1").onclick=()=>openReport("s",rapport(0),"Export","export-migraine");$("#r2").onclick=()=>openReport("d",rapport(1),"Export complet","export-complet");$("#r3").onclick=aiReport;
+ document.querySelectorAll("[data-ar]").forEach(b=>b.onclick=e=>{if(e.target.closest(".del"))return;const a=(S.arch||[]).find(x=>x.id==b.dataset.ar);if(a)showReport(`<p class="sm">📁 Archive du ${fmt(a.d)}</p>`+a.html,a.title,"archive-"+a.ty+"-"+a.id)});
+ document.querySelectorAll("[data-dar]").forEach(b=>b.onclick=()=>sure("Supprimer ce rapport de l’archive ?",()=>{S.arch=S.arch.filter(x=>x.id!=b.dataset.dar);save();ana()}));
+ if($("#arall"))$("#arall").onclick=()=>{AALL=!AALL;ana()};
+ document.querySelectorAll("[data-per]").forEach(b=>b.onclick=()=>{if(b.dataset.per==="x")ask("Nombre de jours à prendre en compte :",v=>{const n=parseInt(v);if(n>0){S.per=n;save();ana()}});else{S.per=+b.dataset.per;save();ana()}})}
+/* ---------- v7 : historique rangé par mois ---------- */
+let HF="all";const HOpen={};
+const wkKey=d=>{const x=new Date(d.slice(0,10)+"T12:00");x.setDate(x.getDate()-(x.getDay()+6)%7);return iso(x).slice(0,10)};
+function weeks(it){const g={};it.forEach(x=>(g[wkKey(x.d)]=g[wkKey(x.d)]||[]).push(x));
+ return Object.keys(g).sort().reverse().map(k=>{const l=g[k],n=l.filter(x=>x.t==="a").length;return `<div class="wk">Semaine du ${new Date(k+"T12:00").toLocaleDateString("fr-FR",{day:"numeric",month:"short"})} · ${n} crise${n>1?"s":""}</div>`+l.map(x=>x.t==="a"?item(x.o,1):itemP(x.o)).join("")}).join("")}
+function hist(){
+ const all=[...sorted().map(a=>({d:a.date,t:"a",o:a})),...S.pre.filter(p=>!p.att).map(p=>({d:p.date,t:"p",o:p}))].sort((a,b)=>b.d.localeCompare(a.d)),
+  l=all.filter(x=>HF==="all"||x.t===HF),g={};l.forEach(x=>(g[x.d.slice(0,7)]=g[x.d.slice(0,7)]||[]).push(x));
+ const keys=Object.keys(g).sort().reverse(),mname=k=>new Date(k+"-15T12:00").toLocaleDateString("fr-FR",{month:"long",year:"numeric"});
+ const html=keys.map((k,i)=>{const it=g[k],at=it.filter(x=>x.t==="a").map(x=>x.o),op=it.length-at.length,open=HOpen[k]!==undefined?HOpen[k]:i<2;
+  return `<details class="mo" data-mo="${k}"${open?" open":""}><summary><span class="mn">${mname(k)}</span><span class="ms">${at.length} crise${at.length>1?"s":""}${at.length?" · moy. "+avg(at).toFixed(1)+"/10":""}${op?" · "+op+" pré-crise"+(op>1?"s":""):""}</span><span class="dots">${at.slice().reverse().slice(-16).map(a=>`<i style="background:${col(a.intensity)}"></i>`).join("")}</span></summary>${weeks(it)}</details>`}).join("");
+ $("#v-hist").innerHTML=`<h3 style="margin-top:0">Historique${I("hist")}</h3><div class="chips" style="margin-bottom:12px">${[["all","Tout ("+all.length+")"],["a","Crises"],["p","Pré-crises"]].map(([v,t])=>`<button class="chip${HF===v?" on":""}" data-hf="${v}">${t}</button>`).join("")}</div>${html||`<div class="card"><div class="empty">Votre historique apparaîtra ici.</div></div>`}`;
+ const V=$("#v-hist");
+ V.querySelectorAll("[data-hf]").forEach(b=>b.onclick=()=>{HF=b.dataset.hf;hist()});
+ V.querySelectorAll("details.mo").forEach(d=>d.ontoggle=()=>{HOpen[d.dataset.mo]=d.open});
+ V.querySelectorAll("[data-da]").forEach(b=>b.onclick=()=>sure("Supprimer cette crise ?",()=>{const id=+b.dataset.da;S.attacks=S.attacks.filter(a=>a.id!==id);S.pre.forEach(p=>{if(p.att===id)p.att=null});save();render()}));
+ V.querySelectorAll("[data-dp]").forEach(b=>b.onclick=()=>sure("Supprimer cette pré-crise ?",()=>{S.pre=S.pre.filter(p=>p.id!==+b.dataset.dp);save();render()}));
+}
+Object.assign(INFO,{arch:"Tous vos rapports (synthèse, détaillé, analyse) sont conservés ici sur votre appareil, tels qu’ils étaient au moment de leur création. Touchez-en un pour le relire ; le rapport d’analyse, lui, est recalculé à chaque nouvelle ouverture depuis le bouton.",ai:"Le rapport d’analyse est calculé directement dans l’app, gratuitement et sans envoi de données. Il est refait à chaque ouverture pour intégrer vos dernières saisies, puis conservé dans les archives. Aide à la réflexion, pas un diagnostic.",hist:"Vos crises et pré-crises sont rangées par mois. Les deux derniers mois sont ouverts ; touchez un mois pour l’ouvrir ou le replier, et utilisez les filtres pour ne voir que les crises ou les pré-crises."});
+const verHTML=()=>`<div class="ver">Migraine Assistant v${APP_VER} · dernière modification : ${APP_DATE}</div>`;
+if($("#ver"))$("#ver").outerHTML=verHTML();
+
+load();applyTheme();render();
+</script>
+</body>
+</html>
